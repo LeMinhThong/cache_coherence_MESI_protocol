@@ -1,0 +1,106 @@
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 23:59:36 on Mar 05,2025
+vlog -sv -lint -f FILES_vlog.vc -l cache_mem_tb_top.log "+define+UVM_CMDLINE_NO_DPI" "+define+UVM_REGEX_NO_DPI" 
+-- Compiling package uvm_pkg
+** Warning: ../../ext/uvm-core-2020.3.1/src/seq/uvm_sequencer_base.svh(1474): (vlog-2186) SystemVerilog testbench feature
+(randomization, coverage or assertion) detected in the design.
+These features are only supported in Questasim.
+** Warning: ../../ext/uvm-core-2020.3.1/src/reg/uvm_mem_mam.svh(717): (vlog-2186) SystemVerilog testbench feature
+(randomization, coverage or assertion) detected in the design.
+These features are only supported in Questasim.
+** Warning: ../../ext/uvm-core-2020.3.1/src/seq/uvm_sequence_library.svh(830): (vlog-2186) SystemVerilog testbench feature
+(randomization, coverage or assertion) detected in the design.
+These features are only supported in Questasim.
+-- Compiling package cache_test_pkg
+-- Importing package uvm_pkg
+-- Compiling module cache_mem
+-- Compiling module cache_mem_tb_top
+-- Importing package cache_test_pkg
+
+Top level modules:
+	cache_mem_tb_top
+End time: 23:59:38 on Mar 05,2025, Elapsed time: 0:00:02
+Errors: 0, Warnings: 3
+Reading pref.tcl
+
+# 2020.1
+
+# vsim work.cache_mem_tb_top -do "run -all; quit" -sv_seed random 
+# Start time: 23:59:39 on Mar 05,2025
+# Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_8076\win32pe_gcc-4.2.1\export_tramp.dll
+# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
+# This also means that later if you turn on UVM-aware debugging your debug simulations may have
+# different random seeds from your non-debug simulations.
+# Loading sv_std.std
+# Loading work.uvm_pkg
+# Loading work.cache_test_pkg
+# Loading work.cache_mem_tb_top
+# Loading work.cache_mem
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 14, found 13.
+#    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/dut File: tb/cache_mem_tb_top.sv Line: 33
+# ** Warning: (vsim-3722) tb/cache_mem_tb_top.sv(33): [TFMPC] - Missing connection for port 'bus2cac_data'.
+# Compiling F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_8076\win32pe_gcc-4.2.1\exportwrapper.c
+# Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_8076\win32pe_gcc-4.2.1\vsim_auto_compile.dll
+# ** Warning: (vsim-3770) Failed to find user specified function 'uvm_hdl_check_path' in DPI C/C++ source files.
+#    Time: 0 ps  Iteration: 0  Region: /uvm_pkg File: ../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
+# ** Warning: (vsim-3770) Failed to find user specified function 'uvm_hdl_deposit' in DPI C/C++ source files.
+#    Time: 0 ps  Iteration: 0  Region: /uvm_pkg File: ../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
+# ** Warning: (vsim-3770) Failed to find user specified function 'uvm_hdl_force' in DPI C/C++ source files.
+#    Time: 0 ps  Iteration: 0  Region: /uvm_pkg File: ../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
+# ** Warning: (vsim-3770) Failed to find user specified function 'uvm_hdl_release_and_read' in DPI C/C++ source files.
+#    Time: 0 ps  Iteration: 0  Region: /uvm_pkg File: ../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
+# ** Warning: (vsim-3770) Failed to find user specified function 'uvm_hdl_release' in DPI C/C++ source files.
+#    Time: 0 ps  Iteration: 0  Region: /uvm_pkg File: ../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
+# ** Warning: (vsim-3770) Failed to find user specified function 'uvm_hdl_read' in DPI C/C++ source files.
+#    Time: 0 ps  Iteration: 0  Region: /uvm_pkg File: ../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
+# ** Warning: Design size of 65373 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# Sv_Seed = 3341828334
+# run -all
+# hello from cache_mem_tb
+# UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(476) @ 0: reporter [UVM/RELNOTES] 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   This implementation of the UVM Library deviates from the 1800.2-2020
+#   standard.  See the DEVIATIONS.md file contained in the release
+#   for more details.
+# 
+# ----------------------------------------------------------------
+# Accellera:1800.2:UVM:2020.3.1
+# 
+# All copyright owners for this kit are listed in NOTICE.txt
+# All Rights Reserved Worldwide
+# ----------------------------------------------------------------
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# UVM_INFO @ 0: reporter [RNTST] Running test base_test...
+# UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(699) @ 0: reporter [UVMTOP] UVM testbench topology:
+# --------------------------------------
+# Name            Type       Size  Value
+# --------------------------------------
+# <unnamed>       uvm_root   -     @61  
+#   uvm_test_top  base_test  -     @146 
+# --------------------------------------
+# UVM_WARNING ../../ext/uvm-core-2020.3.1/src/base/uvm_traversal.svh(314) @ 0: reporter [NO_VISIT_CHECK] Because UVM_REGEX_NO_DPI is defined, no uvm component name constraints will be checked
+# UVM_INFO ./sv/test/base_test.sv(31) @ 0: uvm_test_top [base_test] Start test
+# UVM_INFO ./sv/test/base_test.sv(33) @ 100: uvm_test_top [base_test] Complete test
+# UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_report_server.svh(1009) @ 100: reporter [UVM/REPORT/SERVER] 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :    5
+# UVM_WARNING :    1
+# UVM_ERROR :    0
+# UVM_FATAL :    0
+# ** Report counts by id
+# [NO_VISIT_CHECK]     1
+# [RNTST]     1
+# [UVM/RELNOTES]     1
+# [UVMTOP]     1
+# [base_test]     2
+# 
+# ** Note: $finish    : ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(633)
+#    Time: 100 ps  Iteration: 109  Instance: /cache_mem_tb_top
+# End time: 23:59:40 on Mar 05,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 9

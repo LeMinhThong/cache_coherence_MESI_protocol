@@ -1,0 +1,17 @@
++incdir+../../ext/uvm-core-2020.3.1/src
+
++incdir+./tb
++incdir+./sv/test
++incdir+./sv/seq
++incdir+../lib
++incdir+../../rtl
+
+../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
+
+sv/cache_test_pkg.svh
+
+// RTL
+../../rtl/cache_mem.v
+
+// DV
+tb/cache_mem_tb_top.sv
