@@ -1,13 +1,10 @@
 `ifndef CACHE_MEM_V
 `define CACHE_MEM_V
-`define THIS_MODULE cache_mem
 
-`define OFFSET_RANGE  OFFSET_WIDTH-1:0
-`define SET_RANGE     SET_WIDTH+OFFSET_WIDTH-1:OFFSET_WIDTH
-`define TAG_RANGE     ADDR_WIDTH-1:SET_WIDTH+OFFSET_WIDTH
+`include "cache_def.v"
 
-module `THIS_MODULE #(
-      parameter LINE_SIZE       = 64*8,
+module cache_mem #(
+      parameter LINE_WIDTH      = 64*8,
       parameter NUM_CACHE_LINE  = 1024,
       parameter ADDR_WIDTH      = 64,
       parameter DATA_WIDTH      = 32
@@ -22,74 +19,82 @@ module `THIS_MODULE #(
       input   [ADDR_WIDTH-1:0]  cpu2cac_addr,
       input   [DATA_WIDTH-1:0]  cpu2cac_data,
 
-      output                    cac2cpu_hit,
-      output                    cac2cpu_miss,
+      output                    cac2cpu_wait,
       output  [DATA_WIDTH-1:0]  cac2cpu_data,
 
       // Bus side
-      input   [LINE_SIZE-1:0]   bus2cac_data,
+      input   [1:0]             bus2cac_bus_req,
+      input   [1:0]             bus2cac_bus_rsp,
+      input   [ADDR_WIDTH-$clog2(LINE_WIDTH/8)-1:0]  bus2cac_addr,
+      input   [LINE_WIDTH-1:0]  bus2cac_data,
 
-      output                    cac2bus_rd,
-      output                    cac2bus_wr,
-      output  [ADDR_WIDTH-$clog2(LINE_SIZE/8)-1:0]  cac2bus_addr,
-      output  [DATA_WIDTH-1:0]  cac2bus_data
+      output  [1:0]             cac2bus_bus_req,
+      output  [1:0]             cac2bus_bus_rsp,
+      output  [ADDR_WIDTH-$clog2(LINE_WIDTH/8)-1:0]  cac2bus_addr,
+      output  [LINE_WIDTH-1:0]  cac2bus_data,
+
+      output                    cac2bus_write_back
 );
 
   // ----------------------------------------------------------------
   // Parameter
-  // Cache states (one-hot FSM style)
-  localparam  INVALID   = 0,  // 4'b0001
-              EXCLUSIVE = 1,  // 4'b0010
-              MODIFIED  = 2,  // 4'b0100
-              SHARED    = 3;  // 4'b1000
-
+  // ----------------------------------------------------------------
   // TAG structure
-  localparam  OFFSET_WIDTH  = $clog2(LINE_SIZE/2),
-              SET_WIDTH     = $clog2(NUM_CACHE_LINE/4), // 4-way set associative
-              TAG_WIDTH     = ADDR_WIDTH-SET_WIDTH-OFFSET_WIDTH;
+  localparam  OFFSET_WIDTH  = $clog2(LINE_WIDTH/2),
+              INDEX_WIDTH   = $clog2(NUM_CACHE_LINE/4), // 4-way set associative
+              TAG_WIDTH     = ADDR_WIDTH-INDEX_WIDTH-OFFSET_WIDTH;
+
+  localparam  RAM_WIDTH     = `STATE_WIDTH + TAG_WIDTH + LINE_WIDTH;
 
   // ----------------------------------------------------------------
   // TAG RAM & DATA RAM register definition
-  // way 0
-  reg                 valid_0 [0:(NUM_CACHE_LINE/4)-1];
-  reg                 dirty_0 [0:(NUM_CACHE_LINE/4)-1];
-  reg [TAG_WIDTH-1:0] tag_0   [0:(NUM_CACHE_LINE/4)-1];
-  reg [LINE_SIZE-1:0] mem_0   [0:(NUM_CACHE_LINE/4)-1];
+  // ----------------------------------------------------------------
+  reg [RAM_WIDTH-1:0] cac_mem [0:NUM_CACHE_LINE-1];
 
-  // way 1
-  reg                 valid_1 [0:(NUM_CACHE_LINE/4)-1];
-  reg                 dirty_1 [0:(NUM_CACHE_LINE/4)-1];
-  reg [TAG_WIDTH-1:0] tag_1   [0:(NUM_CACHE_LINE/4)-1];
-  reg [LINE_SIZE-1:0] mem_1   [0:(NUM_CACHE_LINE/4)-1];
+  // ----------------------------------------------------------------
+  //
+  // ----------------------------------------------------------------
+  wire cpu_req_cac_state = cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_STATE];
 
-  // way 2
-  reg                 valid_2 [0:(NUM_CACHE_LINE/4)-1];
-  reg                 dirty_2 [0:(NUM_CACHE_LINE/4)-1];
-  reg [TAG_WIDTH-1:0] tag_2   [0:(NUM_CACHE_LINE/4)-1];
-  reg [LINE_SIZE-1:0] mem_2   [0:(NUM_CACHE_LINE/4)-1];
+  wire is_cpu_wr      = (cpu2cac_wr && ~cpu2cac_rd) ? 1'b1 : 1'b0;
+  wire is_line_valid  = cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_VALID] ? 1'b1 : 1'b0;
+  wire is_tag_match   = (cpu2cac_addr[`ADDR_TAG] == cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_TAG]) ? 1'b1 : 1'b0;
 
-  // way 3
-  reg                 valid_3 [0:(NUM_CACHE_LINE/4)-1];
-  reg                 dirty_3 [0:(NUM_CACHE_LINE/4)-1];
-  reg [TAG_WIDTH-1:0] tag_3   [0:(NUM_CACHE_LINE/4)-1];
-  reg [LINE_SIZE-1:0] mem_3   [0:(NUM_CACHE_LINE/4)-1];
+  assign wr_hit   = is_cpu_wr && is_line_valid && is_tag_match;
+  assign rd_hit   = !is_cpu_wr && is_line_valid && is_tag_match;
+  assign wr_miss  = is_cpu_wr && (!is_line_valid || !is_tag_match);
+  assign rd_miss  = !is_cpu_wr && (!is_line_valid || !is_tag_match);
 
   // ----------------------------------------------------------------
   // BUS side controller
+  // ----------------------------------------------------------------
   assign cac2bus_addr = cpu2cac_addr[ADDR_WIDTH-1:OFFSET_WIDTH];
 
   // ----------------------------------------------------------------
-  // FSM
-  always @(posedge clk)
-  begin
-    if (!rst_n)
-    begin
-    end else
-    begin
-    end
-  end
+  // Instances
+  // ----------------------------------------------------------------
+  fsm_cpu_req_ctrl cpu_req_crtl (
+        .cur_state    (cpu_req_cac_state  ),
+        .cpu_wr_hit   (wr_hit             ),
+        .cpu_rd_hit   (rd_hit             ),
+        .cpu_wr_miss  (wr_miss            ),
+        .cpu_rd_miss  (rd_miss            ),
+        .bus_rsp      (bus2cac_bus_rsp    ),
 
-endmodule: `THIS_MODULE
+        .nxt_state    (),
+        .cpu_wait     (cac2cpu_wait       ),
+        .write_back   (cac2bus_write_back ),
+        .send_bus_req (cac2bus_bus_req    )
+  );
 
-`undef THIS_MODULE
+  fsm_bus_req_ctrl bus_req_crtl (
+        .cur_state    (),
+        .bus_req      (),
+
+        .nxt_state    (),
+        .write_back   (),
+        .send_bus_rsp ()
+  );
+endmodule // cache_mem
+
 `endif

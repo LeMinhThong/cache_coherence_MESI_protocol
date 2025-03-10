@@ -1,0 +1,55 @@
+../../dv/env/run_dir/cache_mem_tb_top.log:15:-- Importing package uvm_pkg
+../../dv/env/run_dir/cache_mem_tb_top.log:19:-- Importing package cache_test_pkg
+../../dv/env/sv/cache_test_pkg.svh:5:  import uvm_pkg::*;
+../../dv/env/tb/cache_mem_tb_top.sv:6:  import uvm_pkg::*;
+../../dv/env/tb/cache_mem_tb_top.sv:7:  import cache_test_pkg::*;
+../../ext/uvm-core-2020.3.1/compat/README.md:46:The `uvm_packer` was re-worked after UVM1.2.  If data is packed and the resulting bit- or byte-stream is subsequently unpacked, the unpack output will match the original data in both old and new versions, however the stream itself can be different between versions.  If the value of the stream is important, the way to get user code compatible with multiple versions is to move to the `uvm_compat_packer`.  As mentioned above, based on version defines, the `uvm_compat_packer` is either a typedef for the library version of `uvm_packer` or a new class that inherits from the library version and modifies functions as required.
+../../ext/uvm-core-2020.3.1/compat/uvm_compat_pkg.sv:44:  import uvm_pkg::*;
+../../ext/uvm-core-2020.3.1/docs/html/doc_src/overviews/legal.txt:44:sus of concerned interests, it is important to ensure that any interpretation has also received the concurrence 
+../../ext/uvm-core-2020.3.1/docs/html/files/base/uvm_process_guard-svh.html:32:    // Important tasks complete, clear the guard. We
+../../ext/uvm-core-2020.3.1/docs/html/styles/main.css:2:   IMPORTANT: If you're editing this file in the output directory of one of
+../../ext/uvm-core-2020.3.1/LICENSE.txt:77:      use, offer to sell, sell, import, and otherwise transfer the Work,
+../../ext/uvm-core-2020.3.1/src/base/uvm_process_guard.svh:55://|     // Important tasks complete, clear the guard. We
+../../ext/uvm-core-2020.3.1/src/base/uvm_report_object.svh:248:  //               importance. If this number is less than or equal to the
+../../ext/uvm-core-2020.3.1/src/base/uvm_resource_db.svh:88:  // Imports a resource by ~name~.  The first argument is the current 
+../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh:454:      q.push_back("\n  ***********       IMPORTANT RELEASE NOTES         ************\n");
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl.svh:77:  import "DPI-C" context function int uvm_hdl_check_path(string path);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl.svh:85:  import "DPI-C" context function int uvm_hdl_deposit(string path, uvm_hdl_data_t value);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl.svh:92:  import "DPI-C" context function int uvm_hdl_force(string path, uvm_hdl_data_t value);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl.svh:126:  import "DPI-C" context function int uvm_hdl_release_and_read(string path, inout uvm_hdl_data_t value);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl.svh:134:  import "DPI-C" context function int uvm_hdl_release(string path);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl.svh:142:  import "DPI-C" context function int uvm_hdl_read(string path, output uvm_hdl_data_t value);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:46:// DPI import and export prototypes
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:49:// DPI import ____ uvm_polling_create
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:66:// DPI import ____ uvm_polling_set_enable_callback
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:79:// DPI import ____ uvm_polling_get_callback_enable
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:88:// DPI import ____ uvm_polling_getValue32
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:108:// DPI import _______________________________________ uvm_polling_getSize
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:116:// DPI import _____________________________________ uvm_polling_getSigned
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:124:// DPI import _______________________________ uvm_polling_setup_notifier
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:134:// DPI import ____ uvm_polling_process_changelist
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_hdl_polling.c:507:// SV DPI import implementations
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_polling_dpi.svh:33:  import "DPI-C" context function chandle uvm_polling_create(input string name, input int sv_key);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_polling_dpi.svh:36:   import "DPI-C" context function void uvm_polling_set_enable_callback(chandle hnd, int enable);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_polling_dpi.svh:37:   import "DPI-C" context function int uvm_polling_get_callback_enable(chandle hnd);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_polling_dpi.svh:42:   import "DPI-C" context function int uvm_polling_setup_notifier(string fullname);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_polling_dpi.svh:43:   import "DPI-C" context function void uvm_polling_process_changelist();
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_polling_dpi.svh:45:   import "DPI-C" context function int uvm_hdl_signal_size(string path);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_polling_dpi.svh:46:   // import "DPI-C" context function void uvm_polling_free_mem_structures();
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_regex.svh:35:import "DPI-C" function string uvm_re_deglobbed(string glob, bit with_brackets);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_regex.svh:36:import "DPI-C" function string uvm_re_buffer();
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_regex.svh:37:import "DPI-C" function void uvm_re_free(chandle rexp);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_regex.svh:38:import "DPI-C" function chandle uvm_re_comp(string re, bit deglob);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_regex.svh:39:import "DPI-C" function int uvm_re_exec(chandle rexp, string str);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_regex.svh:40:import "DPI-C" function chandle uvm_re_compexec(string re, string str, bit deglob, output int exec_ret);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_regex.svh:41:import "DPI-C" function bit uvm_re_compexecfree(string re, string str, bit deglob, output int exec_ret);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_svcmd_dpi.svh:35:// Import DPI functions used by the interface to generate the
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_svcmd_dpi.svh:39:import "DPI-C" function string uvm_dpi_get_next_arg_c (int init);
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_svcmd_dpi.svh:40:import "DPI-C" function string uvm_dpi_get_tool_name_c ();
+../../ext/uvm-core-2020.3.1/src/dpi/uvm_svcmd_dpi.svh:41:import "DPI-C" function string uvm_dpi_get_tool_version_c ();
+../../ext/uvm-core-2020.3.1/src/macros/uvm_tlm_defines.svh:83:// The important thing to note is that each `uvm_<interface>_imp_decl creates a 
+../../ext/uvm-core-2020.3.1/src/tlm2/uvm_tlm_time.svh:293://| import a_pkg::*;
+../../ext/uvm-core-2020.3.1/src/tlm2/uvm_tlm_time.svh:319://| import uvm_pkg::*;
+../../ext/uvm-core-2020.3.1/src/tlm2/uvm_tlm_time.svh:334://| import uvm_pkg::*;
+../../ext/uvm-core-2020.3.1/src/tlm2/uvm_tlm_time.svh:335://| import a_pkg::*;
+../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv:43:   //import uvm_pkg::*;
