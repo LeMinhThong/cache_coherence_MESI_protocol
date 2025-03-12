@@ -1,6 +1,6 @@
 # vsim work.cache_mem_tb_top -sv_seed random -do "run -all; quit" 
-# Start time: 20:19:21 on Mar 10,2025
-# Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_9516\win32pe_gcc-4.2.1\export_tramp.dll
+# Start time: 16:15:28 on Mar 12,2025
+# Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_12572\win32pe_gcc-4.2.1\export_tramp.dll
 # ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
 # This also means that later if you turn on UVM-aware debugging your debug simulations may have
 # different random seeds from your non-debug simulations.
@@ -11,13 +11,15 @@
 # Loading work.cache_mem
 # Loading work.fsm_cpu_req_ctrl
 # Loading work.fsm_bus_req_ctrl
-# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (1) for port 'cur_state'. The port definition is at: ../../rtl/fsm_cpu_req_ctrl.v(7).
-#    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/dut/cpu_req_crtl File: ../../rtl/cache_mem.v Line: 76
-# Compiling F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_9516\win32pe_gcc-4.2.1\exportwrapper.c
-# Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_9516\win32pe_gcc-4.2.1\vsim_auto_compile.dll
-# ** Warning: Design size of 65552 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (1) for port 'cur_state'. The port definition is at: ../../rtl/fsm_bus_req_ctrl.v(7).
+#    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/dut/bus_req_crtl File: ../../rtl/cache_mem.v Line: 111
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (1) for port 'send_bus_rsp'. The port definition is at: ../../rtl/fsm_bus_req_ctrl.v(12).
+#    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/dut/bus_req_crtl File: ../../rtl/cache_mem.v Line: 111
+# Compiling F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_12572\win32pe_gcc-4.2.1\exportwrapper.c
+# Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_12572\win32pe_gcc-4.2.1\vsim_auto_compile.dll
+# ** Warning: Design size of 65560 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
 # Expect performance to be adversely affected.
-# Sv_Seed = 3732733454
+# Sv_Seed = 3007981342
 # run -all
 # hello from cache_mem_tb
 # UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(476) @ 0: reporter [UVM/RELNOTES] 
@@ -68,5 +70,5 @@
 # 
 # ** Note: $finish    : ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(633)
 #    Time: 100 ps  Iteration: 109  Instance: /cache_mem_tb_top
-# End time: 20:19:22 on Mar 10,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 2
+# End time: 16:15:30 on Mar 12,2025, Elapsed time: 0:00:02
+# Errors: 0, Warnings: 3

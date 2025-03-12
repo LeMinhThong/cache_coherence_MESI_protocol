@@ -1,76 +1,45 @@
-Reading pref.tcl
-
-# 2020.1
-
-# vsim work.cache_mem_tb_top -sv_seed random -do "run -all; quit" 
-# Start time: 20:19:21 on Mar 10,2025
-# Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_9516\win32pe_gcc-4.2.1\export_tramp.dll
-# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
-# This also means that later if you turn on UVM-aware debugging your debug simulations may have
-# different random seeds from your non-debug simulations.
-# Loading sv_std.std
-# Loading work.uvm_pkg
-# Loading work.cache_test_pkg
-# Loading work.cache_mem_tb_top
-# Loading work.cache_mem
-# Loading work.fsm_cpu_req_ctrl
-# Loading work.fsm_bus_req_ctrl
-# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (1) for port 'cur_state'. The port definition is at: ../../rtl/fsm_cpu_req_ctrl.v(7).
-#    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/dut/cpu_req_crtl File: ../../rtl/cache_mem.v Line: 76
-# Compiling F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_9516\win32pe_gcc-4.2.1\exportwrapper.c
-# Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_9516\win32pe_gcc-4.2.1\vsim_auto_compile.dll
-# ** Warning: Design size of 65552 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
-# Expect performance to be adversely affected.
-# Sv_Seed = 3732733454
-# run -all
-# hello from cache_mem_tb
-# UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(476) @ 0: reporter [UVM/RELNOTES] 
-#   ***********       IMPORTANT RELEASE NOTES         ************
-# 
-#   This implementation of the UVM Library deviates from the 1800.2-2020
-#   standard.  See the DEVIATIONS.md file contained in the release
-#   for more details.
-# 
-# ----------------------------------------------------------------
-# Accellera:1800.2:UVM:2020.3.1
-# 
-# All copyright owners for this kit are listed in NOTICE.txt
-# All Rights Reserved Worldwide
-# ----------------------------------------------------------------
-# 
-#       (Specify +UVM_NO_RELNOTES to turn off this notice)
-# 
-# UVM_WARNING ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(549) @ 0: reporter [NO_DPI_USED] We are thinking of removing support for UVM_NO_DPI.  Please try this test without it and evaluate the impact
-# UVM_INFO @ 0: reporter [RNTST] Running test base_test...
-# UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(699) @ 0: reporter [UVMTOP] UVM testbench topology:
-# --------------------------------------
-# Name            Type       Size  Value
-# --------------------------------------
-# <unnamed>       uvm_root   -     @61  
-#   uvm_test_top  base_test  -     @148 
-# --------------------------------------
-# UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_traversal.svh(345) @ 0: reporter [UVM/COMP/NAMECHECK] This implementation of the component name checks requires DPI to be enabled
-# UVM_WARNING ../../ext/uvm-core-2020.3.1/src/base/uvm_traversal.svh(314) @ 0: reporter [NO_VISIT_CHECK] Because UVM_REGEX_NO_DPI is defined, no uvm component name constraints will be checked
-# UVM_INFO ./sv/test/base_test.sv(31) @ 0: uvm_test_top [base_test] Start test
-# UVM_INFO ./sv/test/base_test.sv(33) @ 100: uvm_test_top [base_test] Complete test
-# UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_report_server.svh(1009) @ 100: reporter [UVM/REPORT/SERVER] 
-# --- UVM Report Summary ---
-# 
-# ** Report counts by severity
-# UVM_INFO :    6
-# UVM_WARNING :    2
-# UVM_ERROR :    0
-# UVM_FATAL :    0
-# ** Report counts by id
-# [NO_DPI_USED]     1
-# [NO_VISIT_CHECK]     1
-# [RNTST]     1
-# [UVM/COMP/NAMECHECK]     1
-# [UVM/RELNOTES]     1
-# [UVMTOP]     1
-# [base_test]     2
-# 
-# ** Note: $finish    : ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(633)
-#    Time: 100 ps  Iteration: 109  Instance: /cache_mem_tb_top
-# End time: 20:19:22 on Mar 10,2025, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 2
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+Start time: 16:50:39 on Mar 12,2025
+vlog -sv -lint -f FILES_vlog.vc -l run_dir/cache_mem_tb_top.log "+define+UVM_HDL_NO_DPI" "+define+UVM_NO_DPI" "+define+UVM_CMDLINE_NO_DPI" "+define+UVM_REGEX_NO_DPI" 
+-- Compiling package uvm_pkg
+** Warning: ../../ext/uvm-core-2020.3.1/src/seq/uvm_sequencer_base.svh(1474): (vlog-2186) SystemVerilog testbench feature
+(randomization, coverage or assertion) detected in the design.
+These features are only supported in Questasim.
+** Warning: ../../ext/uvm-core-2020.3.1/src/reg/uvm_mem_mam.svh(717): (vlog-2186) SystemVerilog testbench feature
+(randomization, coverage or assertion) detected in the design.
+These features are only supported in Questasim.
+** Warning: ../../ext/uvm-core-2020.3.1/src/seq/uvm_sequence_library.svh(830): (vlog-2186) SystemVerilog testbench feature
+(randomization, coverage or assertion) detected in the design.
+These features are only supported in Questasim.
+-- Compiling package cache_test_pkg
+-- Importing package uvm_pkg
+-- Compiling module fsm_cpu_req_ctrl
+-- Compiling module fsm_bus_req_ctrl
+-- Compiling module cache_mem
+** Warning: ../../rtl/cache_mem.v(112): (vlog-2623) Undefined variable: bus_req_cur_cac_state.
+** Error: ../../rtl/cache_mem.v(122): (vlog-2730) Undefined variable: 'cpu_match'.
+** Error: ../../rtl/cache_mem.v(124): (vlog-2730) Undefined variable: 'cache_mem'.
+** Error: ../../rtl/cache_mem.v(127): (vlog-2730) Undefined variable: 'cache_mem'.
+** Error: ../../rtl/cache_mem.v(134): (vlog-2730) Undefined variable: 'cache_mem'.
+** Error: (vlog-13069) ../../rtl/cache_mem.v(136): near "else": syntax error, unexpected else.
+-- Importing package cache_test_pkg
+** Error (suppressible): tb/cache_mem_tb_top.sv(11): (vlog-2388) 'clk' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(13).
+** Error (suppressible): tb/cache_mem_tb_top.sv(12): (vlog-2388) 'rst_n' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(14).
+** Error (suppressible): tb/cache_mem_tb_top.sv(14): (vlog-2388) 'cpu2cac_rd' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(17).
+** Error (suppressible): tb/cache_mem_tb_top.sv(15): (vlog-2388) 'cpu2cac_wr' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(18).
+** Error (suppressible): tb/cache_mem_tb_top.sv(16): (vlog-2388) 'cpu2cac_addr' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(19).
+** Error (suppressible): tb/cache_mem_tb_top.sv(17): (vlog-2388) 'cpu2cac_data' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(20).
+** Error (suppressible): tb/cache_mem_tb_top.sv(19): (vlog-2388) 'cac2cpu_wait' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(22).
+** Error (suppressible): tb/cache_mem_tb_top.sv(20): (vlog-2388) 'cac2cpu_data' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(23).
+** Error (suppressible): tb/cache_mem_tb_top.sv(22): (vlog-2388) 'bus2cac_bus_req' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(26).
+** Error (suppressible): tb/cache_mem_tb_top.sv(23): (vlog-2388) 'bus2cac_bus_rsp' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(27).
+** Error (suppressible): tb/cache_mem_tb_top.sv(24): (vlog-2388) 'bus2cac_addr' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(28).
+** Error (suppressible): tb/cache_mem_tb_top.sv(25): (vlog-2388) 'bus2cac_data' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(29).
+** Error (suppressible): tb/cache_mem_tb_top.sv(27): (vlog-2388) 'cac2bus_bus_req' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(31).
+** Error (suppressible): tb/cache_mem_tb_top.sv(28): (vlog-2388) 'cac2bus_bus_rsp' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(32).
+** Error (suppressible): tb/cache_mem_tb_top.sv(29): (vlog-2388) 'cac2bus_addr' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(33).
+** Error (suppressible): tb/cache_mem_tb_top.sv(30): (vlog-2388) 'cac2bus_data' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(34).
+** Error (suppressible): tb/cache_mem_tb_top.sv(32): (vlog-2388) 'cac2bus_write_back' already declared in this scope (cache_mem) at ../../rtl/cache_mem.v(36).
+** Error (suppressible): tb/cache_mem_tb_top.sv(81): (vlog-13163) End label 'cache_mem_tb_top' does not match module name on line 6.
+End time: 16:50:41 on Mar 12,2025, Elapsed time: 0:00:02
+Errors: 23, Warnings: 4
