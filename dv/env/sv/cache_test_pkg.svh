@@ -5,7 +5,13 @@ package cache_test_pkg;
   import uvm_pkg::*;
   `include "uvm_macros.svh";
 
-  `include "base_test.sv";
+  import cache_lib_pkg::*;
+
+  // Seqs
+  `include "cache_base_seq.sv"
+
+  // Test
+  `include "cache_base_test.sv";
 endpackage
 
 `endif

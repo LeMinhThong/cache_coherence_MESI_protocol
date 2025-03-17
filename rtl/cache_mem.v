@@ -118,23 +118,23 @@ module cache_mem #(
   );
 
   // ----------------------------------------------------------------
-  always @(posedge clk)
-  begin
-    if(!cpu_match)
-    begin
-      cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_TAG] <= cpu2cac_addr[`ADDR_TAG];
-    end else // no change
-    begin
-      cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_TAG] <= cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_TAG];
-    end
-  end
+//  always @(posedge clk)
+//  begin
+//    if(!cpu_match)
+//    begin
+//      cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_TAG] <= cpu2cac_addr[`ADDR_TAG];
+//    end else // no change
+//    begin
+//      cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_TAG] <= cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_TAG];
+//    end
+//  end
 
   // ----------------------------------------------------------------
   always @(posedge clk)
   begin
     if(!rst_n)
-      cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_STATE] <= {`STATE_WIDTH{1'b0}};
     begin
+      cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_STATE] <= {`STATE_WIDTH{1'b0}};
     end else
     begin
       cac_mem[cpu2cac_addr[`ADDR_OFFSET]][`RAM_STATE] <= cpu_req_cac_nxt_state;

@@ -4,11 +4,11 @@
 +incdir+./sv/test
 +incdir+./sv/seq
 +incdir+../lib
++incdir+../lib/agent
++incdir+../lib/interface
 +incdir+../../rtl
 
 ../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
-
-sv/cache_test_pkg.svh
 
 // RTL
 ../../rtl/cache_def.v
@@ -16,5 +16,13 @@ sv/cache_test_pkg.svh
 ../../rtl/fsm_bus_req_ctrl.v
 ../../rtl/cache_mem.v
 
-// DV
+// VIP
+../lib/cache_lib_pkg.svh
+sv/cache_test_pkg.svh
+
+// Interface
+../lib/interface/cache_if.sv
+  //`include "xcache_if.sv";
+
+
 tb/cache_mem_tb_top.sv
