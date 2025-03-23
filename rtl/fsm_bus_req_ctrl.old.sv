@@ -1,18 +1,17 @@
-`ifndef FSM_BUS_REQ_CTRL_V
-`define FSM_BUS_REQ_CTRL_V
+`ifndef FSM_BUS_REQ_CTRL_SV
+`define FSM_BUS_REQ_CTRL_SV
 
-`include "cache_def.v"
+`include "cache_rtl_def.sv"
 
 module fsm_bus_req_ctrl (
-      input       [3:0] cur_state,
-      input       [1:0] bus_req,
+      input   logic [3:0] cur_state,
+      input   logic [1:0] bus_req,
 
-      output  reg [3:0] nxt_state,
-      output  reg       write_back,
-      output  reg [1:0] send_bus_rsp
+      output  logic [3:0] nxt_state,
+      output  logic       write_back,
+      output  logic [1:0] send_bus_rsp
 );
-  always @(*)
-  begin
+  always_comb begin
     nxt_state     = `INVALID;
     write_back    = 1'b0;
     send_bus_rsp  = `BUS_NO_RSP;
@@ -78,11 +77,17 @@ module fsm_bus_req_ctrl (
       `SHARED:
             begin
               case(bus_req)
-                `BUS_NO_REQ, `BUS_READ_REQ:
+                `BUS_NO_REQ:
                       begin
                         nxt_state     = `SHARED;
                         write_back    = 1'b0;
                         send_bus_rsp  = `BUS_NO_RSP;
+                      end
+                `BUS_READ_REQ:
+                      begin
+                        nxt_state     = `SHARED;
+                        write_back    = 1'b0;
+                        send_bus_rsp  = `BUS_SNOOP_FOUND_RSP;
                       end
                 `BUS_INVALIDATE_REQ:
                       begin

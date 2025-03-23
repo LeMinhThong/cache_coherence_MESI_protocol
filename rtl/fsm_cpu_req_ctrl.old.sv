@@ -1,28 +1,27 @@
-`ifndef FSM_CPU_REQ_CTRL_V
-`define FSM_CPU_REQ_CTRL_V
+`ifndef FSM_CPU_REQ_CTRL_SV
+`define FSM_CPU_REQ_CTRL_SV
 
-`include "cache_def.v"
+`include "cache_rtl_def.sv"
 
 module fsm_cpu_req_ctrl (
-      input       [3:0]   cur_state,
-      input               cpu_wr_hit,
-      input               cpu_rd_hit,
-      input               cpu_wr_miss,
-      input               cpu_rd_miss,
-      input       [1:0]   bus_rsp,
+      input   logic [3:0]   cur_state,
+      input   logic         cpu_wr_hit,
+      input   logic         cpu_rd_hit,
+      input   logic         cpu_wr_miss,
+      input   logic         cpu_rd_miss,
+      input   logic [1:0]   bus_rsp,
 
-      output  reg [3:0]   nxt_state,
-      output  reg         cpu_wait,
-      output  reg         write_back,
-      output  reg [1:0]   send_bus_req
+      output  logic [3:0]   nxt_state,
+      output  logic         cpu_wait,
+      output  logic         write_back,
+      output  logic [1:0]   send_bus_req
 );
 
-  wire [3:0] cache_hit_miss;
+  logic [3:0] cache_hit_miss;
 
   assign cache_hit_miss = {cpu_wr_miss, cpu_rd_miss, cpu_wr_hit, cpu_rd_hit};
 
-  always @(*)
-  begin
+  always_comb begin
     cpu_wait      = 1'b0;
     send_bus_req  = `BUS_NO_REQ;
     write_back    = 1'b0;
