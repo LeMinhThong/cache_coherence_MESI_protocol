@@ -1,5 +1,5 @@
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-Start time: 22:54:18 on Mar 17,2025
+Start time: 22:44:42 on Mar 23,2025
 vlog -sv -lint -f FILES_vlog.vc -l run_dir/cache_base_test.log "+define+UVM_HDL_NO_DPI" "+define+UVM_NO_DPI" "+define+UVM_CMDLINE_NO_DPI" "+define+UVM_REGEX_NO_DPI" 
 -- Compiling package uvm_pkg
 ** Warning: ../../ext/uvm-core-2020.3.1/src/seq/uvm_sequencer_base.svh(1474): (vlog-2186) SystemVerilog testbench feature
@@ -14,7 +14,6 @@ These features are only supported in Questasim.
 -- Compiling module fsm_cpu_req_ctrl
 -- Compiling module fsm_bus_req_ctrl
 -- Compiling module cache_mem
-** Warning: ../../rtl/cache_mem.v(112): (vlog-2623) Undefined variable: bus_req_cur_cac_state.
 -- Compiling package cache_lib_pkg
 -- Importing package uvm_pkg
 ** Warning: ** while parsing file included at ../lib/cache_lib_pkg.svh(12)
@@ -31,15 +30,15 @@ These features are only supported in Questasim.
 
 Top level modules:
 	cache_mem_tb_top
-End time: 22:54:21 on Mar 17,2025, Elapsed time: 0:00:03
-Errors: 0, Warnings: 7
+End time: 22:44:45 on Mar 23,2025, Elapsed time: 0:00:03
+Errors: 0, Warnings: 6
 Reading pref.tcl
 
  2020.1
 
  vsim work.cache_mem_tb_top "+UVM_TESTNAME=cache_base_test" -sv_seed random -wlf wave_dir/cache_base_test.wlf -do "log -r /*; run -all; quit" 
- Start time: 22:54:21 on Mar 17,2025
- Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_3480\win32pe_gcc-4.2.1\export_tramp.dll
+ Start time: 22:44:46 on Mar 23,2025
+ Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_12352\win32pe_gcc-4.2.1\export_tramp.dll
  ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
  This also means that later if you turn on UVM-aware debugging your debug simulations may have
  different random seeds from your non-debug simulations.
@@ -58,15 +57,11 @@ Reading pref.tcl
     Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/cac_if File: tb/cache_mem_tb_top.sv Line: 43
  ** Warning: (vsim-3015) [PCDPC] - Port size (58) does not match connection size (26) for port 'cac2bus_addr'. The port definition is at: ../lib/interface/cache_if.sv(33).
     Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/cac_if File: tb/cache_mem_tb_top.sv Line: 43
- ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (1) for port 'cur_state'. The port definition is at: ../../rtl/fsm_bus_req_ctrl.v(7).
-    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/dut/bus_req_crtl File: ../../rtl/cache_mem.v Line: 111
- ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (1) for port 'send_bus_rsp'. The port definition is at: ../../rtl/fsm_bus_req_ctrl.v(12).
-    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/dut/bus_req_crtl File: ../../rtl/cache_mem.v Line: 111
- Compiling F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_3480\win32pe_gcc-4.2.1\exportwrapper.c
- Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_3480\win32pe_gcc-4.2.1\vsim_auto_compile.dll
- ** Warning: Design size of 67187 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+ Compiling F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_12352\win32pe_gcc-4.2.1\exportwrapper.c
+ Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_12352\win32pe_gcc-4.2.1\vsim_auto_compile.dll
+ ** Warning: Design size of 67291 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
  Expect performance to be adversely affected.
- Sv_Seed = 3978868826
+ Sv_Seed = 3022372226
  log -r /*
   run -all
  UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(476) @ 0: reporter [UVM/RELNOTES] 
@@ -115,13 +110,16 @@ Reading pref.tcl
  ----------------------------------------------------------------
  UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_traversal.svh(345) @ 0: reporter [UVM/COMP/NAMECHECK] This implementation of the component name checks requires DPI to be enabled
  UVM_WARNING ../../ext/uvm-core-2020.3.1/src/base/uvm_traversal.svh(314) @ 0: reporter [NO_VISIT_CHECK] Because UVM_REGEX_NO_DPI is defined, no uvm component name constraints will be checked
- UVM_INFO ./sv/test/cache_base_test.sv(36) @ 0: uvm_test_top [cache_base_test] Start test
- UVM_INFO ./sv/test/cache_base_test.sv(38) @ 100: uvm_test_top [cache_base_test] Complete test
- UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_report_server.svh(1009) @ 100: reporter [UVM/REPORT/SERVER] 
+ UVM_INFO ./sv/test/cache_base_test.sv(38) @ 0: uvm_test_top [cache_base_test] Start test
+ UVM_INFO ./sv/seq/cache_base_seq.sv(19) @ 100: uvm_test_top.m_env.m_req_agt.m_sqr@@`THIS_CLASS [cache_base_seq] Sequence start
+ UVM_INFO ./sv/seq/cache_base_seq.sv(21) @ 100: uvm_test_top.m_env.m_req_agt.m_sqr@@`THIS_CLASS [cache_base_seq] Write: 0, Addr: 0, Data 0
+ UVM_INFO ./sv/seq/cache_base_seq.sv(23) @ 200: uvm_test_top.m_env.m_req_agt.m_sqr@@`THIS_CLASS [cache_base_seq] Sequence complete
+ UVM_INFO ./sv/test/cache_base_test.sv(44) @ 200: uvm_test_top [cache_base_test] Complete test
+ UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_report_server.svh(1009) @ 200: reporter [UVM/REPORT/SERVER] 
  --- UVM Report Summary ---
  
  ** Report counts by severity
- UVM_INFO :    7
+ UVM_INFO :   10
  UVM_WARNING :    3
  UVM_ERROR :    0
  UVM_FATAL :    0
@@ -134,9 +132,10 @@ Reading pref.tcl
  [UVM/COMP/NAMECHECK]     1
  [UVM/RELNOTES]     1
  [UVMTOP]     1
+ [cache_base_seq]     3
  [cache_base_test]     2
  
  ** Note: $finish    : ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(633)
-    Time: 100 ps  Iteration: 109  Instance: /cache_mem_tb_top
- End time: 22:54:24 on Mar 17,2025, Elapsed time: 0:00:03
- Errors: 0, Warnings: 6
+    Time: 200 ps  Iteration: 114  Instance: /cache_mem_tb_top
+ End time: 22:44:48 on Mar 23,2025, Elapsed time: 0:00:02
+ Errors: 0, Warnings: 4

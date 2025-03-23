@@ -8,6 +8,8 @@ class `THIS_CLASS extends uvm_test;
   cache_env       m_env;
   cache_coverage  m_cov;
 
+  cache_base_seq  m_seq;
+
   extern  virtual function  void  build_phase(uvm_phase phase);
   extern  virtual function  void  end_of_elaboration_phase(uvm_phase phase);
   extern  virtual task            main_phase(uvm_phase phase);
@@ -34,7 +36,11 @@ endfunction: end_of_elaboration_phase
 task `THIS_CLASS::main_phase(uvm_phase phase);
   phase.raise_objection(this);
   `uvm_info(get_type_name(), "Start test", UVM_LOW)
+
   #100;
+  m_seq = new();
+  m_seq.start(m_env.m_req_agt.m_sqr);
+
   `uvm_info(get_type_name(), "Complete test", UVM_LOW)
   phase.drop_objection(this);
 endtask: main_phase

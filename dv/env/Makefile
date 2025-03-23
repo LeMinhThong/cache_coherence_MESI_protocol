@@ -4,13 +4,6 @@ TEST_NAME ?= cache_base_test
 SEED ?= random
 CMD_OPT ?=
 
-#VSIM_RUN =  \
-    vcd file ${TB_NAME}.vcd; \
-    vcd add -r /*; \
-    run -all; \
-    vcd flush; \
-    quit
-
 VLOG_DEFINE = +define+UVM_HDL_NO_DPI \
 							+define+UVM_NO_DPI \
 							+define+UVM_CMDLINE_NO_DPI \

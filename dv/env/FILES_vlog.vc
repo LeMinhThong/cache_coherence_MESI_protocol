@@ -11,10 +11,10 @@
 ../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
 
 // RTL
-../../rtl/cache_def.v
-../../rtl/fsm_cpu_req_ctrl.v
-../../rtl/fsm_bus_req_ctrl.v
-../../rtl/cache_mem.v
+../../rtl/cache_rtl_def.sv
+../../rtl/fsm_cpu_req_ctrl.sv
+../../rtl/fsm_bus_req_ctrl.sv
+../../rtl/cache_mem.sv
 
 // VIP
 ../lib/cache_lib_pkg.svh
