@@ -1,21 +1,12 @@
-Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
-Start time: 22:44:42 on Mar 23,2025
-vlog -sv -lint -f FILES_vlog.vc -l run_dir/cache_base_test.log "+define+UVM_HDL_NO_DPI" "+define+UVM_NO_DPI" "+define+UVM_CMDLINE_NO_DPI" "+define+UVM_REGEX_NO_DPI" 
--- Compiling package uvm_pkg
-** Warning: ../../ext/uvm-core-2020.3.1/src/seq/uvm_sequencer_base.svh(1474): (vlog-2186) SystemVerilog testbench feature
-(randomization, coverage or assertion) detected in the design.
-These features are only supported in Questasim.
-** Warning: ../../ext/uvm-core-2020.3.1/src/reg/uvm_mem_mam.svh(717): (vlog-2186) SystemVerilog testbench feature
-(randomization, coverage or assertion) detected in the design.
-These features are only supported in Questasim.
-** Warning: ../../ext/uvm-core-2020.3.1/src/seq/uvm_sequence_library.svh(830): (vlog-2186) SystemVerilog testbench feature
-(randomization, coverage or assertion) detected in the design.
-These features are only supported in Questasim.
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+Start time: 18:16:04 on Mar 26,2025
+vlog -sv -lint "+incdir+../../rtl" "+incdir+./tb" "+incdir+./sv/test" "+incdir+./sv/seq" "+incdir+../lib" "+incdir+../lib/agent" "+incdir+../lib/interface" ../../rtl/cache_rtl_def.sv ../../rtl/fsm_cpu_req_ctrl.sv ../../rtl/fsm_bus_req_ctrl.sv ../../rtl/cache_mem.sv ../lib/cache_lib_pkg.svh sv/cache_test_pkg.svh ../lib/interface/cache_if.sv tb/cache_mem_tb_top.sv -l run_dir/cache_base_test.log 
 -- Compiling module fsm_cpu_req_ctrl
 -- Compiling module fsm_bus_req_ctrl
 -- Compiling module cache_mem
 -- Compiling package cache_lib_pkg
--- Importing package uvm_pkg
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+** Note: (vlog-2286) ../lib/cache_lib_pkg.svh(6): Using implicit +incdir+E:/questaSim/main/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
 ** Warning: ** while parsing file included at ../lib/cache_lib_pkg.svh(12)
 ** at ../lib/agent/cache_sequencer.sv(5): (vlog-2181) Use of a parameterized class uvm_sequencer as a type creates a default specialization.
 ** Warning: ** while parsing file included at ../lib/cache_lib_pkg.svh(13)
@@ -30,112 +21,148 @@ These features are only supported in Questasim.
 
 Top level modules:
 	cache_mem_tb_top
-End time: 22:44:45 on Mar 23,2025, Elapsed time: 0:00:03
-Errors: 0, Warnings: 6
-Reading pref.tcl
+End time: 18:16:04 on Mar 26,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 3
+Reading E:/questaSim/main/tcl/vsim/pref.tcl
 
- 2020.1
+ 10.6c
 
- vsim work.cache_mem_tb_top "+UVM_TESTNAME=cache_base_test" -sv_seed random -wlf wave_dir/cache_base_test.wlf -do "log -r /*; run -all; quit" 
- Start time: 22:44:46 on Mar 23,2025
- Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_12352\win32pe_gcc-4.2.1\export_tramp.dll
- ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
- This also means that later if you turn on UVM-aware debugging your debug simulations may have
- different random seeds from your non-debug simulations.
+ vsim work.cache_mem_tb_top "+UVM_TESTNAME=cache_base_test" -nodpiexports -novopt -sv_seed random -wlf wave_dir/cache_base_test.wlf -do " log -r /*; run -all; quit;" 
+ Start time: 18:16:17 on Mar 26,2025
+ ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+ //  Questa Sim-64
+ //  Version 10.6c win64 Jul 26 2017
+ //
+ //  Copyright 1991-2017 Mentor Graphics Corporation
+ //  All Rights Reserved.
+ //
+ //  QuestaSim and its associated documentation contain trade
+ //  secrets and commercial or financial information that are the property of
+ //  Mentor Graphics Corporation and are privileged, confidential,
+ //  and exempt from disclosure under the Freedom of Information Act,
+ //  5 U.S.C. Section 552. Furthermore, this information
+ //  is prohibited from disclosure under the Trade Secrets Act,
+ //  18 U.S.C. Section 1905.
+ //
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem_tb_top
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_test_pkg
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_if
  Loading sv_std.std
  Loading work.cache_if
- Loading work.uvm_pkg
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_lib_pkg
+ Loading mtiUvm.uvm_pkg
  Loading work.cache_lib_pkg
  Loading work.cache_test_pkg
  Loading work.cache_mem_tb_top
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem
  Loading work.cache_mem
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.fsm_cpu_req_ctrl
  Loading work.fsm_cpu_req_ctrl
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.fsm_bus_req_ctrl
  Loading work.fsm_bus_req_ctrl
- ** Warning: (vsim-3015) [PCDPC] - Port size (64) does not match connection size (32) for port 'cpu2cac_addr'. The port definition is at: ../lib/interface/cache_if.sv(20).
-    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/cac_if File: tb/cache_mem_tb_top.sv Line: 43
- ** Warning: (vsim-3015) [PCDPC] - Port size (58) does not match connection size (26) for port 'bus2cac_addr'. The port definition is at: ../lib/interface/cache_if.sv(28).
-    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/cac_if File: tb/cache_mem_tb_top.sv Line: 43
- ** Warning: (vsim-3015) [PCDPC] - Port size (58) does not match connection size (26) for port 'cac2bus_addr'. The port definition is at: ../lib/interface/cache_if.sv(33).
-    Time: 0 ps  Iteration: 0  Instance: /cache_mem_tb_top/cac_if File: tb/cache_mem_tb_top.sv Line: 43
- Compiling F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_12352\win32pe_gcc-4.2.1\exportwrapper.c
- Loading F:/mobaxterm/slash/tmp\lmtkt@LMTK_dpi_12352\win32pe_gcc-4.2.1\vsim_auto_compile.dll
- ** Warning: Design size of 67291 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
- Expect performance to be adversely affected.
- Sv_Seed = 3022372226
- log -r /*
+ Loading mtiUvm.questa_uvm_pkg
+ ** Warning: (vsim-3015) tb/cache_mem_tb_top.sv(43): [PCDPC] - Port size (64) does not match connection size (32) for port 'cpu2cac_addr'. The port definition is at: ../lib/interface/cache_if.sv(20).
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/cac_if File: ../lib/interface/cache_if.sv
+ ** Warning: (vsim-3015) tb/cache_mem_tb_top.sv(43): [PCDPC] - Port size (58) does not match connection size (26) for port 'bus2cac_addr'. The port definition is at: ../lib/interface/cache_if.sv(28).
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/cac_if File: ../lib/interface/cache_if.sv
+ ** Warning: (vsim-3015) tb/cache_mem_tb_top.sv(43): [PCDPC] - Port size (58) does not match connection size (26) for port 'cac2bus_addr'. The port definition is at: ../lib/interface/cache_if.sv(33).
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/cac_if File: ../lib/interface/cache_if.sv
+ Loading E:/questaSim/main/uvm-1.1d\win64\uvm_dpi.dll
+ Sv_Seed = 2728153854
   run -all
- UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(476) @ 0: reporter [UVM/RELNOTES] 
+ ----------------------------------------------------------------
+ UVM-1.1d
+ (C) 2007-2013 Mentor Graphics Corporation
+ (C) 2007-2013 Cadence Design Systems, Inc.
+ (C) 2006-2013 Synopsys, Inc.
+ (C) 2011-2013 Cypress Semiconductor Corp.
+ ----------------------------------------------------------------
+ 
    ***********       IMPORTANT RELEASE NOTES         ************
  
-   This implementation of the UVM Library deviates from the 1800.2-2020
-   standard.  See the DEVIATIONS.md file contained in the release
-   for more details.
+   You are using a version of the UVM library that has been compiled
+   with `UVM_NO_DEPRECATED undefined.
+   See http://www.eda.org/svdb/view.php?id=3313 for more details.
  
- ----------------------------------------------------------------
- Accellera:1800.2:UVM:2020.3.1
- 
- All copyright owners for this kit are listed in NOTICE.txt
- All Rights Reserved Worldwide
- ----------------------------------------------------------------
+   You are using a version of the UVM library that has been compiled
+   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+   See http://www.eda.org/svdb/view.php?id=3770 for more details.
  
        (Specify +UVM_NO_RELNOTES to turn off this notice)
  
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(69): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(70): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(84): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(85): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(95): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(96): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
+ UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(111): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(120): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  hello from cache_mem_tb
- UVM_WARNING ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(549) @ 0: reporter [NO_DPI_USED] We are thinking of removing support for UVM_NO_DPI.  Please try this test without it and evaluate the impact
- UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(552) @ 0: reporter [NO_DPI_TSTNAME] UVM_NO_DPI defined--getting UVM_TESTNAME directly, without DPI
  UVM_INFO @ 0: reporter [RNTST] Running test cache_base_test...
- UVM_WARNING ../../ext/uvm-core-2020.3.1/src/comps/uvm_driver.svh(101) @ 0: uvm_test_top.m_env.m_req_agt.m_drv [DRVCONNECT] seq_item_port (a uvm_seq_item_pull_port in uvm_driver) has not been connected to a sequencer
- UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(699) @ 0: reporter [UVMTOP] UVM testbench topology:
- ----------------------------------------------------------------
- Name                         Type                    Size  Value
- ----------------------------------------------------------------
- <unnamed>                    uvm_root                -     @62  
-   uvm_test_top               cache_base_test         -     @155 
-     m_cov                    cache_coverage          -     @233 
-     m_env                    cache_env               -     @225 
-       m_req_agt              cache_active_agent      -     @243 
-         m_drv                cache_driver            -     @261 
-           rsp_port           uvm_analysis_port       -     @279 
-           seq_item_port      uvm_seq_item_pull_port  -     @269 
-         m_mon                cache_active_monitor    -     @411 
-         m_sqr                cache_sequencer         -     @288 
-           rsp_export         uvm_analysis_export     -     @296 
-           seq_item_export    uvm_seq_item_pull_imp   -     @402 
-           arbitration_queue  array                   0     -    
-           lock_queue         array                   0     -    
-           num_last_reqs      integral                32    'd1  
-           num_last_rsps      integral                32    'd1  
-       m_rsp_agt              cache_passive_agent     -     @251 
-         m_mon                cache_passive_monitor   -     @429 
- ----------------------------------------------------------------
- UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_traversal.svh(345) @ 0: reporter [UVM/COMP/NAMECHECK] This implementation of the component name checks requires DPI to be enabled
- UVM_WARNING ../../ext/uvm-core-2020.3.1/src/base/uvm_traversal.svh(314) @ 0: reporter [NO_VISIT_CHECK] Because UVM_REGEX_NO_DPI is defined, no uvm component name constraints will be checked
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(111): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(120): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
+ UVM_WARNING @ 0: uvm_test_top [UVM_DEPRECATED] build()/build_phase() has been called explicitly, outside of the phasing system. This usage of build is deprecated and may lead to unexpected behavior.
+ UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
+ --------------------------------------------------------------
+ Name                       Type                    Size  Value
+ --------------------------------------------------------------
+ uvm_test_top               cache_base_test         -     @471 
+   m_cov                    cache_coverage          -     @485 
+   m_env                    cache_env               -     @478 
+     m_req_agt              cache_active_agent      -     @492 
+       m_drv                cache_driver            -     @507 
+         rsp_port           uvm_analysis_port       -     @522 
+         seq_item_port      uvm_seq_item_pull_port  -     @514 
+       m_mon                cache_active_monitor    -     @639 
+       m_sqr                cache_sequencer         -     @530 
+         rsp_export         uvm_analysis_export     -     @537 
+         seq_item_export    uvm_seq_item_pull_imp   -     @631 
+         arbitration_queue  array                   0     -    
+         lock_queue         array                   0     -    
+         num_last_reqs      integral                32    'd1  
+         num_last_rsps      integral                32    'd1  
+     m_rsp_agt              cache_passive_agent     -     @499 
+       m_mon                cache_passive_monitor   -     @653 
+ --------------------------------------------------------------
+ 
  UVM_INFO ./sv/test/cache_base_test.sv(38) @ 0: uvm_test_top [cache_base_test] Start test
- UVM_INFO ./sv/seq/cache_base_seq.sv(19) @ 100: uvm_test_top.m_env.m_req_agt.m_sqr@@`THIS_CLASS [cache_base_seq] Sequence start
- UVM_INFO ./sv/seq/cache_base_seq.sv(21) @ 100: uvm_test_top.m_env.m_req_agt.m_sqr@@`THIS_CLASS [cache_base_seq] Write: 0, Addr: 0, Data 0
- UVM_INFO ./sv/seq/cache_base_seq.sv(23) @ 200: uvm_test_top.m_env.m_req_agt.m_sqr@@`THIS_CLASS [cache_base_seq] Sequence complete
- UVM_INFO ./sv/test/cache_base_test.sv(44) @ 200: uvm_test_top [cache_base_test] Complete test
- UVM_INFO ../../ext/uvm-core-2020.3.1/src/base/uvm_report_server.svh(1009) @ 200: reporter [UVM/REPORT/SERVER] 
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(111): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
+    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/cache_mem.sv(120): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
+    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
+ UVM_INFO ./sv/seq/cache_base_seq.sv(19) @ 50: uvm_test_top.m_env.m_req_agt.m_sqr@@`THIS_CLASS [cache_base_seq] Sequence start
+ UVM_INFO ./sv/seq/cache_base_seq.sv(21) @ 50: uvm_test_top.m_env.m_req_agt.m_sqr@@`THIS_CLASS [cache_base_seq] Write: 0, Addr: 8227317f8ee6ed09, Data 3cb383786b15fd60c96993f150ca19232028716f3ec89eee643a2af8bad2a02551024d29227ee46af17b0a5411e4f5bd41b8889f47e2e5c0eec92237d72d301b
+ UVM_INFO ./sv/seq/cache_base_seq.sv(23) @ 100: uvm_test_top.m_env.m_req_agt.m_sqr@@`THIS_CLASS [cache_base_seq] Sequence complete
+ UVM_INFO ./sv/test/cache_base_test.sv(44) @ 100: uvm_test_top [cache_base_test] Complete test
+ 
  --- UVM Report Summary ---
  
  ** Report counts by severity
- UVM_INFO :   10
- UVM_WARNING :    3
+ UVM_INFO :    9
+ UVM_WARNING :    1
  UVM_ERROR :    0
  UVM_FATAL :    0
  ** Report counts by id
- [DRVCONNECT]     1
- [NO_DPI_TSTNAME]     1
- [NO_DPI_USED]     1
- [NO_VISIT_CHECK]     1
+ [Questa UVM]     2
  [RNTST]     1
- [UVM/COMP/NAMECHECK]     1
- [UVM/RELNOTES]     1
  [UVMTOP]     1
+ [UVM_DEPRECATED]     1
  [cache_base_seq]     3
  [cache_base_test]     2
- 
- ** Note: $finish    : ../../ext/uvm-core-2020.3.1/src/base/uvm_root.svh(633)
-    Time: 200 ps  Iteration: 114  Instance: /cache_mem_tb_top
- End time: 22:44:48 on Mar 23,2025, Elapsed time: 0:00:02
- Errors: 0, Warnings: 4
+ ** Note: $finish    : E:/questaSim/main/win64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+    Time: 100 ns  Iteration: 102  Instance: /cache_mem_tb_top
+ End time: 18:16:21 on Mar 26,2025, Elapsed time: 0:00:04
+ Errors: 0, Warnings: 16

@@ -37,7 +37,7 @@ task `THIS_CLASS::main_phase(uvm_phase phase);
   phase.raise_objection(this);
   `uvm_info(get_type_name(), "Start test", UVM_LOW)
 
-  #100;
+  #50;
   m_seq = new();
   m_seq.start(m_env.m_req_agt.m_sqr);
 
