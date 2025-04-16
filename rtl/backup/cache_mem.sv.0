@@ -1,38 +1,43 @@
 `ifndef CACHE_MEM_SV
 `define CACHE_MEM_SV
 
-`include "cache_rtl_def.sv"
+`include "cache_def.sv"
 
 module cache_mem #(
+      // CAC_SIZE = 256
       parameter LINE_WIDTH      = 64*8,
       parameter NUM_CACHE_LINE  = 1024,
       parameter ADDR_WIDTH      = 64,
-      parameter DATA_WIDTH      = 32
+      parameter DATA_WIDTH      = 32,
+
+      parameter BLK_DAT_WIDTH = 
+      parameter BLK_ADDR_WIDTH  = ADDR_WIDTH-$clog2(LINE_WIDTH/8)
 ) (
       // System signals
-      input   logic                   clk,
-      input   logic                   rst_n,
+      input   logic clk,
+      input   logic rst_n,
 
       // Procelogic ssor side
-      input   logic                   cpu2cac_rd,
-      input   logic                   cpu2cac_wr,
-      input   logic [ADDR_WIDTH-1:0]  cpu2cac_addr,
-      input   logic [DATA_WIDTH-1:0]  cpu2cac_data,
+      input   logic                   rx_cpu_rd,
+      input   logic                   rx_cpu_wr,
 
-      output  logic                   cac2cpu_wait,
-      output  logic [DATA_WIDTH-1:0]  cac2cpu_data,
+      input   logic [ADDR_WIDTH-1:0]  rx_cpu_addr,
+      input   logic [DATA_WIDTH-1:0]  rx_cpu_data,
+
+      output  logic                   tx_cpu_wait,
+      output  logic [DATA_WIDTH-1:0]  tx_cpu_data,
 
       // Bus slogic ide
-      input   logic [1:0]             bus2cac_bus_req,
-      input   logic [1:0]             bus2cac_bus_rsp,
-      input   logic [ADDR_WIDTH-$clog2(LINE_WIDTH/8)-1:0]  bus2cac_addr,
-      input   logic [LINE_WIDTH-1:0]  bus2cac_data,
+      input   logic [1:0]             rx_snp_opcode,
+      input   logic [SNP_ADDR_WIDTH-1:0]  rx_snp_addr,
+      input   logic [LINE_WIDTH-1:0]  rx_snp_data,
+      input   logic [1:0]             rx_snp_rsp,
 
-      output  logic [1:0]             cac2bus_bus_req,
-      output  logic [1:0]             cac2bus_bus_rsp,
-      output  logic                   cac2bus_write_back,
-      output  logic [ADDR_WIDTH-$clog2(LINE_WIDTH/8)-1:0]  cac2bus_addr,
-      output  logic [LINE_WIDTH-1:0]  cac2bus_data
+      output  logic [1:0]             tx_snp_opcode,
+      output  logic                   tx_snp_wb,
+      output  logic [SNP_ADDR_WIDTH-1:0]  tx_snp_addr,
+      output  logic [LINE_WIDTH-1:0]  tx_snp_data
+      output  logic [1:0]             tx_snp_rsp,
 );
 
   // ----------------------------------------------------------------
@@ -66,23 +71,23 @@ module cache_mem #(
   // ----------------------------------------------------------------
   // Definitioin
   // ----------------------------------------------------------------
-  logic [2:0] cpu_req_cac_cur_state = cac_mem[cpu2cac_addr[`ADDR_INDEX]][`CAC_STATE];
-  logic [2:0] bus_req_cac_cur_state = cac_mem[bus2cac_addr[`ADDR_INDEX]][`CAC_STATE];
+  logic [2:0] cpu_req_cac_cur_state = cac_mem[rx_cpu_addr[`ADDR_INDEX]][`CAC_STATE];
+  logic [2:0] bus_req_cac_cur_state = cac_mem[rx_snp_addr[`ADDR_INDEX]][`CAC_STATE];
   logic [2:0] cpu_req_cac_nxt_state;
   logic [2:0] bus_req_cac_nxt_state;
 
-  logic cpu_req_write_back;
-  logic bus_req_write_back;
+  logic cpu_req_wb;
+  logic bus_req_wb;
 
   // ----------------------------------------------------------------
   // Determine CPU request hit or miss
   // ----------------------------------------------------------------
-  logic is_cpu_wr   = (cpu2cac_wr && ~cpu2cac_rd);
-  logic is_cpu_rd   = (~cpu2cac_wr && cpu2cac_rd);
+  logic is_cpu_wr   = (rx_cpu_wr && ~rx_cpu_rd);
+  logic is_cpu_rd   = (~rx_cpu_wr && rx_cpu_rd);
   logic is_cpu_req  = is_cpu_wr || is_cpu_rd;
 
-  logic is_line_valid = cac_mem[cpu2cac_addr[`ADDR_INDEX]][`CAC_VALID];
-  logic is_tag_match  = (cpu2cac_addr[`ADDR_TAG] == cac_mem[cpu2cac_addr[`ADDR_INDEX]][`CAC_TAG]) ? 1'b1 : 1'b0;
+  logic is_line_valid = cac_mem[rx_cpu_addr[`ADDR_INDEX]][`CAC_VALID];
+  logic is_tag_match  = (rx_cpu_addr[`ADDR_TAG] == cac_mem[rx_cpu_addr[`ADDR_INDEX]][`CAC_TAG]) ? 1'b1 : 1'b0;
 
   logic wr_hit  = is_cpu_wr && is_line_valid && is_tag_match;
   logic rd_hit  = is_cpu_rd && is_line_valid && is_tag_match;
@@ -92,32 +97,32 @@ module cache_mem #(
   // ----------------------------------------------------------------
   // Determine Snoop match
   // ----------------------------------------------------------------
-  logic bus_req_match = (cac_mem[bus2cac_addr[`ADDR_INDEX]][`CAC_VALID] == 1'b1)
-                        && (bus2cac_addr[`ADDR_TAG] == cac_mem[bus2cac_addr[`ADDR_INDEX]][`CAC_TAG]);
+  logic bus_req_match = (cac_mem[rx_snp_addr[`ADDR_INDEX]][`CAC_VALID] == 1'b1)
+                        && (rx_snp_addr[`ADDR_TAG] == cac_mem[rx_snp_addr[`ADDR_INDEX]][`CAC_TAG]);
 
   // ----------------------------------------------------------------
   // Internal port
   // ----------------------------------------------------------------
   // CPU side
-  logic       _cac2cpu_wait;
+  logic       _tx_cpu_wait;
   // Bus side
-  logic [1:0] _cac2bus_bus_rsp;
-  logic [1:0] _cac2bus_bus_req;
+  logic [1:0] _tx_snp_rsp;
+  logic [1:0] _tx_snp_opcode;
 
   // ----------------------------------------------------------------
   // CPU side output
   // ----------------------------------------------------------------
-  assign cac2cpu_wait = _cac2cpu_wait;
-  assign cac2cpu_data = cac_mem[cpu2cac_addr[`ADDR_INDEX]][`CAC_DATA];
+  assign tx_cpu_wait = _tx_cpu_wait;
+  assign tx_cpu_data = cac_mem[rx_cpu_addr[`ADDR_INDEX]][`CAC_DATA];
 
   // ----------------------------------------------------------------
   // BUS side output
   // ----------------------------------------------------------------
-  assign cac2bus_bus_req = _cac2bus_bus_req;
-  assign cac2bus_bus_rsp = (bus_req_match == 1'b1) ? _cac2bus_bus_rsp : `BUS_NO_RSP;
-  assign cac2bus_write_back = cpu_req_write_back || bus_req_write_back;
-  assign cac2bus_addr = ((bus_req_write_back == 1'b1) || (cac2bus_bus_rsp == `BUS_SNOOP_FOUND_RSP)) ? bus2cac_addr[`ADDR_CAC_ADDR] : cpu2cac_addr[`ADDR_CAC_ADDR];
-  assign cac2bus_data = cac_mem[bus2cac_addr[`ADDR_INDEX]][`CAC_DATA];
+  assign tx_snp_opcode = _tx_snp_opcode;
+  assign tx_snp_rsp = (bus_req_match == 1'b1) ? _tx_snp_rsp : `BUS_NO_RSP;
+  assign tx_snp_wb = cpu_req_wb || bus_req_wb;
+  assign tx_snp_addr = ((bus_req_wb == 1'b1) || (tx_snp_rsp == `BUS_SNOOP_FOUND_RSP)) ? rx_snp_addr[`ADDR_CAC_ADDR] : rx_cpu_addr[`ADDR_CAC_ADDR];
+  assign tx_snp_data = cac_mem[rx_snp_addr[`ADDR_INDEX]][`CAC_DATA];
 
   // ----------------------------------------------------------------
   // CPU request controller
@@ -128,24 +133,24 @@ module cache_mem #(
         .cpu_rd_hit   (rd_hit               ),
         .cpu_wr_miss  (wr_miss              ),
         .cpu_rd_miss  (rd_miss              ),
-        .bus_rsp      (bus2cac_bus_rsp      ),
+        .snp_rsp      (rx_snp_rsp      ),
 
         .nxt_state    (cpu_req_cac_nxt_state),
-        .cpu_wait     (_cac2cpu_wait        ),
-        .write_back   (cpu_req_write_back   ),
-        .send_bus_req (_cac2bus_bus_req     )
+        .cpu_wait     (_tx_cpu_wait        ),
+        .snp_wb   (cpu_req_wb   ),
+        .snp_req (_tx_snp_opcode     )
   );
 
   // ----------------------------------------------------------------
   // Snoop request controller
   // ----------------------------------------------------------------
-  fsm_bus_req_ctrl bus_req_crtl (
+  fsm_snp_req_ctrl snp_req_crtl (
         .cur_state    (bus_req_cac_cur_state),
-        .bus_req      (bus2cac_bus_req      ),
+        .snp_opcode      (rx_snp_opcode      ),
 
         .nxt_state    (bus_req_cac_nxt_state),
-        .write_back   (bus_req_write_back   ),
-        .send_bus_rsp (_cac2bus_bus_rsp     )
+        .snp_wb   (bus_req_wb   ),
+        .snp_rsp (_tx_snp_rsp     )
   );
 
   // ----------------------------------------------------------------
@@ -158,16 +163,16 @@ module cache_mem #(
       end
     end else begin
       if(is_cpu_req)
-        cac_mem[cpu2cac_addr[`ADDR_INDEX]][`CAC_STATE] <= cpu_req_cac_nxt_state;
+        cac_mem[rx_cpu_addr[`ADDR_INDEX]][`CAC_STATE] <= cpu_req_cac_nxt_state;
       else if(bus_req_match)
-        cac_mem[bus2cac_addr[`ADDR_INDEX]][`CAC_STATE] <= bus_req_cac_nxt_state;
+        cac_mem[rx_snp_addr[`ADDR_INDEX]][`CAC_STATE] <= bus_req_cac_nxt_state;
     end
   end
 
   // ----------------------------------------------------------------
   // Update Tag when CPU request miss
   // ----------------------------------------------------------------
-  logic bus_return_data = (bus2cac_bus_rsp == `BUS_SNOOP_FOUND_RSP) || (bus2cac_bus_rsp == `BUS_FETCH_MEM_RSP);
+  logic bus_return_data = (rx_snp_rsp == `BUS_SNOOP_FOUND_RSP) || (rx_snp_rsp == `BUS_FETCH_MEM_RSP);
 
   always_ff @(posedge clk) begin
     if(!rst_n) begin
@@ -176,7 +181,7 @@ module cache_mem #(
       end
     end else begin
       if(bus_return_data)
-        cac_mem[cpu2cac_addr[`ADDR_INDEX]][`CAC_TAG] <= cpu2cac_addr[`ADDR_TAG];
+        cac_mem[rx_cpu_addr[`ADDR_INDEX]][`CAC_TAG] <= rx_cpu_addr[`ADDR_TAG];
     end
   end
 
@@ -190,9 +195,9 @@ module cache_mem #(
       end
     end else begin
       if(wr_hit)
-        cac_mem[cpu2cac_addr[`ADDR_INDEX]][`CAC_DATA] <= cpu2cac_data;
+        cac_mem[rx_cpu_addr[`ADDR_INDEX]][`CAC_DATA] <= rx_cpu_data;
       else if(bus_return_data)
-        cac_mem[cpu2cac_addr[`ADDR_INDEX]][`CAC_DATA] <= bus2cac_data;
+        cac_mem[rx_cpu_addr[`ADDR_INDEX]][`CAC_DATA] <= rx_snp_data;
     end
   end
 endmodule // cache_mem
