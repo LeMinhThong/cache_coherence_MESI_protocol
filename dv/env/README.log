@@ -1,0 +1,17 @@
+smock test
+- run string: make runall [TB_NAME=] [TEST_NAME=] [SEED=] [CMD_OPT=]
+- default options:
+  - TB_NAME=cache_mem_tb_top
+  - TEST_NAME=cache_base_test
+  - SEED=random
+  - CMD_OPT=
+
+
+When IO signals were changed, adjust following files
+- rtl
+- cache_if
+- cache_types & cache_def
+- tb
+- cache_txn (rand fields, uvm_object_utils, convert2string)
+- cache_drv (init_signals, get_and_drive)
+- cache_mon (asg_txn)
