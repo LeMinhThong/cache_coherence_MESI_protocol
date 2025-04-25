@@ -1,14 +1,14 @@
 `ifndef CACHE_BASE_TEST_SV
 `define CACHE_BASE_TEST_SV
-`define THIS_CLASS cache_base_test
+`define THIS_CLASS cache_base_test_c
 
 class `THIS_CLASS extends uvm_test;
   `uvm_component_utils(`THIS_CLASS);
 
-  cache_env       m_env;
-  cache_coverage  m_cov;
+  cache_env_c m_env;
+  cache_cov_c m_cov;
 
-  cache_base_seq  m_seq;
+  cache_base_seq_c  m_seq;
 
   extern  virtual function  void  build_phase(uvm_phase phase);
   extern  virtual function  void  end_of_elaboration_phase(uvm_phase phase);
@@ -22,8 +22,8 @@ endclass: `THIS_CLASS
 // ------------------------------------------------------------------
 function void `THIS_CLASS::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  m_env = cache_env::type_id::create("m_env", this);
-  m_cov = cache_coverage::type_id::create("m_cov", this);
+  m_env = cache_env_c::type_id::create("env", this);
+  m_cov = cache_cov_c::type_id::create("cov", this);
 endfunction: build_phase
 
 // ------------------------------------------------------------------
@@ -37,9 +37,9 @@ task `THIS_CLASS::main_phase(uvm_phase phase);
   phase.raise_objection(this);
   `uvm_info(get_type_name(), "Start test", UVM_LOW)
 
-  #50;
+  #100ns;
   m_seq = new();
-  m_seq.start(m_env.m_req_agt.m_sqr);
+  m_seq.start(m_env.m_agt.m_sqr);
 
   `uvm_info(get_type_name(), "Complete test", UVM_LOW)
   phase.drop_objection(this);

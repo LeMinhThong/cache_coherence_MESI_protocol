@@ -4,99 +4,94 @@
 module cache_mem_tb_top;
 
   import uvm_pkg::*;
-  import cache_test_pkg::*;
   `include "uvm_macros.svh";
-  
-  `include "cache_vip_def.svh";
-  //`include "cache_if.sv"
+
+  import cache_test_pkg::*;
 
   // ----------------------------------------------------------------
-  localparam LINE_WIDTH     = 512; // 64*8
-  localparam NUM_CACHE_LINE = 1024;
-  localparam ADDR_WIDTH     = 32;
-  localparam DATA_WIDTH     = 32;
+  localparam PADDR_WIDTH = 64;
+  localparam BLK_WIDTH   = 512;
+  localparam NUM_BLK     = 1024;
+
+  localparam SADDR_WIDTH = PADDR_WIDTH-$clog2(BLK_WIDTH/8);
 
   logic                   clk;
   logic                   rst_n;
 
-  wire                    cpu2cac_rd;
-  wire                    cpu2cac_wr;
-  wire [ADDR_WIDTH-1:0]   cpu2cac_addr;
-  wire [DATA_WIDTH-1:0]   cpu2cac_data;
+  wire  [1:0]             rx_l1_op;
+  wire  [SADDR_WIDTH-1:0] rx_l1_addr;
+  wire  [BLK_WIDTH-1:0]   rx_l1_data;
 
-  wire                    cac2cpu_wait;
-  wire [DATA_WIDTH-1:0]   cac2cpu_data;
+  wire                    tx_l1_wait;
+  wire  [BLK_WIDTH-1:0]   tx_l1_data;
 
-  wire [1:0]              bus2cac_bus_req;
-  wire [1:0]              bus2cac_bus_rsp;
-  wire [ADDR_WIDTH-$clog2(LINE_WIDTH/8)-1:0]  bus2cac_addr;
-  wire [LINE_WIDTH-1:0]   bus2cac_data;
+  wire  [2:0]             rx_snp_op;
+  wire  [SADDR_WIDTH-1:0] rx_snp_addr;
+  wire  [BLK_WIDTH-1:0]   rx_snp_data;
+  wire  [1:0]             rx_snp_rsp;
 
-  wire [1:0]              cac2bus_bus_req;
-  wire [1:0]              cac2bus_bus_rsp;
-  wire [ADDR_WIDTH-$clog2(LINE_WIDTH/8)-1:0]  cac2bus_addr;
-  wire [LINE_WIDTH-1:0]   cac2bus_data;
-
-  wire                    cac2bus_write_back;
+  wire  [2:0]             tx_snp_op;
+  wire  [SADDR_WIDTH-1:0] tx_snp_addr;
+  wire  [BLK_WIDTH-1:0]   tx_snp_data;
+  wire  [1:0]             tx_snp_rsp;
   
   // ----------------------------------------------------------------
-  cache_if cac_if (
-        .clk                (clk                ),
-        .rst_n              (rst_n              ),
-
-        .cpu2cac_rd         (cpu2cac_rd         ),
-        .cpu2cac_wr         (cpu2cac_wr         ),
-        .cpu2cac_addr       (cpu2cac_addr       ),
-        .cpu2cac_data       (cpu2cac_data       ),
-
-        .cac2cpu_wait       (cac2cpu_wait       ),
-        .cac2cpu_data       (cac2cpu_data       ),
-
-        .bus2cac_bus_req    (bus2cac_bus_req    ),
-        .bus2cac_bus_rsp    (bus2cac_bus_rsp    ),
-        .bus2cac_addr       (bus2cac_addr       ),
-        .bus2cac_data       (bus2cac_data       ),
-
-        .cac2bus_bus_req    (cac2bus_bus_req    ),
-        .cac2bus_bus_rsp    (cac2bus_bus_rsp    ),
-        .cac2bus_addr       (cac2bus_addr       ),
-        .cac2bus_data       (cac2bus_data       ),
-        .cac2bus_write_back (cac2bus_write_back )
+  cache_if #(
+        .PADDR_WIDTH  (PADDR_WIDTH),
+        .BLK_WIDTH    (BLK_WIDTH  ),
+        .NUM_BLK      (NUM_BLK    )
+  ) cac_if (
+        .clk          (clk        ),
+        .rst_n        (rst_n      ),
+                                  
+        .rx_l1_op     (rx_l1_op   ),
+        .rx_l1_addr   (rx_l1_addr ),
+        .rx_l1_data   (rx_l1_data ),
+                                  
+        .tx_l1_wait   (tx_l1_wait ),
+        .tx_l1_data   (tx_l1_data ),
+                                  
+        .rx_snp_op    (rx_snp_op  ),
+        .rx_snp_addr  (rx_snp_addr),
+        .rx_snp_data  (rx_snp_data),
+        .rx_snp_rsp   (rx_snp_rsp ),
+                                  
+        .tx_snp_op    (tx_snp_op  ),
+        .tx_snp_addr  (tx_snp_addr),
+        .tx_snp_data  (tx_snp_data),
+        .tx_snp_rsp   (tx_snp_rsp )
   );
 
   // ----------------------------------------------------------------
   cache_mem #(
-        .LINE_WIDTH     (LINE_WIDTH),
-        .NUM_CACHE_LINE (NUM_CACHE_LINE),
-        .ADDR_WIDTH     (ADDR_WIDTH),
-        .DATA_WIDTH     (DATA_WIDTH)
+        .PADDR_WIDTH  (PADDR_WIDTH),
+        .BLK_WIDTH    (BLK_WIDTH  ),
+        .NUM_BLK      (NUM_BLK    )
   ) dut (
-        .clk                (clk                ),
-        .rst_n              (rst_n              ),
-
-        .cpu2cac_rd         (cpu2cac_rd         ),
-        .cpu2cac_wr         (cpu2cac_wr         ),
-        .cpu2cac_addr       (cpu2cac_addr       ),
-        .cpu2cac_data       (cpu2cac_data       ),
-
-        .cac2cpu_wait       (cac2cpu_wait       ),
-        .cac2cpu_data       (cac2cpu_data       ),
-
-        .bus2cac_bus_req    (bus2cac_bus_req    ),
-        .bus2cac_bus_rsp    (bus2cac_bus_rsp    ),
-        .bus2cac_addr       (bus2cac_addr       ),
-        .bus2cac_data       (bus2cac_data       ),
-
-        .cac2bus_bus_req    (cac2bus_bus_req    ),
-        .cac2bus_bus_rsp    (cac2bus_bus_rsp    ),
-        .cac2bus_addr       (cac2bus_addr       ),
-        .cac2bus_data       (cac2bus_data       ),
-        .cac2bus_write_back (cac2bus_write_back )
+        .clk          (clk        ),
+        .rst_n        (rst_n      ),
+                                  
+        .rx_l1_op     (rx_l1_op   ),
+        .rx_l1_addr   (rx_l1_addr ),
+        .rx_l1_data   (rx_l1_data ),
+                                  
+        .tx_l1_wait   (tx_l1_wait ),
+        .tx_l1_data   (tx_l1_data ),
+                                  
+        .rx_snp_op    (rx_snp_op  ),
+        .rx_snp_addr  (rx_snp_addr),
+        .rx_snp_data  (rx_snp_data),
+        .rx_snp_rsp   (rx_snp_rsp ),
+                                  
+        .tx_snp_op    (tx_snp_op  ),
+        .tx_snp_addr  (tx_snp_addr),
+        .tx_snp_data  (tx_snp_data),
+        .tx_snp_rsp   (tx_snp_rsp )
   );
 
   //-------------------------------------------------------------------
   initial begin
-    forever #5 clk = ~clk;
+    forever #5ns clk = ~clk;
   end
 
   //-------------------------------------------------------------------
@@ -115,7 +110,7 @@ module cache_mem_tb_top;
   //-------------------------------------------------------------------
   initial begin
     $display("hello from cache_mem_tb");
-    run_test("cache_base_test");
+    run_test("cache_base_test_c");
     $display("complete cache_mem_tb");
     $finish;
   end

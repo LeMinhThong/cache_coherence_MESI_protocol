@@ -1,6 +1,6 @@
 `ifndef CACHE_BASE_SEQ_SV
 `define CACHE_BASE_SEQ_SV
-`define THIS_CLASS cache_base_seq
+`define THIS_CLASS cache_base_seq_c
 
 class `THIS_CLASS extends uvm_sequence;
   `uvm_object_utils(`THIS_CLASS);
@@ -14,12 +14,12 @@ endclass: `THIS_CLASS
 
 //-------------------------------------------------------------------
 task `THIS_CLASS::body();
-  cache_transaction req_txn = new("m_seq");
+  cache_txn_c t_req = new();
 
   `uvm_info(get_type_name(), "Sequence start", UVM_LOW);
-  if(!req_txn.randomize()) `uvm_fatal(get_type_name(), "sequence randomize fail");
-  `uvm_info(get_type_name(), $sformatf("Write: %b, Addr: %0h, Data %0h", req_txn.Write, req_txn.Address, req_txn.LineData), UVM_LOW);
-  #50;  
+  if(!t_req.randomize()) `uvm_fatal(get_type_name(), "sequence randomize fail");
+  `uvm_info("BASE_SEQ", $sformatf("%s", t_req.convert2string()), UVM_LOW);
+  #200ns;  
   `uvm_info(get_type_name(), "Sequence complete", UVM_LOW);
 endtask: body
 

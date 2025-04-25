@@ -1,0 +1,286 @@
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+Start time: 01:26:54 on Apr 26,2025
+vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/topchip" "+incdir+../../rtl/subsystem" "+incdir+../lib" "+incdir+../lib/agent" "+incdir+../lib/interface" "+incdir+./sv/test" "+incdir+./sv/seq" "+incdir+./tb" ../../rtl/topchip/cache_def.sv ../../rtl/subsystem/fsm_cpu_req_ctrl.sv ../../rtl/subsystem/fsm_snp_req_ctrl.sv ../../rtl/topchip/cache_mem.sv ../lib/cache_vip_pkg.sv ../lib/if/cache_if.sv ./sv/cache_test_pkg.sv ./tb/cache_mem_tb_top.sv -l run_dir/cache_base_test_c.log 
+-- Compiling module fsm_l1_req_ctrl
+-- Compiling module fsm_snp_req_ctrl
+-- Compiling module cache_mem
+-- Compiling package cache_vip_pkg
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+** Note: (vlog-2286) ../lib/cache_vip_pkg.sv(6): Using implicit +incdir+E:/questaSim/main/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
+-- Compiling interface cache_if
+-- Compiling package cache_test_pkg
+-- Importing package cache_vip_pkg
+** Warning: ** while parsing file included at ./sv/cache_test_pkg.sv(11)
+** at ./sv/seq/cache_base_seq.sv(5): (vlog-2181) Use of a parameterized class uvm_sequence as a type creates a default specialization.
+-- Compiling module cache_mem_tb_top
+-- Importing package cache_test_pkg
+
+Top level modules:
+	cache_mem_tb_top
+End time: 01:26:55 on Apr 26,2025, Elapsed time: 0:00:01
+Errors: 0, Warnings: 1
+Reading E:/questaSim/main/tcl/vsim/pref.tcl
+
+ 10.6c
+
+ vsim work.cache_mem_tb_top "+UVM_TESTNAME=cache_base_test_c" -nodpiexports -novopt -sv_seed random "+UVM_VERBOSITY=DEBUG" -wlf wave_dir/cache_base_test_c.wlf -do " log -r /*; run -all; quit -f;" 
+ Start time: 01:26:56 on Apr 26,2025
+ ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+ //  Questa Sim-64
+ //  Version 10.6c win64 Jul 26 2017
+ //
+ //  Copyright 1991-2017 Mentor Graphics Corporation
+ //  All Rights Reserved.
+ //
+ //  QuestaSim and its associated documentation contain trade
+ //  secrets and commercial or financial information that are the property of
+ //  Mentor Graphics Corporation and are privileged, confidential,
+ //  and exempt from disclosure under the Freedom of Information Act,
+ //  5 U.S.C. Section 552. Furthermore, this information
+ //  is prohibited from disclosure under the Trade Secrets Act,
+ //  18 U.S.C. Section 1905.
+ //
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem_tb_top
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_test_pkg
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_if
+ Loading sv_std.std
+ Loading work.cache_if
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_vip_pkg
+ Loading mtiUvm.uvm_pkg
+ Loading work.cache_vip_pkg
+ Loading work.cache_test_pkg
+ Loading work.cache_mem_tb_top
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem
+ Loading work.cache_mem
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.fsm_l1_req_ctrl
+ Loading work.fsm_l1_req_ctrl
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.fsm_snp_req_ctrl
+ Loading work.fsm_snp_req_ctrl
+ Loading mtiUvm.questa_uvm_pkg
+ Loading E:/questaSim/main/uvm-1.1d\win64\uvm_dpi.dll
+ Sv_Seed = 1742370278
+  run -all
+ ----------------------------------------------------------------
+ UVM-1.1d
+ (C) 2007-2013 Mentor Graphics Corporation
+ (C) 2007-2013 Cadence Design Systems, Inc.
+ (C) 2006-2013 Synopsys, Inc.
+ (C) 2011-2013 Cypress Semiconductor Corp.
+ ----------------------------------------------------------------
+ 
+   ***********       IMPORTANT RELEASE NOTES         ************
+ 
+   You are using a version of the UVM library that has been compiled
+   with `UVM_NO_DEPRECATED undefined.
+   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+ 
+   You are using a version of the UVM library that has been compiled
+   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+ 
+       (Specify +UVM_NO_RELNOTES to turn off this notice)
+ 
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(60): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(61): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(75): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(75): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(76): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(76): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
+ UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
+ UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(192) @ 0: reporter [Questa UVM] Add Phase
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(91): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(100): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ hello from cache_mem_tb
+ UVM_INFO @ 0: reporter [RNTST] Running test cache_base_test_c...
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(91): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(100): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
+ UVM_WARNING @ 0: uvm_test_top [UVM_DEPRECATED] build()/build_phase() has been called explicitly, outside of the phasing system. This usage of build is deprecated and may lead to unexpected behavior.
+ UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
+ ----------------------------------------------------------------
+ Name                       Type                      Size  Value
+ ----------------------------------------------------------------
+ uvm_test_top               cache_base_test_c         -     @471 
+   cov                      cache_cov_c               -     @485 
+   env                      cache_env_c               -     @478 
+     agt                    cache_agt_c               -     @492 
+       drv                  cache_drv_c               -     @609 
+         req_port           uvm_blocking_put_port     -     @647 
+         rsp_imp            uvm_nonblocking_put_imp   -     @655 
+         rsp_port           uvm_analysis_port         -     @624 
+         seq_item_port      uvm_seq_item_pull_port    -     @616 
+       drv_bfm              cache_drv_bfm_c           -     @632 
+         req_imp            uvm_blocking_put_imp      -     @664 
+         rsp_port           uvm_nonblocking_put_port  -     @672 
+       mon                  cache_mon_c               -     @639 
+         mon_bfm            cache_mon_bfm_c           -     @680 
+       sqr                  cache_seqr_c              -     @500 
+         rsp_export         uvm_analysis_export       -     @507 
+         seq_item_export    uvm_seq_item_pull_imp     -     @601 
+         arbitration_queue  array                     0     -    
+         lock_queue         array                     0     -    
+         num_last_reqs      integral                  32    'd1  
+         num_last_rsps      integral                  32    'd1  
+ ----------------------------------------------------------------
+ 
+ UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(277) @ 0: reporter [Questa UVM] End Of Elaboration
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'run'
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(38) @ 0: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] start collect transaction
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_reset'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_reset' (id=172) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'reset'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.reset' (id=184) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_reset'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_reset' (id=196) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_configure'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_configure' (id=208) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'configure'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.configure' (id=220) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_configure'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_configure' (id=232) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_main'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_main' (id=244) PHASE READY TO END
+ UVM_INFO ./sv/test/cache_base_test.sv(38) @ 0: uvm_test_top [cache_base_test_c] Start test
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'main'
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 0: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(91): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
+    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(100): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
+    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(71) @ 5: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Reset is handling
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 10: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 20: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 30: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 40: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 50: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 55: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(77) @ 55: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Reset has completed
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 60: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 65: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 70: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 75: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 80: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 85: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 90: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 95: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ./sv/seq/cache_base_seq.sv(19) @ 100: uvm_test_top.env.agt.sqr@@`THIS_CLASS [cache_base_seq_c] Sequence start
+ UVM_INFO ./sv/seq/cache_base_seq.sv(21) @ 100: uvm_test_top.env.agt.sqr@@`THIS_CLASS [BASE_SEQ] TxnId=-1  rx_l1_op=L1_WR  rx_l1_addr=0x23b79103f4fcfd7  rx_l1_data=0x25c586e38e2c01f09571bffe76cd89460b8d242ae021ad5930554b62e3f2ff1edf3de22f2faeceb7c1fa45b6b0dbee03fa47452057f226a6bd592d29a156952d  tx_l1_wait=0  tx_l1_data=0x125e115d3245ce7c5b71007f3bbd863b16839a0fea0000e7c0dd587e6ab5c725f788d8650b3a8325fc72961b53dfcb73daaa9bc1494b6bde1146790410920bda  rx_snp_op=SNP_WB  rx_snp_addr=0x39720c738b5cd14  rx_snp_data=0x13fb2e8cb72f26a7e3ae0a7cfc688c22de9eb815d1ad1eaab228235bcf2b6258102c03218483baeb1b0493d1cfaa6786134e1331c2c58d77022333e7add3efaa  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x215e9bba38d2aba  tx_snp_data=0x5d868d1c2544212435c220520c410a36ba2b69fab1e36fe9e2d9b0d4b709a7ce4a1f6cc316080c7ad7660c1451dcdf1478edc51474a5f26616fc886208480ca2  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 100: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 105: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 110: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 115: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 120: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 125: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 130: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 135: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 140: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 145: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 150: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 155: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 160: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 165: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 170: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 175: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 180: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 185: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 190: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 195: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 200: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 205: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 210: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 215: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 220: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 225: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 230: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 235: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 240: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 245: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 250: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 255: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 260: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 265: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 270: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 275: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 280: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 285: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ../lib/agent/cache_mon_bfm.svh(42) @ 290: uvm_test_top.env.agt.mon.mon_bfm [MONITOR_BFM] TxnId=-1  rx_l1_op=L1_NO_REQ  rx_l1_addr=0x0  rx_l1_data=0x0  tx_l1_wait=0  tx_l1_data=0x0  rx_snp_op=SNP_NO_REQ  rx_snp_addr=0x0  rx_snp_data=0x0  rx_snp_rsp=SNP_NO_RSP  tx_snp_op=SNP_NO_REQ  tx_snp_addr=0x0  tx_snp_data=0x0  tx_snp_rsp=SNP_NO_RSP  
+ 
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(61) @ 295: uvm_test_top.env.agt.drv_bfm [DRIVER_BFM] Driving signals
+ UVM_INFO ./sv/seq/cache_base_seq.sv(23) @ 300: uvm_test_top.env.agt.sqr@@`THIS_CLASS [cache_base_seq_c] Sequence complete
+ UVM_INFO ./sv/test/cache_base_test.sv(44) @ 300: uvm_test_top [cache_base_test_c] Complete test
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1199) @ 300: reporter [PH/TRC/EXE/ALLDROP] Phase 'uvm.uvm_sched.main' (id=256) PHASE EXIT ALL_DROPPED
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 300: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.main' (id=256) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 300: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_main'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 300: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_main' (id=268) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 300: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_shutdown'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 300: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_shutdown' (id=280) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 300: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'shutdown'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 300: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.shutdown' (id=292) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 300: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_shutdown'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 300: reporter [PH_READY_TO_END] Phase 'common.run' (id=93) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 300: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_shutdown' (id=304) PHASE READY TO END
+ 
+ --- UVM Report Summary ---
+ 
+ ** Report counts by severity
+ UVM_INFO :   96
+ UVM_WARNING :    1
+ UVM_ERROR :    0
+ UVM_FATAL :    0
+ ** Report counts by id
+ [BASE_SEQ]     1
+ [DRIVER_BFM]    27
+ [MONITOR_BFM]    31
+ [PH/TRC/EXE/ALLDROP]     1
+ [PHASESEQ]    13
+ [PH_READY_TO_END]    13
+ [Questa UVM]     4
+ [RNTST]     1
+ [UVMTOP]     1
+ [UVM_DEPRECATED]     1
+ [cache_base_seq_c]     2
+ [cache_base_test_c]     2
+ ** Note: $finish    : E:/questaSim/main/win64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+    Time: 300 ns  Iteration: 102  Instance: /cache_mem_tb_top
+ End time: 01:27:00 on Apr 26,2025, Elapsed time: 0:00:04
+ Errors: 0, Warnings: 13
