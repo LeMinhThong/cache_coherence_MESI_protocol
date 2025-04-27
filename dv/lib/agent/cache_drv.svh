@@ -11,7 +11,7 @@ class `THIS_CLASS extends uvm_driver #(cache_txn_c);
 
   virtual cache_if m_vif;
 
-  semaphore   sema_reset;
+  semaphore   reset_sem;
   cache_txn_c t_req;
   cache_txn_c t_rsp;
   cache_txn_c req_q[$];
@@ -20,7 +20,7 @@ class `THIS_CLASS extends uvm_driver #(cache_txn_c);
   extern          task            run_phase(uvm_phase phase);
   extern          task            drive_request();
   extern          task            reset_handler();
-  extern  virtual function  bit   try_put(cache_txn_c rsp_txn);
+  extern  virtual function  bit   try_put(cache_txn_c t_rsp);
   extern  virtual function  bit   can_put();
 
   function new(string name="`THIS_CLASS", uvm_component component);
@@ -32,7 +32,7 @@ endclass: `THIS_CLASS
 function void `THIS_CLASS::build_phase(uvm_phase phase);
   super.build_phase(phase);
   if(!uvm_config_db#(virtual cache_if)::get(this, "", "cac_if", m_vif)) uvm_report_fatal("DRIVER", "Cannot get virtual cache interface");
-  sema_reset = new(1);
+  reset_sem = new(1);
   this.req_port = new("req_port", this);
   this.rsp_imp = new("rsp_imp", this);
 endfunction: build_phase
@@ -52,10 +52,10 @@ endtask: run_phase
 //-------------------------------------------------------------------
 task `THIS_CLASS::drive_request();
   forever begin
-    sema_reset.get(1);
-    sema_reset.put(1);
+    reset_sem.get(1);
+    reset_sem.put(1);
     seq_item_port.get(t_req);
-    `uvm_info("DRV", $sformatf("Receive request from sequencer: %s", t_req.convert2string()), UVM_DEBUG)
+    `uvm_info("DRV", $sformatf("Received request from sequencer: %s", t_req.convert2string()), UVM_LOW)
     req_q.push_back(t_req);
     this.req_port.put(t_req);
   end
@@ -65,14 +65,21 @@ endtask: drive_request
 task `THIS_CLASS::reset_handler();
   forever begin
     wait((`M_VIF.rst_n == 1'b0));
-    sema_reset.get(1);
+    reset_sem.get(1);
     wait((`M_VIF.rst_n == 1'b1));
-    sema_reset.put(1);
+    reset_sem.put(1);
   end
 endtask: reset_handler
 
 //-------------------------------------------------------------------
-function bit `THIS_CLASS::try_put(cache_txn_c rsp_txn);
+function bit `THIS_CLASS::try_put(cache_txn_c t_rsp);
+  cache_txn_c _t_rsp = new();
+  if(req_q.size() != 0) begin
+    _t_rsp = req_q.pop_front();
+    rsp_port.write(t_rsp);
+  end else begin
+    `uvm_fatal("DRV", "reponse wit request queue is empty")
+  end
   return 1;
 endfunction: try_put
 

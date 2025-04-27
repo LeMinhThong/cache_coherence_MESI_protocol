@@ -11,7 +11,8 @@ class `THISCLASS extends uvm_component;
 
   virtual cache_if m_vif;
 
-  bit txn_outstanding = 0;
+  mailbox #(cache_txn_c)  m_txn_mb;
+  bit                     m_txn_outstanding = 0;
 
   extern  virtual function  void  build_phase(uvm_phase phase);
   extern  virtual task            run_phase(uvm_phase phase);
@@ -19,9 +20,11 @@ class `THISCLASS extends uvm_component;
   extern  virtual task            reset_handler();
   extern  virtual task            init_signals();
   extern  virtual task            put(cache_txn_c t);
+  extern  virtual task            send_reponse(cache_txn_c t_rsp);
 
   function new(string name="`THISCLASS", uvm_component parent);
     super.new(name, parent);
+    m_txn_mb = new();
   endfunction: new
 endclass: `THISCLASS
 
@@ -58,7 +61,29 @@ task `THISCLASS::get_and_drive();
   forever begin
     @`M_VIF;
     wait(`M_VIF.rst_n == 1'b1);
-    `uvm_info("DRIVER_BFM", "Driving signals", UVM_DEBUG)
+    //`uvm_info("DRIVER_BFM", "Driving signals", UVM_DEBUG)
+    if(m_txn_mb.try_get(t_req)) begin
+      `uvm_info("DRIVER_BFM", $sformatf("get and drive request: mailbox size=%0d  t_req=%s", m_txn_mb.num(), t_req.convert2string()), UVM_DEBUG)
+      t_rsp = new t_req;
+      `M_VIF.rx_l1_op   <= t_req.rx_l1_op;
+      `M_VIF.rx_l1_addr <= t_req.rx_l1_addr;
+      if(t_req.is_wr_req())
+        `M_VIF.rx_l1_data <= t_req.rx_l1_data;
+      else
+        `M_VIF.rx_l1_data <= '0;
+      #10ps;
+      @`M_VIF;
+      t_rsp.tx_l1_wait  = m_vif.tx_l1_wait;
+      t_rsp.tx_l1_data  = m_vif.tx_l1_data;
+      t_rsp.tx_snp_op   = snp_op_e'(m_vif.tx_snp_op);
+      t_rsp.tx_snp_addr = m_vif.tx_snp_addr;
+      t_rsp.tx_snp_data = m_vif.tx_snp_data;
+      t_rsp.tx_snp_rsp  = snp_rsp_e'(m_vif.tx_snp_rsp);
+      send_reponse(t_rsp);
+    end
+    //else begin
+    //  `uvm_info("DRIVER_BFM", "request mailbox empty", UVM_DEBUG)
+    //end
   end
 endtask: get_and_drive
 
@@ -69,7 +94,7 @@ task `THISCLASS::reset_handler();
   forever begin
     wait(`M_VIF.rst_n == 1'b0);
     `uvm_info("DRIVER_BFM", "Reset is handling", UVM_DEBUG)
-    if(txn_outstanding) `uvm_fatal("DRIVER_BFM", "reset occurred during transfer")
+    if(m_txn_outstanding) `uvm_fatal("DRIVER_BFM", "reset occurred during transfer")
     init_signals();
     fork
       begin: WAIT_UNLOCK_RESET
@@ -83,6 +108,8 @@ endtask: reset_handler
 
 //-------------------------------------------------------------------
 task `THISCLASS::put(cache_txn_c t);
+  //`uvm_info("DRIVER_BFM", $sformatf("put request transaction to mailbox, t_req: %s, mailbox.size=%0d", t.convert2string(), m_txn_mb.num), UVM_DEBUG)
+  void'(m_txn_mb.try_put(t));
 endtask: put
 
 //-------------------------------------------------------------------
@@ -96,6 +123,11 @@ task `THISCLASS::init_signals();
   `M_VIF.rx_snp_data  <= '0;
   `M_VIF.rx_snp_rsp   <= SNP_NO_RSP;
 endtask: init_signals
+
+//-------------------------------------------------------------------
+task `THISCLASS::send_reponse(cache_txn_c t_rsp);
+  void'(this.rsp_port.try_put(t_rsp));
+endtask: send_reponse
 
 `undef M_VIF
 `undef THISCLASS

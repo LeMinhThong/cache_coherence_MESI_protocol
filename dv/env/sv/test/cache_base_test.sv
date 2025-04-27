@@ -8,7 +8,7 @@ class `THIS_CLASS extends uvm_test;
   cache_env_c m_env;
   cache_cov_c m_cov;
 
-  cache_base_seq_c  m_seq;
+  //cache_base_seq_c  m_seq;
 
   extern  virtual function  void  build_phase(uvm_phase phase);
   extern  virtual function  void  end_of_elaboration_phase(uvm_phase phase);
@@ -34,13 +34,32 @@ endfunction: end_of_elaboration_phase
 
 // ------------------------------------------------------------------
 task `THIS_CLASS::main_phase(uvm_phase phase);
+  l1_req_seq_c m_l1_seq = new();
+  snp_req_seq_c m_snp_seq = new();
   phase.raise_objection(this);
   `uvm_info(get_type_name(), "Start test", UVM_LOW)
 
   #100ns;
-  m_seq = new();
-  m_seq.start(m_env.m_agt.m_sqr);
+  //for(int i = 0; i < 5; i++) begin
+  //  cache_base_seq_c m_seq = new();
+  //  m_seq.m_rand_seq = $urandom();
+  //  m_seq.start(m_env.m_agt.m_sqr);
+  //  #10ns;
+  //end
 
+  fork
+    begin
+      m_l1_seq.config_seq(L1_RD, 32'h10, '0, SNP_FETCH, 32'hff);
+      m_l1_seq.start(m_env.m_agt.m_sqr);
+    end
+    //begin
+    //  #10ns;
+    //  m_snp_seq.m_rand_seq = 1;
+    //  m_snp_seq.m_rand_wr_rate = 0;
+    //  m_snp_seq.start(m_env.m_agt.m_sqr);
+    //end
+  join
+  #20ns;
   `uvm_info(get_type_name(), "Complete test", UVM_LOW)
   phase.drop_objection(this);
 endtask: main_phase

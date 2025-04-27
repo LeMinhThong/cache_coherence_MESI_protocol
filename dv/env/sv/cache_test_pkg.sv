@@ -9,6 +9,8 @@ package cache_test_pkg;
 
   // Seqs
   `include "cache_base_seq.sv"
+  `include "l1_req_seq.sv"
+  `include "snp_req_seq.sv"
 
   // Test
   `include "cache_base_test.sv";

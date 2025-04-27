@@ -40,7 +40,11 @@ class `THIS_CLASS extends uvm_sequence_item;
   `uvm_object_utils_end
 
   // ----------------------------------------------------------------
-  extern  virtual function string convert2string();
+  extern  virtual function  string  convert2string();
+  extern  virtual function  bit     comp(input cache_txn_c item);
+  extern  virtual function  void    set_as_wr_req();
+  extern  virtual function  void    set_as_rd_req();
+  extern  virtual function  bit     is_wr_req();
 
   // ----------------------------------------------------------------
   function new(string name="`THIS_CLASS");
@@ -72,17 +76,30 @@ function string `THIS_CLASS::convert2string();
 
   return str;
 endfunction: convert2string
-//function string `THIS_CLASS::convert2string();
-//  string str;
-//  string tmp_str = "";
-//  str = $sformatf("TxnId=%0d  ", TxnId);
-//  str = {str, $sformatf("L1Op=%s  ", L1Op.name())};
-//  str = {str, $sformatf("Rx_SnpOp=%s  ", Rx_SnpOp.name())};
-//  str = {str, $sformatf("Rx_SnpRsp=%s  ", Rx_SnpRsp.name())};
-//  str = {str, $sformatf("Tx_SnpOp=%s  ", Tx_SnpOp.name())};
-//  str = {str, $sformatf("Tx_SnpRsp=%s  ", Tx_SnpRsp.name())};
-//  return str;
-//endfunction: convert2string
+
+// ----------------------------------------------------------------
+function bit `THIS_CLASS::comp(input cache_txn_c item);
+  cache_txn_c castItem;
+  if(item == null)            return 0;
+  if(!$cast(castItem, item))  return 0;
+  return 1;
+endfunction: comp
+
+// ----------------------------------------------------------------
+function void `THIS_CLASS::set_as_wr_req();
+  this.rx_l1_op = L1_WR;
+endfunction: set_as_wr_req
+
+// ----------------------------------------------------------------
+function void `THIS_CLASS::set_as_rd_req();
+  this.rx_l1_op = L1_WR;
+endfunction: set_as_rd_req
+
+// ----------------------------------------------------------------
+function bit `THIS_CLASS::is_wr_req();
+  if(this.rx_l1_op == L1_WR)  return 1;
+  else                        return 0;
+endfunction: is_wr_req
 
 `undef THIS_CLASS
 `endif

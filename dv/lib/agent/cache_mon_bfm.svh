@@ -34,6 +34,7 @@ endtask: run_phase
 //-------------------------------------------------------------------
 task `THIS_CLASS::coll_txn();
   cache_txn_c t;
+  cache_txn_c prev_t;
   t = new();
   `uvm_info("MONITOR_BFM", "start collect transaction", UVM_DEBUG)
   forever begin
