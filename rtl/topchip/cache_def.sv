@@ -4,14 +4,14 @@
 // ------------------------------------------------------------------
 // Cache state MESI protocol
 // ------------------------------------------------------------------
-// STATE 2:SHARED | 1:EXCLUSIVE/MODIFIED | 0: VALID
+// 2:SHARED | 1:EXCLUSIVE/MODIFIED | 0: VALID
 `define INVALID     3'b000
 `define EXCLUSIVE   3'b001
 `define MODIFIED    3'b011
 `define SHARED      3'b101
 
 // ------------------------------------------------------------------
-// Cache generates requests on Snooping Bus
+// SNP opcode encode (*x_snp_op)
 // ------------------------------------------------------------------
 `define SNP_NO_REQ  3'b000
 `define SNP_INV     3'b001
@@ -20,7 +20,7 @@
 `define SNP_WB      3'b100
 
 // ------------------------------------------------------------------
-// Snoop response
+// SNP response encode (*x_snp_rsp)
 // ------------------------------------------------------------------
 `define SNP_NO_RSP  2'b00
 `define SNP_FOUND   2'b01

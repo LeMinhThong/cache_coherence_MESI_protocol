@@ -11,8 +11,8 @@ module cache_mem #(
       parameter SADDR_WIDTH = PADDR_WIDTH-$clog2(BLK_WIDTH/8)
 ) (
       // System signals
-      input   logic clk,
-      input   logic rst_n,
+      input   logic                   clk,
+      input   logic                   rst_n,
 
       // L1 side
       input   logic [1:0]             rx_l1_op,
