@@ -1,17 +1,148 @@
-smock test
-- run string: make runall [TB_NAME=] [TEST_NAME=] [SEED=] [CMD_OPT=]
+run string: make runall [TB_NAME=] [TEST_NAME=] [SEED=] [CMD_OPT=]
 - default options:
   - TB_NAME=cache_mem_tb_top
-  - TEST_NAME=cache_base_test
+  - TEST_NAME=cache_base_test // empty test
   - SEED=random
   - CMD_OPT=
 
+//-------------------------------------------------------------------
+adjust to new version
 
+find dir/ -type f -exec sed -i 's/old_pattern/new_pattern/g' {} +
+
+l1_op_e   rx_l1_op    --> cd_op_e   cdr_op
+address_t rx_l1_addr  --> address_t cdr_addr
+data_t    rx_l1_data  --> data_t    cdr_data
+
+                      --> cd_rsp_e  cdt_rsp
+data_t    tx_l1_data  --> data_t    cdt_data
+
+                      --> cu_op_e   cut_op
+                      --> address_t cut_addr
+
+                      --> cu_rsp_e  cur_rsp
+                      --> data_t    cur_data
+
+snp_op_e  tx_snp_op   --> sd_op_e   sdt_op
+address_t tx_snp_addr --> address_t sdt_addr
+                      --> data_t    sdt_data
+
+snp_rsp_e rx_snp_rsp  --> sd_rsp_e  sdr_rsp
+data_t    rx_snp_data --> data_t    sdr_data
+
+snp_op_e  rx_snp_op   --> su_op_e   sur_op
+address_t rx_snp_addr --> address_t sur_addr
+
+snp_rsp_e tx_snp_rsp  --> su_rsp_e  sut_rsp
+data_t    tx_snp_data --> data_t    sut_data
+
+//-------------------------------------------------------------------
+operation:
+  L1 --> L2
+    RD
+    RFO // == RD + MARK_DIRTY
+    MARK_DIRTY
+    WB
+  L1 <-- L2
+    RD
+    INV
+    RDINV // == RD + INV
+  L2 --> SNP
+    SNP_RD
+    SNP_RFO
+    SNP_INV
+    SNP_WB
+  L2 <-- SNP
+    SNP_RD
+    SNP_RFO
+    SNP_INV
+
+//-------------------------------------------------------------------
+behavior
+L1 behavior
+  receive CPU request
+    read
+      miss
+        inv: RD
+        tag_mismatch
+          // check upcoming evicted block
+          clean: RD
+          dirty: WB -> RD
+      hit: send data to CPU
+    write
+      miss
+        inv: RFO -> write data to block
+        tag_mismatch
+          clean: RFO -> write data to block
+          dirty: WB -> RFO -> write data to block
+      hit: MARK_DIRTY
+  receive L2 request
+    RD
+      miss: hazard // L1 has to WB before evict dirty block -> L2 has data -> L2 no need init RD
+      hit
+        clean: hazard // if clean, no reason L2 have to init RD
+        dirty: deassert dirty -> RSP
+    RDINV
+      miss: hazard // L1 has to WB before evict dirty block -> L2 has data -> L2 no need init RD
+      hit:
+        clean: hazard // if clean, no reason L2 have to init RD
+        dirty: invalid -> RSP
+    INV
+      miss: pass -> RSP
+      hit:
+        clean: invalid -> RSP
+        dirty: hazard // L2 have to init RDINV instead because L2 known dirty
+
+L2
+  L1 request
+    CAC_RD
+      miss
+        inv: init SNP_RD -> RSP 
+        tag_mismatch: init SNP_RD -> RSP 
+      hit:
+        clean: RSP 
+        dirty: hazard // if dirty, this block has to be already located in L1
+    CAC_RFO
+      miss
+        inv: init SNP_RFO -> RSP 
+        tag_mismatch: init SNP_RFO -> RSP 
+      hit
+        clean: init SNP_INV -> RSP 
+        dirty: hazard // if dirty, this block has to be already located in L1
+    CAC_MD
+      miss: hazard // violate inclusive property
+      hit:
+        clean: init SNP_INV -> assert dirty -> RSP 
+        dirty: pass -> RSP 
+    CAC_WB
+      miss: hazard // violate inclusive property
+      hit:
+        clean: init SNP_INV -> assert dirty -> assign data // it expected dirty because L1 should have sent dirty anount before write back
+        dirty: assign data
+  SNP request
+    SNP_RD
+      miss: RSP
+      hit:
+        clean: RSP(data)
+        dirty: init SNP_WB -> RSP(data)
+    SNP_RFO
+      miss: RSP
+      hit:
+        clean: invalid -> RSP
+        dirty: init SNP_WB -> invalid -> RSP
+    SNP_INV
+      miss: RSP
+      hit:
+        clean: invalid -> RSP
+        dirty: hazard // if dirty so this block is only present in this cache, other cache can not init INV to SNP
+
+//-------------------------------------------------------------------
 When IO signals were changed, adjust following files
 - rtl
 - cache_if
 - cache_types & cache_def
 - tb
 - cache_txn (rand fields, uvm_object_utils, convert2string)
-- cache_drv (init_signals, get_and_drive)
-- cache_mon (asg_txn)
+- cache_drv_bfm (init_signals, get_and_drive)
+- cache_mon_bfm (asg_txn)
+
