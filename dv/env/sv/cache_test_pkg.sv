@@ -3,7 +3,7 @@
 
 package cache_test_pkg;
   import uvm_pkg::*;
-  `include "uvm_macros.svh";
+  `include "uvm_macros.svh"
 
   import cache_vip_pkg::*;
 
@@ -13,7 +13,8 @@ package cache_test_pkg;
   `include "snp_req_seq.sv"
 
   // Test
-  `include "cache_base_test.sv";
+  `include "cache_base_test.sv"
+  `include "rd_wr_test.svh"
 endpackage
 
 `endif

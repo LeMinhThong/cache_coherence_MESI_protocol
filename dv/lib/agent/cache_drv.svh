@@ -43,6 +43,7 @@ task `THIS_CLASS::run_phase(uvm_phase phase);
     begin
       drive_request();
     end
+
     begin
       reset_handler();
     end
@@ -55,7 +56,8 @@ task `THIS_CLASS::drive_request();
     reset_sem.get(1);
     reset_sem.put(1);
     seq_item_port.get(t_req);
-    `uvm_info("DRV", $sformatf("Received request from sequencer: %s", t_req.convert2string()), UVM_LOW)
+    //`uvm_info("DRV", $sformatf("t_req.sequence_id=%0h", t_req.get_sequence_id()), UVM_DEBUG)
+    `uvm_info("DRV", $sformatf("Received request from sequencer: %s", t_req.convert2string()), UVM_DEBUG)
     req_q.push_back(t_req);
     this.req_port.put(t_req);
   end
@@ -78,7 +80,7 @@ function bit `THIS_CLASS::try_put(cache_txn_c t_rsp);
     _t_rsp = req_q.pop_front();
     rsp_port.write(t_rsp);
   end else begin
-    `uvm_fatal("DRV", "reponse wit request queue is empty")
+    `uvm_fatal("DRV", "reponse with request queue is empty")
   end
   return 1;
 endfunction: try_put

@@ -1,7 +1,7 @@
 `ifndef CACHE_MON_BFM
 `define CACHE_MON_BFM
 `define THIS_CLASS cache_mon_bfm_c
-`define M_VIF m_vif.mon_cb
+`define M_VIF m_vif.drv_cb
 
 class `THIS_CLASS extends uvm_component;
   `uvm_component_utils(`THIS_CLASS)
@@ -46,19 +46,19 @@ endtask: coll_txn
 
 //-------------------------------------------------------------------
 function void `THIS_CLASS::asg_txn(cache_txn_c t);
-  t.rx_l1_op    = l1_op_e'(`M_VIF.rx_l1_op);
-  t.rx_l1_addr  = `M_VIF.rx_l1_addr;
-  t.rx_l1_data  = `M_VIF.rx_l1_data;
+  t.cdr_op    = l1_op_e'(`M_VIF.cdr_op);
+  t.cdr_addr  = `M_VIF.cdr_addr;
+  t.cdr_data  = `M_VIF.cdr_data;
   t.tx_l1_wait  = `M_VIF.tx_l1_wait;
-  t.tx_l1_data  = `M_VIF.tx_l1_data;
-  t.rx_snp_op   = snp_op_e'(`M_VIF.rx_snp_op);
-  t.rx_snp_addr = `M_VIF.rx_snp_addr;
-  t.rx_snp_data = `M_VIF.rx_snp_data;
-  t.rx_snp_rsp  = snp_rsp_e'(`M_VIF.rx_snp_rsp);
-  t.tx_snp_op   = snp_op_e'(`M_VIF.tx_snp_op);
-  t.tx_snp_addr = `M_VIF.tx_snp_addr;
-  t.tx_snp_data = `M_VIF.tx_snp_data;
-  t.tx_snp_rsp  = snp_rsp_e'(`M_VIF.tx_snp_rsp);
+  t.cdt_data  = `M_VIF.cdt_data;
+  t.sur_op   = snp_op_e'(`M_VIF.sur_op);
+  t.sur_addr = `M_VIF.sur_addr;
+  t.sdr_data = `M_VIF.sdr_data;
+  t.sdr_rsp  = snp_rsp_e'(`M_VIF.sdr_rsp);
+  t.sdt_op   = snp_op_e'(`M_VIF.sdt_op);
+  t.sdt_addr = `M_VIF.sdt_addr;
+  t.sut_data = `M_VIF.sut_data;
+  t.sut_rsp  = snp_rsp_e'(`M_VIF.sut_rsp);
 endfunction: asg_txn
 
 `undef M_VIF

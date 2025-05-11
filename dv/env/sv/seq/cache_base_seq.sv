@@ -14,18 +14,8 @@ class `THIS_CLASS extends uvm_sequence #(cache_txn_c, cache_txn_c);
   bit m_rand_seq;
   int m_rand_wr_rate;
 
-  // if m_rand_seq == 0
-  l1_op_e   m_l1_op;
-  address_t m_l1_addr;
-  data_t    m_l1_data;
-  snp_op_e  m_snp_op;
-  snp_rsp_e m_snp_rsp;
-  address_t m_snp_addr;
-  data_t    m_snp_data;
-
   extern  virtual task            body();
   extern  virtual task            gen_rand_seq();
-  extern  virtual task            gen_user_cfg_seq();
   extern  virtual task            send_seq(input cache_txn_c t_req, output cache_txn_c t_rsp);
   extern  virtual function  void  response_handler(uvm_sequence_item response);
   extern  virtual task            wait_for_resp(output cache_txn_c t_rsp);
@@ -34,19 +24,15 @@ class `THIS_CLASS extends uvm_sequence #(cache_txn_c, cache_txn_c);
     super.new(name);
     use_response_handler(1);
     m_sem = new(1);
-    //m_fix_rd0wr1 = -1;
     m_rand_wr_rate = 50;
   endfunction: new
 endclass: `THIS_CLASS
 
 //-------------------------------------------------------------------
 task `THIS_CLASS::body();
-  if(m_rand_seq)
-    gen_rand_seq();
-  else
-    gen_user_cfg_seq();
-
-  `uvm_info(get_type_name(), "Sequence complete", UVM_LOW);
+  `uvm_info(get_type_name(), "start sequence", UVM_LOW)
+  #50ns;
+  `uvm_info(get_type_name(), "Sequence complete", UVM_LOW)
 endtask: body
 
 //-------------------------------------------------------------------
@@ -55,23 +41,19 @@ task `THIS_CLASS::gen_rand_seq();
   cache_txn_c t_rsp = new();
 
   if(!t_req.randomize()) `uvm_fatal(get_type_name(), "sequence randomize fail");
-  `uvm_info(get_type_name(), $sformatf("generate random sequence: %s", t_req.convert2string()), UVM_LOW);
+  `uvm_info(get_type_name(), $sformatf("generate random sequence: %s", t_req.convert2string()), UVM_LOW)
   randcase
     m_rand_wr_rate:     t_req.set_as_wr_req();
     100-m_rand_wr_rate: t_req.set_as_rd_req();
   endcase
   if(t_req.is_wr_req()) begin
-    if(!std::randomize(t_req.rx_l1_data)) `uvm_fatal(get_type_name(), "randomize write data failed")
+    if(!std::randomize(t_req.cdr_data)) `uvm_fatal(get_type_name(), "randomize write data failed")
   end else begin
-    t_req.rx_l1_data = '0;
+    t_req.cdr_data = '0;
   end
   send_seq(t_req, t_rsp);
   #50ns;
 endtask: gen_rand_seq
-
-//-------------------------------------------------------------------
-task `THIS_CLASS::gen_user_cfg_seq();
-endtask: gen_user_cfg_seq
 
 //-------------------------------------------------------------------
 task `THIS_CLASS::send_seq(input cache_txn_c t_req, output cache_txn_c t_rsp);

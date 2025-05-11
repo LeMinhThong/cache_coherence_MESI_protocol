@@ -37,7 +37,7 @@ DV_INCDIR += +incdir+$(TB_DIR)
 
 #--------------------------------------------------------------------
 RTL_SRC += $(RTL_DIR)/topchip/cache_def.sv
-RTL_SRC += $(RTL_DIR)/subsystem/fsm_cpu_req_ctrl.sv
+RTL_SRC += $(RTL_DIR)/subsystem/fsm_l1_req_ctrl.sv
 RTL_SRC += $(RTL_DIR)/subsystem/fsm_snp_req_ctrl.sv
 RTL_SRC += $(RTL_DIR)/topchip/cache_mem.sv
 
@@ -79,10 +79,10 @@ vlog:
 
 #--------------------------------------------------------------------
 vsim:
-	vsim work.$(TB_NAME) +UVM_TESTNAME=$(TEST_NAME) -nodpiexports -novopt -sv_seed $(SEED) $(CMD_OPT) -wlf wave_dir/$(TEST_NAME).wlf -do "$(VSIM_RUN)" | tee -a run_dir/$(TEST_NAME).log
+	vsim work.$(TB_NAME) +UVM_VERBOSITY=DEBUG +UVM_TESTNAME=$(TEST_NAME) -nodpiexports -novopt -sv_seed $(SEED) $(CMD_OPT) -wlf wave_dir/$(TEST_NAME).wlf -do "$(VSIM_RUN)" | tee -a run_dir/$(TEST_NAME).log
 	sed 's/^#//' run_dir/$(TEST_NAME).log > tmp.log && mv tmp.log run_dir/$(TEST_NAME).log
 	sed -i '/  log -r \/\\*/d' run_dir/$(TEST_NAME).log
 
 #--------------------------------------------------------------------
-comp_rtl:
+vlog_rtl:
 	vlog -sv -lint $(RTL_INCDIR) $(RTL_SRC)
