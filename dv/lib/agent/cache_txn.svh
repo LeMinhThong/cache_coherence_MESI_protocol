@@ -6,62 +6,62 @@ class `THIS_CLASS extends uvm_sequence_item;
         int       TxnId;
   rand  type_e    Type;
 
-  rand  cdr_e   cdr_op;
-  rand  address_t cdr_addr;
-  rand  data_t    cdr_data;
+  rand  cdreq_e   cdreq_op;
+  rand  address_t cdreq_addr;
+  rand  data_t    cdreq_data;
 
-  rand  cdt_e  cdt_rsp;
-  rand  data_t    cdt_data;
+  rand  cursp_e   cursp_rsp;
+  rand  data_t    cursp_data;
 
-  rand  cut_e   cut_op;
-  rand  address_t cut_addr;
+  rand  cureq_e   cureq_op;
+  rand  address_t cureq_addr;
 
-  rand  cur_e  cur_rsp;
-  rand  data_t    cur_data;
+  rand  cdrsp_e   cdrsp_rsp;
+  rand  data_t    cdrsp_data;
 
-  rand  sdt_e   sdt_op;
-  rand  address_t sdt_addr;
-  rand  data_t    sdt_data;
+  rand  sdreq_e   sdreq_op;
+  rand  address_t sdreq_addr;
+  rand  data_t    sdreq_data;
 
-  rand  sdr_e  sdr_rsp;
-  rand  data_t    sdr_data;
+  rand  sursp_e   sursp_rsp;
+  rand  data_t    sursp_data;
 
-  rand  sur_e   sur_op;
-  rand  address_t sur_addr;
+  rand  sureq_e   sureq_op;
+  rand  address_t sureq_addr;
 
-  rand  sut_e  sut_rsp;
-  rand  data_t    sut_data;
+  rand  sdrsp_e   sdrsp_rsp;
+  rand  data_t    sdrsp_data;
 
   // ----------------------------------------------------------------
   `uvm_object_utils_begin(`THIS_CLASS)
-    `uvm_field_int  (           TxnId     ,UVM_DEFAULT)
-    `uvm_field_enum (type_e,    Type      ,UVM_DEFAULT)
+    `uvm_field_int  (         TxnId       ,UVM_DEFAULT)
+    `uvm_field_enum (type_e,  Type        ,UVM_DEFAULT)
 
-    `uvm_field_enum (cdr_e,   cdr_op    ,UVM_DEFAULT)
-    `uvm_field_int  (           cdr_addr  ,UVM_DEFAULT)
-    `uvm_field_int  (           cdr_data  ,UVM_DEFAULT)
+    `uvm_field_enum (cdreq_e, cdreq_op    ,UVM_DEFAULT)
+    `uvm_field_int  (         cdreq_addr  ,UVM_DEFAULT)
+    `uvm_field_int  (         cdreq_data  ,UVM_DEFAULT)
 
-    `uvm_field_enum (cdt_e,  cdt_rsp   ,UVM_DEFAULT)
-    `uvm_field_int  (           cdt_data  ,UVM_DEFAULT)
+    `uvm_field_enum (cursp_e, cursp_rsp   ,UVM_DEFAULT)
+    `uvm_field_int  (         cursp_data  ,UVM_DEFAULT)
 
-    `uvm_field_enum (cut_e,   cut_op    ,UVM_DEFAULT)
-    `uvm_field_int  (           cut_addr  ,UVM_DEFAULT)
+    `uvm_field_enum (cureq_e, cureq_op    ,UVM_DEFAULT)
+    `uvm_field_int  (         cureq_addr  ,UVM_DEFAULT)
 
-    `uvm_field_enum (cur_e,  cur_rsp   ,UVM_DEFAULT)
-    `uvm_field_int  (           cur_data  ,UVM_DEFAULT)
+    `uvm_field_enum (cdrsp_e, cdrsp_rsp   ,UVM_DEFAULT)
+    `uvm_field_int  (         cdrsp_data  ,UVM_DEFAULT)
 
-    `uvm_field_enum (sdt_e,   sdt_op    ,UVM_DEFAULT)
-    `uvm_field_int  (           sdt_addr  ,UVM_DEFAULT)
-    `uvm_field_int  (           sdt_data  ,UVM_DEFAULT)
+    `uvm_field_enum (sdreq_e, sdreq_op    ,UVM_DEFAULT)
+    `uvm_field_int  (         sdreq_addr  ,UVM_DEFAULT)
+    `uvm_field_int  (         sdreq_data  ,UVM_DEFAULT)
 
-    `uvm_field_enum (sdr_e,  sdr_rsp   ,UVM_DEFAULT)
-    `uvm_field_int  (           sdr_data  ,UVM_DEFAULT)
+    `uvm_field_enum (sursp_e, sursp_rsp   ,UVM_DEFAULT)
+    `uvm_field_int  (         sursp_data  ,UVM_DEFAULT)
 
-    `uvm_field_enum (sur_e,   sur_op    ,UVM_DEFAULT)
-    `uvm_field_int  (           sur_addr  ,UVM_DEFAULT)
+    `uvm_field_enum (sureq_e, sureq_op    ,UVM_DEFAULT)
+    `uvm_field_int  (         sureq_addr  ,UVM_DEFAULT)
 
-    `uvm_field_enum (sut_e,  sut_rsp   ,UVM_DEFAULT)
-    `uvm_field_int  (           sut_data  ,UVM_DEFAULT)
+    `uvm_field_enum (sdrsp_e, sdrsp_rsp   ,UVM_DEFAULT)
+    `uvm_field_int  (         sdrsp_data  ,UVM_DEFAULT)
   `uvm_object_utils_end
 
   // ----------------------------------------------------------------
@@ -84,34 +84,34 @@ function string `THIS_CLASS::convert2string();
   string str;
   string tmp_str;
 
-  str = {str, $sformatf("TxnId=%0d  ",      TxnId         )};
-  str = {str, $sformatf("Type=%s  ",        Type.name()   )};
+  str = {str, $sformatf("TxnId=%0d  ",        TxnId             )};
+  str = {str, $sformatf("Type=%s  ",          Type.name()       )};
 
-  str = {str, $sformatf("cdr_op=%s  ",      cdr_op.name() )};
-  str = {str, $sformatf("cdr_addr=0x%0h  ", cdr_addr      )};
-  str = {str, $sformatf("cdr_data=0x%0h  ", cdr_data      )};
+  str = {str, $sformatf("cdreq_op=%s  ",      cdreq_op.name()   )};
+  str = {str, $sformatf("cdreq_addr=0x%0h  ", cdreq_addr        )};
+  str = {str, $sformatf("cdreq_data=0x%0h  ", cdreq_data        )};
 
-  str = {str, $sformatf("cdt_rsp=%s  ",     cdt_rsp.name())};
-  str = {str, $sformatf("cdt_data=0x%0h  ", cdt_data      )};
+  str = {str, $sformatf("cursp_rsp=%s  ",     cursp_rsp.name()  )};
+  str = {str, $sformatf("cursp_data=0x%0h  ", cursp_data        )};
 
-  str = {str, $sformatf("cut_op=%s  ",      cut_op.name() )};
-  str = {str, $sformatf("cut_addr=0x%0h  ", cut_addr      )};
+  str = {str, $sformatf("cureq_op=%s  ",      cureq_op.name()   )};
+  str = {str, $sformatf("cureq_addr=0x%0h  ", cureq_addr        )};
 
-  str = {str, $sformatf("cur_rsp=%s  ",     cur_rsp.name())};
-  str = {str, $sformatf("cur_data=0x%0h  ", cur_data      )};
+  str = {str, $sformatf("cdrsp_rsp=%s  ",     cdrsp_rsp.name()  )};
+  str = {str, $sformatf("cdrsp_data=0x%0h  ", cdrsp_data        )};
 
-  str = {str, $sformatf("sdt_op=%s  ",      sdt_op.name() )};
-  str = {str, $sformatf("sdt_addr=0x%0h  ", sdt_addr      )};
-  str = {str, $sformatf("sdt_data=0x%0h  ", sdt_data      )};
+  str = {str, $sformatf("sdreq_op=%s  ",      sdreq_op.name()   )};
+  str = {str, $sformatf("sdreq_addr=0x%0h  ", sdreq_addr        )};
+  str = {str, $sformatf("sdreq_data=0x%0h  ", sdreq_data        )};
 
-  str = {str, $sformatf("sdr_rsp=%s  ",     sdr_rsp.name())};
-  str = {str, $sformatf("sdr_data=0x%0h  ", sdr_data      )};
+  str = {str, $sformatf("sursp_rsp=%s  ",     sursp_rsp.name()  )};
+  str = {str, $sformatf("sursp_data=0x%0h  ", sursp_data        )};
 
-  str = {str, $sformatf("sur_op=%s  ",      sur_op.name() )};
-  str = {str, $sformatf("sur_addr=0x%0h  ", sur_addr      )};
+  str = {str, $sformatf("sureq_op=%s  ",      sureq_op.name()   )};
+  str = {str, $sformatf("sureq_addr=0x%0h  ", sureq_addr        )};
 
-  str = {str, $sformatf("sut_rsp=%s  ",     sut_rsp.name())};
-  str = {str, $sformatf("sut_data=0x%0h  ", sut_data      )};
+  str = {str, $sformatf("sdrsp_rsp=%s  ",     sdrsp_rsp.name()  )};
+  str = {str, $sformatf("sdrsp_data=0x%0h  ", sdrsp_data        )};
 
   return str;
 endfunction: convert2string
@@ -120,19 +120,19 @@ endfunction: convert2string
 //function void `THIS_CLASS::cloneFields(cache_txn_c t);
 //  this.TxnId        = t.TxnId;
 //  this.Type         = t.Type;
-//  this.cdr_op     = t.cdr_op;
-//  this.cdr_addr   = t.cdr_addr;
-//  this.cdr_data   = t.cdr_data;
+//  this.cdreq_op     = t.cdreq_op;
+//  this.cdreq_addr   = t.cdreq_addr;
+//  this.cdreq_data   = t.cdreq_data;
 //  this.tx_l1_wait   = t.tx_l1_wait;
-//  this.cdt_data   = t.cdt_data;
-//  this.sur_op    = t.sur_op;
-//  this.sur_addr  = t.sur_addr;
-//  this.sdr_data  = t.sdr_data;
-//  this.sdr_rsp   = t.sdr_rsp;
-//  this.sdt_op    = t.sdt_op;
-//  this.sdt_addr  = t.sdt_addr;
-//  this.sut_data  = t.sut_data;
-//  this.sut_rsp   = t.sut_rsp;
+//  this.cursp_data   = t.cursp_data;
+//  this.sureq_op    = t.sureq_op;
+//  this.sureq_addr  = t.sureq_addr;
+//  this.sursp_data  = t.sursp_data;
+//  this.sursp_rsp   = t.sursp_rsp;
+//  this.sdreq_op    = t.sdreq_op;
+//  this.sdreq_addr  = t.sdreq_addr;
+//  this.sdrsp_data  = t.sdrsp_data;
+//  this.sdrsp_rsp   = t.sdrsp_rsp;
 //endfunction: cloneFields
 
 // ----------------------------------------------------------------
@@ -145,18 +145,18 @@ endfunction: comp
 
 // ----------------------------------------------------------------
 function void `THIS_CLASS::set_as_wr_req();
-  this.cdr_op = CDR_WB;
+  this.cdreq_op = CDREQ_WB;
 endfunction: set_as_wr_req
 
 // ----------------------------------------------------------------
 function void `THIS_CLASS::set_as_rd_req();
-  this.cdr_op = CDR_RD;
+  this.cdreq_op = CDREQ_RD;
 endfunction: set_as_rd_req
 
 // ----------------------------------------------------------------
 function bit `THIS_CLASS::is_wr_req();
-  if(this.cdr_op == CDR_WB) return 1;
-  else                      return 0;
+  if(this.cdreq_op == CDREQ_WB) return 1;
+  else                          return 0;
 endfunction: is_wr_req
 
 `undef THIS_CLASS

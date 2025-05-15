@@ -18,46 +18,47 @@ module cache_mem_tb_top;
   logic                   clk       ;
   logic                   rst_n     ;
 
-  wire                    cdr_valid ;
-  wire                    cdr_ready ;
-  wire  [2:0]             cdr_op    ;
-  wire  [SADDR_WIDTH-1:0] cdr_addr  ;
-  wire  [BLK_WIDTH-1:0]   cdr_data  ;
+  wire                    cdreq_valid ;
+  wire  [2:0]             cdreq_op    ;
+  wire  [SADDR_WIDTH-1:0] cdreq_addr  ;
+  wire  [BLK_WIDTH-1:0]   cdreq_data  ;
+  wire                    cdreq_ready ;
 
-  wire                    cdt_valid ;
-  wire                    cdt_ready ;
-  wire  [1:0]             cdt_rsp   ;
-  wire  [BLK_WIDTH-1:0]   cdt_data  ;
+  wire                    cursp_valid ;
+  wire  [1:0]             cursp_rsp   ;
+  wire  [BLK_WIDTH-1:0]   cursp_data  ;
+  wire                    cursp_ready ;
 
-  wire                    cut_valid ;
-  wire                    cut_ready ;
-  wire  [1:0]             cut_op    ;
-  wire  [SADDR_WIDTH-1:0] cut_addr  ;
+  wire                    cureq_valid ;
+  wire  [1:0]             cureq_op    ;
+  wire  [SADDR_WIDTH-1:0] cureq_addr  ;
+  wire                    cureq_ready ;
 
-  wire                    cur_valid ;
-  wire                    cur_ready ;
-  wire  [1:0]             cur_rsp   ;
-  wire  [BLK_WIDTH-1:0]   cur_data  ;
+  wire                    cdrsp_valid ;
+  wire  [1:0]             cdrsp_rsp   ;
+  wire  [BLK_WIDTH-1:0]   cdrsp_data  ;
+  wire                    cdrsp_ready ;
 
-  wire                    sdt_valid ;
-  wire                    sdt_ready ;
-  wire  [2:0]             sdt_op    ;
-  wire  [SADDR_WIDTH-1:0] sdt_addr  ;
-  wire  [BLK_WIDTH-1:0]   sdt_data  ;
+  wire                    sdreq_valid ;
+  wire  [2:0]             sdreq_op    ;
+  wire  [SADDR_WIDTH-1:0] sdreq_addr  ;
+  wire  [BLK_WIDTH-1:0]   sdreq_data  ;
+  wire                    sdreq_ready ;
 
-  wire                    sdr_valid ;
-  wire                    sdr_ready ;
-  wire  [2:0]             sdr_rsp   ;
-  wire  [BLK_WIDTH-1:0]   sdr_data  ;
+  wire                    sursp_valid ;
+  wire  [2:0]             sursp_rsp   ;
+  wire  [BLK_WIDTH-1:0]   sursp_data  ;
+  wire                    sursp_ready ;
 
-  wire                    sur_valid ;
-  wire                    sur_ready ;
-  wire  [1:0]             sur_op    ;
-  wire  [SADDR_WIDTH-1:0] sur_addr  ;
+  wire                    sureq_valid ;
+  wire  [1:0]             sureq_op    ;
+  wire  [SADDR_WIDTH-1:0] sureq_addr  ;
+  wire                    sureq_ready ;
 
-  wire                    sut_valid ;
-  wire                    sut_ready ;
-  wire  [1:0]             sut_rsp   ;
+  wire                    sdrsp_valid ;
+  wire  [1:0]             sdrsp_rsp   ;
+  wire  [BLK_WIDTH-1:0]   sdrsp_data  ;
+  wire                    sdrsp_ready ;
 
   // ----------------------------------------------------------------
   cache_if #(
@@ -68,46 +69,47 @@ module cache_mem_tb_top;
         .clk        (clk       ),
         .rst_n      (rst_n     ),
 
-        .cdr_valid  (cdr_valid ),
-        .cdr_ready  (cdr_ready ),
-        .cdr_op     (cdr_op    ),
-        .cdr_addr   (cdr_addr  ),
-        .cdr_data   (cdr_data  ),
+        .cdreq_valid  (cdreq_valid ),
+        .cdreq_op     (cdreq_op    ),
+        .cdreq_addr   (cdreq_addr  ),
+        .cdreq_data   (cdreq_data  ),
+        .cdreq_ready  (cdreq_ready ),
 
-        .cdt_valid  (cdt_valid ),
-        .cdt_ready  (cdt_ready ),
-        .cdt_rsp    (cdt_rsp   ),
-        .cdt_data   (cdt_data  ),
+        .cursp_valid  (cursp_valid ),
+        .cursp_rsp    (cursp_rsp   ),
+        .cursp_data   (cursp_data  ),
+        .cursp_ready  (cursp_ready ),
 
-        .cut_valid  (cut_valid ),
-        .cut_ready  (cut_ready ),
-        .cut_op     (cut_op    ),
-        .cut_addr   (cut_addr  ),
+        .cureq_valid  (cureq_valid ),
+        .cureq_op     (cureq_op    ),
+        .cureq_addr   (cureq_addr  ),
+        .cureq_ready  (cureq_ready ),
 
-        .cur_valid  (cur_valid ),
-        .cur_ready  (cur_ready ),
-        .cur_rsp    (cur_rsp   ),
-        .cur_data   (cur_data  ),
+        .cdrsp_valid  (cdrsp_valid ),
+        .cdrsp_rsp    (cdrsp_rsp   ),
+        .cdrsp_data   (cdrsp_data  ),
+        .cdrsp_ready  (cdrsp_ready ),
 
-        .sdt_valid  (sdt_valid ),
-        .sdt_ready  (sdt_ready ),
-        .sdt_op     (sdt_op    ),
-        .sdt_addr   (sdt_addr  ),
-        .sdt_data   (sdt_data  ),
+        .sdreq_valid  (sdreq_valid ),
+        .sdreq_op     (sdreq_op    ),
+        .sdreq_addr   (sdreq_addr  ),
+        .sdreq_data   (sdreq_data  ),
+        .sdreq_ready  (sdreq_ready ),
 
-        .sdr_valid  (sdr_valid ),
-        .sdr_ready  (sdr_ready ),
-        .sdr_rsp    (sdr_rsp   ),
-        .sdr_data   (sdr_data  ),
+        .sursp_valid  (sursp_valid ),
+        .sursp_rsp    (sursp_rsp   ),
+        .sursp_data   (sursp_data  ),
+        .sursp_ready  (sursp_ready ),
 
-        .sur_valid  (sur_valid ),
-        .sur_ready  (sur_ready ),
-        .sur_op     (sur_op    ),
-        .sur_addr   (sur_addr  ),
+        .sureq_valid  (sureq_valid ),
+        .sureq_op     (sureq_op    ),
+        .sureq_addr   (sureq_addr  ),
+        .sureq_ready  (sureq_ready ),
 
-        .sut_valid  (sut_valid ),
-        .sut_ready  (sut_ready ),
-        .sut_rsp    (sut_rsp   )
+        .sdrsp_valid  (sdrsp_valid ),
+        .sdrsp_ready  (sdrsp_ready ),
+        .sdrsp_rsp    (sdrsp_rsp   ),
+        .sdrsp_data   (sdrsp_data  )
   );
 
   // ----------------------------------------------------------------
@@ -119,46 +121,47 @@ module cache_mem_tb_top;
         .clk        (clk       ),
         .rst_n      (rst_n     ),
 
-        .cdr_valid  (cdr_valid ),
-        .cdr_ready  (cdr_ready ),
-        .cdr_op     (cdr_op    ),
-        .cdr_addr   (cdr_addr  ),
-        .cdr_data   (cdr_data  ),
+        .cdreq_valid  (cdreq_valid ),
+        .cdreq_op     (cdreq_op    ),
+        .cdreq_addr   (cdreq_addr  ),
+        .cdreq_data   (cdreq_data  ),
+        .cdreq_ready  (cdreq_ready ),
 
-        .cdt_valid  (cdt_valid ),
-        .cdt_ready  (cdt_ready ),
-        .cdt_rsp    (cdt_rsp   ),
-        .cdt_data   (cdt_data  ),
+        .cursp_valid  (cursp_valid ),
+        .cursp_rsp    (cursp_rsp   ),
+        .cursp_data   (cursp_data  ),
+        .cursp_ready  (cursp_ready ),
 
-        .cut_valid  (cut_valid ),
-        .cut_ready  (cut_ready ),
-        .cut_op     (cut_op    ),
-        .cut_addr   (cut_addr  ),
+        .cureq_valid  (cureq_valid ),
+        .cureq_op     (cureq_op    ),
+        .cureq_addr   (cureq_addr  ),
+        .cureq_ready  (cureq_ready ),
 
-        .cur_valid  (cur_valid ),
-        .cur_ready  (cur_ready ),
-        .cur_rsp    (cur_rsp   ),
-        .cur_data   (cur_data  ),
+        .cdrsp_valid  (cdrsp_valid ),
+        .cdrsp_rsp    (cdrsp_rsp   ),
+        .cdrsp_data   (cdrsp_data  ),
+        .cdrsp_ready  (cdrsp_ready ),
 
-        .sdt_valid  (sdt_valid ),
-        .sdt_ready  (sdt_ready ),
-        .sdt_op     (sdt_op    ),
-        .sdt_addr   (sdt_addr  ),
-        .sdt_data   (sdt_data  ),
+        .sdreq_valid  (sdreq_valid ),
+        .sdreq_op     (sdreq_op    ),
+        .sdreq_addr   (sdreq_addr  ),
+        .sdreq_data   (sdreq_data  ),
+        .sdreq_ready  (sdreq_ready ),
 
-        .sdr_valid  (sdr_valid ),
-        .sdr_ready  (sdr_ready ),
-        .sdr_rsp    (sdr_rsp   ),
-        .sdr_data   (sdr_data  ),
+        .sursp_valid  (sursp_valid ),
+        .sursp_rsp    (sursp_rsp   ),
+        .sursp_data   (sursp_data  ),
+        .sursp_ready  (sursp_ready ),
 
-        .sur_valid  (sur_valid ),
-        .sur_ready  (sur_ready ),
-        .sur_op     (sur_op    ),
-        .sur_addr   (sur_addr  ),
+        .sureq_valid  (sureq_valid ),
+        .sureq_op     (sureq_op    ),
+        .sureq_addr   (sureq_addr  ),
+        .sureq_ready  (sureq_ready ),
 
-        .sut_valid  (sut_valid ),
-        .sut_ready  (sut_ready ),
-        .sut_rsp    (sut_rsp   )
+        .sdrsp_valid  (sdrsp_valid ),
+        .sdrsp_rsp    (sdrsp_rsp   ),
+        .sdrsp_data   (sdrsp_data  ),
+        .sdrsp_ready  (sdrsp_ready )
   );
 
   //-------------------------------------------------------------------

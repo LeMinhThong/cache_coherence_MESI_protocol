@@ -18,52 +18,52 @@ typedef enum reg [2:0] {
 } st_e;
 
 typedef enum reg [2:0] {
-  CDR_RD  = 3'b000,
-  CDR_RFO = 3'b001,
-  CDR_WB  = 3'b010,
-  CDR_MD  = 3'b011
-} cdr_e;
+  CDREQ_RD  = 3'b000,
+  CDREQ_RFO = 3'b001,
+  CDREQ_WB  = 3'b010,
+  CDREQ_MD  = 3'b011
+} cdreq_e;
 
 typedef enum reg [1:0] {
-  CDT_OKAY  = 2'b00,
-  CDT_ERROR = 2'b01
-} cdt_e;
+  CURSP_OKAY  = 2'b00,
+  CURSP_ERROR = 2'b01
+} cursp_e;
 
 typedef enum reg [1:0] {
-  CUT_RD    = 2'b00,
-  CUT_INV   = 2'b01,
-  CUT_RDINV = 2'b10
-} cut_e;
+  CUREQ_RD    = 2'b00,
+  CUREQ_INV   = 2'b01,
+  CUREQ_RDINV = 2'b10
+} cureq_e;
 
 typedef enum reg [1:0] {
-  CUR_OKAY  = 2'b00,
-  CUR_ERROR = 2'b01
-} cur_e;
+  CDRSP_OKAY  = 2'b00,
+  CDRSP_ERROR = 2'b01
+} cdrsp_e;
 
 typedef enum reg [2:0] {
-  SDT_RD  = 3'b000,
-  SDT_RFO = 3'b001,
-  SDT_INV = 3'b010,
-  SDT_WB  = 3'b011
-} sdt_e;
+  SDREQ_RD  = 3'b000,
+  SDREQ_RFO = 3'b001,
+  SDREQ_INV = 3'b010,
+  SDREQ_WB  = 3'b011
+} sdreq_e;
 
 typedef enum reg [2:0] {
-  SDR_OKAY  = 3'b000,
-  SDR_FETCH = 3'b001,
-  SDR_SNOOP = 3'b010,
-  SDR_ERROR = 3'b011
-} sdr_e;
+  SURSP_OKAY  = 3'b000,
+  SURSP_FETCH = 3'b001,
+  SURSP_SNOOP = 3'b010,
+  SURSP_ERROR = 3'b011
+} sursp_e;
 
 typedef enum reg [1:0] {
-  SUR_RD    = 2'b00,
-  SUR_RFO   = 2'b01,
-  SUR_INV   = 2'b10
-} sur_e;
+  SUREQ_RD    = 2'b00,
+  SUREQ_RFO   = 2'b01,
+  SUREQ_INV   = 2'b10
+} sureq_e;
 
 typedef enum reg [1:0] {
-  SUT_OKAY     = 2'b00,
-  SUT_INVALID  = 2'b01,
-  SUT_ERROR    = 2'b10
-} sut_e;
+  SDRSP_OKAY     = 2'b00,
+  SDRSP_INVALID  = 2'b01,
+  SDRSP_ERROR    = 2'b10
+} sdrsp_e;
 
 `endif

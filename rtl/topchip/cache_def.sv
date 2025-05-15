@@ -11,61 +11,61 @@
 `define SHARED      3'b101
 
 // ------------------------------------------------------------------
-// cdr_op encode
+// cdreq_op encode
 // ------------------------------------------------------------------
-`define CDR_RD    3'b000
-`define CDR_RFO   3'b001
-`define CDR_WB    3'b010
-`define CDR_MD    3'b011
+`define CDREQ_RD    3'b000
+`define CDREQ_RFO   3'b001
+`define CDREQ_WB    3'b010
+`define CDREQ_MD    3'b011
 
 // ------------------------------------------------------------------
-// cdt_rsp encode
+// cursp_rsp encode
 // ------------------------------------------------------------------
-`define CDT_OKAY  2'b00
-`define CDT_ERROR 2'b01
+`define CURSP_OKAY  2'b00
+`define CURSP_ERROR 2'b01
 
 // ------------------------------------------------------------------
-// cut_op encode
+// cureq_op encode
 // ------------------------------------------------------------------
-`define CUT_RD    2'b00
-`define CUT_INV   2'b01
-`define CUT_RDINV 2'b10
+`define CUREQ_RD    2'b00
+`define CUREQ_INV   2'b01
+`define CUREQ_RDINV 2'b10
 
 // ------------------------------------------------------------------
-// cur_rsp encode
+// cdrsp_rsp encode
 // ------------------------------------------------------------------
-`define CUR_OKAY  2'b00
-`define CUR_ERROR 2'b01
+`define CDRSP_OKAY  2'b00
+`define CDRSP_ERROR 2'b01
 
 // ------------------------------------------------------------------
-// sdt_op encode
+// sdreq_op encode
 // ------------------------------------------------------------------
-`define SDT_RD    3'b000
-`define SDT_RFO   3'b001
-`define SDT_INV   3'b010
-`define SDT_WB    3'b011
+`define SDREQ_RD    3'b000
+`define SDREQ_RFO   3'b001
+`define SDREQ_INV   3'b010
+`define SDREQ_WB    3'b011
 
 // ------------------------------------------------------------------
-// sdr_rsp encode
+// sursp_rsp encode
 // ------------------------------------------------------------------
-`define SDR_OKAY  3'b000
-`define SDR_FETCH 3'b001
-`define SDR_SNOOP 3'b010
-`define SDR_ERROR 3'b011
+`define SURSP_OKAY  3'b000
+`define SURSP_FETCH 3'b001
+`define SURSP_SNOOP 3'b010
+`define SURSP_ERROR 3'b011
 
 // ------------------------------------------------------------------
-// sur_op encode
+// sureq_op encode
 // ------------------------------------------------------------------
-`define SUR_RD    2'b00
-`define SUR_RFO   2'b01
-`define SUR_INV   2'b10
+`define SUREQ_RD    2'b00
+`define SUREQ_RFO   2'b01
+`define SUREQ_INV   2'b10
 
 // ------------------------------------------------------------------
-// sut_rsp encode
+// sdrsp_rsp encode
 // ------------------------------------------------------------------
-`define SUT_OKAY  2'b00
-`define SUT_INV   2'b01
-`define SUT_ERROR 2'b10
+`define SDRSP_OKAY  2'b00
+`define SDRSP_INV   2'b01
+`define SDRSP_ERROR 2'b10
 
 // ------------------------------------------------------------------
 // partition of physiscal address

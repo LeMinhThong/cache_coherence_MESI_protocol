@@ -47,9 +47,9 @@ task `THIS_CLASS::gen_rand_seq();
     100-m_rand_wr_rate: t_req.set_as_rd_req();
   endcase
   if(t_req.is_wr_req()) begin
-    if(!std::randomize(t_req.cdr_data)) `uvm_fatal(get_type_name(), "randomize write data failed")
+    if(!std::randomize(t_req.cdreq_data)) `uvm_fatal(get_type_name(), "randomize write data failed")
   end else begin
-    t_req.cdr_data = '0;
+    t_req.cdreq_data = '0;
   end
   send_seq(t_req, t_rsp);
   #50ns;

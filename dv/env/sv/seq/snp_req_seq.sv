@@ -5,11 +5,11 @@
 class `THIS_CLASS extends cache_base_seq_c;
   `uvm_object_utils(`THIS_CLASS)
 
-  sur_e  m_op;
+  sureq_e  m_op;
   address_t m_addr;
 
   extern  virtual task            body();
-  extern  virtual function  void  config_seq(sur_e op, address_t addr);
+  extern  virtual function  void  config_seq(sureq_e op, address_t addr);
 
   function new(string name="`THIS_CLASS");
     super.new(name);
@@ -24,8 +24,8 @@ task `THIS_CLASS::body();
   `uvm_info(get_type_name(), "start body", UVM_DEBUG);
   assert(randomize(t_req) with {
     t_req.Type        == SNP_REQ;
-    t_req.sur_op   == m_op;
-    t_req.sur_addr == m_addr;
+    t_req.sureq_op   == m_op;
+    t_req.sureq_addr == m_addr;
   }) else `uvm_fatal(get_type_name(), "randomize transaction with failed")
 
   send_seq(t_req, t_rsp);
@@ -33,7 +33,7 @@ task `THIS_CLASS::body();
 endtask: body
 
 //-------------------------------------------------------------------
-function void `THIS_CLASS::config_seq(sur_e op, address_t addr);
+function void `THIS_CLASS::config_seq(sureq_e op, address_t addr);
   m_op    = op;
   m_addr  = addr;
 endfunction: config_seq

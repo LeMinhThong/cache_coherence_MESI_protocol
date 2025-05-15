@@ -2,18 +2,17 @@
 `define FSM_l1_REQ_CTRL_SV
 
 `include "cache_def.sv"
+import cache_pkg::*;
 
 module fsm_l1_req_ctrl (
-      input   logic [2:0]   curSt   ,
-      input   logic         wr_hit  ,
-      input   logic         rd_hit  ,
-      input   logic         wr_miss ,
-      input   logic         rd_miss ,
-      input   logic [2:0]   snp_rsp ,
+      input   logic [2:0] blk_curSt,
+      input   logic [3:0] req_status,
+      input   logic [2:0] req_curSt,
+      input   logic [2:0] sursp_rsp,
 
-      output  logic [2:0]   nxtSt   ,
-      output  logic         cdt_rsp ,
-      output  logic [2:0]   snp_req 
+      output  logic [2:0] blk_nxtSt,
+      output  logic       cursp_rsp,
+      output  logic [2:0] init_sdreq 
 );
 
   localparam READ_HIT   = 0;
@@ -21,99 +20,59 @@ module fsm_l1_req_ctrl (
   localparam READ_MISS  = 2;
   localparam WRITE_MISS = 3;
 
-  logic [3:0] rd_wr_hit_miss;
+  //-----------------------------------------------------------------
+  //assign snp_wb   = ((blk_curSt == `MODIFIED) && (wr_miss || rd_miss)) ? 1'b1 : 1'b0;
+  //assign cursp_rsp = wr_miss || rd_miss;
 
   //-----------------------------------------------------------------
-  //assign snp_wb   = ((curSt == `MODIFIED) && (wr_miss || rd_miss)) ? 1'b1 : 1'b0;
-  assign rd_wr_hit_miss = {wr_miss, rd_miss, wr_hit, rd_hit};
-  //assign cdt_rsp = ((wr_miss || rd_miss) && (snp_rsp == `SDT_RD)) ? 1'b1 : 1'b0;
-  assign cdt_rsp = wr_miss || rd_miss;
-
+  // cache state fsm
   //-----------------------------------------------------------------
   always_comb begin
-    snp_req = `SDT_RD;
-    nxtSt   = `INVALID;
+    blk_nxtSt = `INVALID;
     case(1'b1)
-      rd_wr_hit_miss[READ_HIT]:
+      req_status[READ_HIT]:   blk_nxtSt = blk_curSt;
+      req_status[WRITE_HIT]:  blk_nxtSt = `MODIFIED;
+      req_status[READ_MISS]:
             begin
-              case(curSt)
-                `EXCLUSIVE:
-                      begin
-                        snp_req = `SDT_RD;
-                        nxtSt   = `EXCLUSIVE;
-                      end
-                `MODIFIED:
-                      begin
-                        snp_req = `SDT_RD;
-                        nxtSt   = `MODIFIED;
-                      end
-                `SHARED:
-                      begin
-                        snp_req = `SDT_RD;
-                        nxtSt   = `SHARED;
-                      end
-                default: ;
-              endcase // curSt
+              if(req_curSt != REQ_RSP_CURSP) // REQ_RSP
+                blk_nxtSt = `INVALID;
+              else begin
+                case(sursp_rsp)
+                  `SURSP_SNOOP: blk_nxtSt = `SHARED;
+                  `SURSP_FETCH: blk_nxtSt = `EXCLUSIVE;
+                  default: ;
+                endcase // sursp_rsp
+              end
             end
-      rd_wr_hit_miss[WRITE_HIT]:
+      req_status[WRITE_MISS]:
             begin
-              case(curSt)
-                `EXCLUSIVE:
-                      begin
-                        snp_req = `SDT_RD;
-                        nxtSt   = `MODIFIED;
-                      end
-                `MODIFIED:
-                      begin
-                        snp_req = `SDT_RD;
-                        nxtSt   = `MODIFIED;
-                      end
-                `SHARED:
-                      begin
-                        snp_req = `SDT_INV;
-                        nxtSt   = `MODIFIED;
-                      end
-                default: ;
-              endcase // curSt
+              if(req_curSt != REQ_RSP_CURSP) // REQ_RSP
+                blk_nxtSt = `INVALID;
+              else
+                blk_nxtSt = `MODIFIED;
             end
-      rd_wr_hit_miss[READ_MISS]:
+      default: ;
+    endcase // req_status
+  end
+
+  //-----------------------------------------------------------------
+  // initiate downstream snoop request
+  //-----------------------------------------------------------------
+  always_comb begin
+    init_sdreq = `SDREQ_RD;
+    case(1'b1)
+      req_status[READ_HIT]:   init_sdreq = `SDREQ_RD;
+      req_status[WRITE_HIT]:
             begin
-              case(snp_rsp)
-                `SDR_OKAY:
-                      begin
-                        snp_req = `SDT_RD;
-                        nxtSt   = `INVALID;
-                      end
-                `SDR_SNOOP:
-                      begin
-                        snp_req = `SDT_RD;
-                        nxtSt   = `SHARED;
-                      end
-                `SDR_FETCH:
-                      begin
-                        snp_req = `SDT_RD;
-                        nxtSt   = `EXCLUSIVE;
-                      end
-                default: ;
-              endcase // snp_rsp
+              if(blk_curSt == `SHARED)
+                init_sdreq = `SDREQ_INV;
+              else
+                init_sdreq = `SDREQ_RD;
             end
-      rd_wr_hit_miss[WRITE_MISS]:
-            begin
-              case(snp_rsp)
-                `SDR_OKAY:
-                      begin
-                        snp_req = `SDT_RFO;
-                        nxtSt   = `INVALID;
-                      end
-                `SDR_SNOOP, `SDR_FETCH:
-                      begin
-                        snp_req = `SDT_RD;
-                        nxtSt   = `MODIFIED;
-                      end
-                default: ;
-              endcase // snp_rsp
-            end
-    endcase // rd_wr_hit_miss
+      req_status[READ_MISS]:  init_sdreq = `SDREQ_RD;
+      req_status[WRITE_MISS]: init_sdreq = `SDREQ_RFO;
+      default: ;
+    endcase // req_status
   end
 endmodule // fsm_l1_req_ctrl
 

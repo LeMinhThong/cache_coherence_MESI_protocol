@@ -46,19 +46,19 @@ endtask: coll_txn
 
 //-------------------------------------------------------------------
 function void `THIS_CLASS::asg_txn(cache_txn_c t);
-  t.cdr_op    = l1_op_e'(`M_VIF.cdr_op);
-  t.cdr_addr  = `M_VIF.cdr_addr;
-  t.cdr_data  = `M_VIF.cdr_data;
+  t.cdreq_op    = l1_op_e'(`M_VIF.cdreq_op);
+  t.cdreq_addr  = `M_VIF.cdreq_addr;
+  t.cdreq_data  = `M_VIF.cdreq_data;
   t.tx_l1_wait  = `M_VIF.tx_l1_wait;
-  t.cdt_data  = `M_VIF.cdt_data;
-  t.sur_op   = snp_op_e'(`M_VIF.sur_op);
-  t.sur_addr = `M_VIF.sur_addr;
-  t.sdr_data = `M_VIF.sdr_data;
-  t.sdr_rsp  = snp_rsp_e'(`M_VIF.sdr_rsp);
-  t.sdt_op   = snp_op_e'(`M_VIF.sdt_op);
-  t.sdt_addr = `M_VIF.sdt_addr;
-  t.sut_data = `M_VIF.sut_data;
-  t.sut_rsp  = snp_rsp_e'(`M_VIF.sut_rsp);
+  t.cursp_data  = `M_VIF.cursp_data;
+  t.sureq_op   = snp_op_e'(`M_VIF.sureq_op);
+  t.sureq_addr = `M_VIF.sureq_addr;
+  t.sursp_data = `M_VIF.sursp_data;
+  t.sursp_rsp  = snp_rsp_e'(`M_VIF.sursp_rsp);
+  t.sdreq_op   = snp_op_e'(`M_VIF.sdreq_op);
+  t.sdreq_addr = `M_VIF.sdreq_addr;
+  t.sdrsp_data = `M_VIF.sdrsp_data;
+  t.sdrsp_rsp  = snp_rsp_e'(`M_VIF.sdrsp_rsp);
 endfunction: asg_txn
 
 `undef M_VIF

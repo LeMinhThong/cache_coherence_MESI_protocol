@@ -75,25 +75,25 @@ L1 behavior
   receive L2 request
     RD
       check cache miss or hit
-        miss: unexpected
+        miss: unreachable
         // L2 init RD because want update dirty block
         // miss indicates that L1 had eviected dirty block, but before that L1 has to init WB -> L2
         // if so L2 expected has up-to-date data -> no reason for L2 init RD
         hit
           check block state
-            clean: unexpected // no reason for L2 init RD to clean block
+            clean: unreachable // no reason for L2 init RD to clean block
             dirty
               deassert dirty
               response data L1 --> L2
     RDINV
       check cache miss or hit
-        miss: unexpected 
+        miss: unreachable 
         // L2 init RD because want update dirty block
         // miss indicates that L1 had eviected dirty block, but before that L1 has to init WB -> L2
         // if so L2 expected has up-to-date data -> no reason for L2 init RD
         hit:
           check block state
-            clean: unexpected // no reason for L2 init RD to clean block
+            clean: unreachable // no reason for L2 init RD to clean block
             dirty:
               invalid block
               response data L1 --> L2
@@ -104,7 +104,7 @@ L1 behavior
           check block state
             clean:
               invalid block
-            dirty: unexpected // L2 is expected to init RDINV instead, because L2 aware that block is dirty
+            dirty: unreachable // L2 is expected to init RDINV instead, because L2 aware that block is dirty
 
 L2 behavior
   receive L1 request
@@ -123,7 +123,7 @@ L2 behavior
           check block state
             clean:
               response data: L1 <-- L2
-            dirty: unexpected // if dirty, this block has to be already located in L1
+            dirty: unreachable // if dirty, this block has to be already located in L1
     RFO
       check cache miss or hit
         miss
@@ -143,10 +143,10 @@ L2 behavior
               init SNP_INV: L2 --> SNP
               assert dirty, set owner is L1
               response data: L1 <-- L2 
-            dirty: unexpected // if dirty, this block has to be already located in L1
+            dirty: unreachable // if dirty, this block has to be already located in L1
     MD
       check cache miss or hit
-        miss: unexpected // violated inclusivity property
+        miss: unreachable // MD is only initiated when CPU write hit on L1 -> this block has to be already located in L2(violated inclusivity property)
         hit:
           check block state
             clean:
@@ -156,10 +156,10 @@ L2 behavior
               set owner is L1
     WB
       check cache miss or hit
-        miss: unexpected // violated inclusivity property
+        miss: unreachable // WB is only initiated when L1 want evict modified block -> this block has to be already located in L2(violated inclusivity property)
         hit:
           check block state
-            clean: // FIXME (not sure) its expected dirty because L1 should has sent dirty anouncement before write back
+            clean: // FIXME unreachable (not sure) its expected dirty because L1 should has sent dirty anouncement before write back
               //init SNP_INV: L2 --> SNP
               //assert dirty, set owner is L2
               //assign data to block 
@@ -209,7 +209,7 @@ L2 behavior
         hit:
           check block state
             clean: invalid block
-            dirty: unexpected // if dirty so this block is only present in this cache, other caches expected to init RD or RFO first
+            dirty: unreachable // INV is initated by other cache that want to modify shared block, if dirty so this block is only present in this cache
 
 //-------------------------------------------------------------------
 adjust to new version

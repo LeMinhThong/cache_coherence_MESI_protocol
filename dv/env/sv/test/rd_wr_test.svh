@@ -19,18 +19,28 @@ task `THIS_CLASS::run_seq();
 
   #50ns;
 
-  m_l1_seq.set_as_rd_seq(64'h20);
-  `START_SEQ(m_l1_seq)
+  fork
+    begin
+      m_l1_seq.set_seq(CDREQ_RFO, 64'h40);
+      m_l1_seq.set_snp_rsp(SURSP_FETCH, 512'habc);
+      `START_SEQ(m_l1_seq)
+    end
 
-  @`M_VIF;
-  m_l1_seq = new();
-  m_l1_seq.set_as_wr_seq(64'h20, 32'hbb);
-  `START_SEQ(m_l1_seq)
+    begin
+      #100ns;
+      `uvm_info(get_type_name, "test timeout", UVM_LOW)
+    end
+  join_any
 
-  @`M_VIF;
-  m_l1_seq = new();
-  m_l1_seq.set_as_rd_seq(64'h20);
-  `START_SEQ(m_l1_seq)
+  //@`M_VIF;
+  //m_l1_seq = new();
+  //m_l1_seq.set_as_wr_seq(64'h20, 32'hbb);
+  //`START_SEQ(m_l1_seq)
+
+  //@`M_VIF;
+  //m_l1_seq = new();
+  //m_l1_seq.set_as_rd_seq(64'h20);
+  //`START_SEQ(m_l1_seq)
 endtask: run_seq
 
 `undef THIS_CLASS

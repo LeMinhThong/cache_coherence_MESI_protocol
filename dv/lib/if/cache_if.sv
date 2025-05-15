@@ -10,47 +10,47 @@ interface cache_if #(
       input wire                    clk       ,
       input wire                    rst_n     ,
 
-      inout wire                    cdr_valid ,
-      inout wire                    cdr_ready ,
-      inout wire  [2:0]             cdr_op    ,
-      inout wire  [SADDR_WIDTH-1:0] cdr_addr  ,
-      inout wire  [BLK_WIDTH-1:0]   cdr_data  ,
+      inout wire                    cdreq_valid ,
+      inout wire  [2:0]             cdreq_op    ,
+      inout wire  [SADDR_WIDTH-1:0] cdreq_addr  ,
+      inout wire  [BLK_WIDTH-1:0]   cdreq_data  ,
+      inout wire                    cdreq_ready ,
 
-      inout wire                    cdt_valid ,
-      inout wire                    cdt_ready ,
-      inout wire  [1:0]             cdt_rsp   ,
-      inout wire  [BLK_WIDTH-1:0]   cdt_data  ,
+      inout wire                    cursp_valid ,
+      inout wire  [1:0]             cursp_rsp   ,
+      inout wire  [BLK_WIDTH-1:0]   cursp_data  ,
+      inout wire                    cursp_ready ,
 
-      inout wire                    cut_valid ,
-      inout wire                    cut_ready ,
-      inout wire  [1:0]             cut_op    ,
-      inout wire  [SADDR_WIDTH-1:0] cut_addr  ,
+      inout wire                    cureq_valid ,
+      inout wire  [1:0]             cureq_op    ,
+      inout wire  [SADDR_WIDTH-1:0] cureq_addr  ,
+      inout wire                    cureq_ready ,
 
-      inout wire                    cur_valid ,
-      inout wire                    cur_ready ,
-      inout wire  [1:0]             cur_rsp   ,
-      inout wire  [BLK_WIDTH-1:0]   cur_data  ,
+      inout wire                    cdrsp_valid ,
+      inout wire  [1:0]             cdrsp_rsp   ,
+      inout wire  [BLK_WIDTH-1:0]   cdrsp_data  ,
+      inout wire                    cdrsp_ready ,
 
-      inout wire                    sdt_valid ,
-      inout wire                    sdt_ready ,
-      inout wire  [2:0]             sdt_op    ,
-      inout wire  [SADDR_WIDTH-1:0] sdt_addr  ,
-      inout wire  [BLK_WIDTH-1:0]   sdt_data  ,
+      inout wire                    sdreq_valid ,
+      inout wire  [2:0]             sdreq_op    ,
+      inout wire  [SADDR_WIDTH-1:0] sdreq_addr  ,
+      inout wire  [BLK_WIDTH-1:0]   sdreq_data  ,
+      inout wire                    sdreq_ready ,
 
-      inout wire                    sdr_valid ,
-      inout wire                    sdr_ready ,
-      inout wire  [2:0]             sdr_rsp   ,
-      inout wire  [BLK_WIDTH-1:0]   sdr_data  ,
+      inout wire                    sursp_valid ,
+      inout wire  [2:0]             sursp_rsp   ,
+      inout wire  [BLK_WIDTH-1:0]   sursp_data  ,
+      inout wire                    sursp_ready ,
 
-      inout wire                    sur_valid ,
-      inout wire                    sur_ready ,
-      inout wire  [1:0]             sur_op    ,
-      inout wire  [SADDR_WIDTH-1:0] sur_addr  ,
+      inout wire                    sureq_valid ,
+      inout wire  [1:0]             sureq_op    ,
+      inout wire  [SADDR_WIDTH-1:0] sureq_addr  ,
+      inout wire                    sureq_ready ,
 
-      inout wire                    sut_valid ,
-      inout wire                    sut_ready ,
-      inout wire  [1:0]             sut_rsp   ,
-      inout wire  [BLK_WIDTH-1:0]   sut_data  
+      inout wire                    sdrsp_valid ,
+      inout wire  [1:0]             sdrsp_rsp   ,
+      inout wire  [BLK_WIDTH-1:0]   sdrsp_data  ,
+      inout wire                    sdrsp_ready
 );
 
   time input_skew   = 0ps;
@@ -59,97 +59,97 @@ interface cache_if #(
   // ----------------------------------------------------------------
   clocking mon_cb @(negedge clk);
     default input #(input_skew) output #(output_skew);
-    input rst_n     ;
+    input rst_n       ;
 
-    input cdr_valid ;
-    input cdr_ready ;
-    input cdr_op    ;
-    input cdr_addr  ;
-    input cdr_data  ;
+    input cdreq_valid ;
+    input cdreq_op    ;
+    input cdreq_addr  ;
+    input cdreq_data  ;
+    input cdreq_ready ;
 
-    input cdt_valid ;
-    input cdt_ready ;
-    input cdt_rsp   ;
-    input cdt_data  ;
+    input cursp_valid ;
+    input cursp_rsp   ;
+    input cursp_data  ;
+    input cursp_ready ;
 
-    input cut_valid ;
-    input cut_ready ;
-    input cut_op    ;
-    input cut_addr  ;
+    input cureq_valid ;
+    input cureq_op    ;
+    input cureq_addr  ;
+    input cureq_ready ;
 
-    input cur_valid ;
-    input cur_ready ;
-    input cur_rsp   ;
-    input cur_data  ;
+    input cdrsp_valid ;
+    input cdrsp_rsp   ;
+    input cdrsp_data  ;
+    input cdrsp_ready ;
 
-    input sdt_valid ;
-    input sdt_ready ;
-    input sdt_op    ;
-    input sdt_addr  ;
-    input sdt_data  ;
+    input sdreq_valid ;
+    input sdreq_op    ;
+    input sdreq_addr  ;
+    input sdreq_data  ;
+    input sdreq_ready ;
 
-    input sdr_valid ;
-    input sdr_ready ;
-    input sdr_rsp   ;
-    input sdr_data  ;
+    input sursp_valid ;
+    input sursp_rsp   ;
+    input sursp_data  ;
+    input sursp_ready ;
 
-    input sur_valid ;
-    input sur_ready ;
-    input sur_op    ;
-    input sur_addr  ;
+    input sureq_valid ;
+    input sureq_op    ;
+    input sureq_addr  ;
+    input sureq_ready ;
 
-    input sut_valid ;
-    input sut_ready ;
-    input sut_rsp   ;
-    input sut_data  ;
+    input sdrsp_valid ;
+    input sdrsp_rsp   ;
+    input sdrsp_data  ;
+    input sdrsp_ready ;
   endclocking: mon_cb
 
   // ----------------------------------------------------------------
   clocking drv_cb @(posedge clk);
     default input #(input_skew) output #(output_skew);
-    output  rst_n     ;
+    input   rst_n       ;
 
-    output  cdr_valid ;
-    input   cdr_ready ;
-    output  cdr_op    ;
-    output  cdr_addr  ;
-    output  cdr_data  ;
+    output  cdreq_valid ;
+    output  cdreq_op    ;
+    output  cdreq_addr  ;
+    output  cdreq_data  ;
+    input   cdreq_ready ;
 
-    input   cdt_valid ;
-    output  cdt_ready ;
-    input   cdt_rsp   ;
-    input   cdt_data  ;
+    input   cursp_valid ;
+    input   cursp_rsp   ;
+    input   cursp_data  ;
+    output  cursp_ready ;
 
-    input   cut_valid ;
-    output  cut_ready ;
-    input   cut_op    ;
-    input   cut_addr  ;
+    input   cureq_valid ;
+    input   cureq_op    ;
+    input   cureq_addr  ;
+    output  cureq_ready ;
 
-    output  cur_valid ;
-    input   cur_ready ;
-    output  cur_rsp   ;
-    output  cur_data  ;
+    output  cdrsp_valid ;
+    output  cdrsp_rsp   ;
+    output  cdrsp_data  ;
+    input   cdrsp_ready ;
 
-    input   sdt_valid ;
-    output  sdt_ready ;
-    input   sdt_op    ;
-    input   sdt_addr  ;
-    input   sdt_data  ;
+    input   sdreq_valid ;
+    input   sdreq_op    ;
+    input   sdreq_addr  ;
+    input   sdreq_data  ;
+    output  sdreq_ready ;
 
-    output  sdr_valid ;
-    input   sdr_ready ;
-    output  sdr_rsp   ;
-    output  sdr_data  ;
+    output  sursp_valid ;
+    output  sursp_rsp   ;
+    output  sursp_data  ;
+    input   sursp_ready ;
 
-    output  sur_valid ;
-    input   sur_ready ;
-    output  sur_op    ;
-    output  sur_addr  ;
+    output  sureq_valid ;
+    output  sureq_op    ;
+    output  sureq_addr  ;
+    input   sureq_ready ;
 
-    input   sut_valid ;
-    output  sut_ready ;
-    input   sut_rsp   ;
-    input   sut_data  ;
+    input   sdrsp_valid ;
+    input   sdrsp_rsp   ;
+    input   sdrsp_data  ;
+    output  sdrsp_ready ;
   endclocking: drv_cb
 
   // ----------------------------------------------------------------

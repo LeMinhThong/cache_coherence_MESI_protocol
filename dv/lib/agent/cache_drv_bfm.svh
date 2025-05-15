@@ -106,6 +106,7 @@ endtask: get_and_drive
 task `THISCLASS::drive_l1_transfer();
   cache_txn_c t_req;
   cache_txn_c t_rsp;
+  sdreq_e     sdreq_op_loc;
 
   init_l1_transfer = 1'b1;
   while(l1_req_q.size() > 0) begin
@@ -113,37 +114,91 @@ task `THISCLASS::drive_l1_transfer();
     `uvm_info(m_msg_name, $sformatf("drive L1 request: t_req=%s", t_req.convert2string()), UVM_DEBUG)
     t_rsp = new t_req;
 
-    `M_VIF.cdr_op   <= t_req.cdr_op;
-    `M_VIF.cdr_addr <= t_req.cdr_addr;
-    if(t_req.is_wr_req()) `M_VIF.cdr_data <= t_req.cdr_data;
-    else                  `M_VIF.cdr_data <= '0;
+    fork
+      begin
+        `M_VIF.cdreq_valid  <= 1'b1;
+        `M_VIF.cdreq_op     <= t_req.cdreq_op;
+        `M_VIF.cdreq_addr   <= t_req.cdreq_addr;
+        if(t_req.is_wr_req())
+          `M_VIF.cdreq_data <= t_req.cdreq_data;
+        else
+          `M_VIF.cdreq_data <= '0;
 
-    @m_vif.mon_cb;
-    if(m_vif.sdt_op != SDT_RD) begin
-      @`M_VIF;
-      `uvm_info(m_msg_name, $sformatf("<CACHE_MISS> snp_rsp: %s, snp_data: 0x%0h", t_req.sdr_rsp.name(), t_req.sdr_data), UVM_DEBUG)
-      if(rand_snp_delay) begin
-        repeat($urandom_range(1, 5)) @`M_VIF;
+        @`M_VIF;
+        while(`M_VIF.cdreq_ready != 1'b1) begin
+          @`M_VIF;
+        end
+        `M_VIF.cdreq_valid  <= 1'b0;
+        `M_VIF.cdreq_op     <= 'x;
+        `M_VIF.cdreq_addr   <= 'x;
+        `M_VIF.cdreq_data   <= 'x;
       end
-      `M_VIF.sdr_rsp   <= t_req.sdr_rsp;
-      `M_VIF.sdr_data  <= t_req.sdr_data;
 
-      @`M_VIF;
-      `M_VIF.sdr_rsp   <= SDR_OKAY;
-      `M_VIF.sdr_data  <= '0;
-    end
+      begin: RESPONSE_SDREQ_BLK
+        @(posedge `M_VIF.sdreq_valid);
+        @`M_VIF;
+        sdreq_op_loc = sdreq_e'(`M_VIF.sdreq_op);
+        // accept request from sdreq
+        `M_VIF.sdreq_ready  <= 1'b1;
+        @`M_VIF;
+        `M_VIF.sdreq_ready  <= 1'b0;
+        @`M_VIF;
 
-    if(!t_req.is_wr_req())  t_rsp.cdt_data = m_vif.cdt_data;
+        // send response on sursp
+        `M_VIF.sursp_valid  <= 1'b1;
+        if(sdreq_op_loc inside {SDREQ_RD, SDREQ_RFO}) begin
+          `M_VIF.sursp_rsp  <= t_req.sursp_rsp;
+          `M_VIF.sursp_data <= t_req.sursp_data;
+        end
+        else begin
+          `M_VIF.sursp_rsp  <= SURSP_OKAY;
+          `M_VIF.sursp_data <= '0;
+        end
+        @(posedge `M_VIF.sursp_ready);
+        `M_VIF.sursp_valid  <= 1'b0;
+        `M_VIF.sursp_rsp    <= 'x;
+        `M_VIF.sursp_data   <= 'x;
+      end: RESPONSE_SDREQ_BLK
 
-    `uvm_info(m_msg_name, $sformatf("put L1 response: %s", t_rsp.convert2string()), UVM_DEBUG)
-    send_reponse(t_rsp);
+      begin
+        @(posedge `M_VIF.cursp_valid);
+        t_rsp.cursp_rsp   = cursp_e'(`M_VIF.cursp_rsp);
+        t_rsp.cursp_data  = `M_VIF.cursp_data;
 
-    @`M_VIF;
-    `M_VIF.cdr_op     <= CDR_RD;
-    `M_VIF.cdr_addr   <= '0;
+        `M_VIF.cursp_ready <= 1'b1;
+        @`M_VIF;
+        `M_VIF.cursp_ready <= 1'b0;
+        // out fork join in cases no sdreq request initiated
+        disable RESPONSE_SDREQ_BLK;
+      end
+    join
   end
   init_l1_transfer = 1'b0;
 endtask: drive_l1_transfer
+
+    //@m_vif.mon_cb;
+    //if(m_vif.sdreq_op != SDREQ_RD) begin
+    //  @`M_VIF;
+    //  `uvm_info(m_msg_name, $sformatf("<CACHE_MISS> snp_rsp: %s, snp_data: 0x%0h", t_req.sursp_rsp.name(), t_req.sursp_data), UVM_DEBUG)
+    //  if(rand_snp_delay) begin
+    //    repeat($urandom_range(1, 5)) @`M_VIF;
+    //  end
+    //  `M_VIF.sursp_rsp   <= t_req.sursp_rsp;
+    //  `M_VIF.sursp_data  <= t_req.sursp_data;
+
+    //  @`M_VIF;
+    //  `M_VIF.sursp_rsp   <= SURSP_OKAY;
+    //  `M_VIF.sursp_data  <= '0;
+    //end
+
+    //if(!t_req.is_wr_req())  t_rsp.cursp_data = m_vif.cursp_data;
+
+    //`uvm_info(m_msg_name, $sformatf("put L1 response: %s", t_rsp.convert2string()), UVM_DEBUG)
+    //send_reponse(t_rsp);
+
+    //@`M_VIF;
+    //`M_VIF.cdreq_op     <= CDREQ_RD;
+    //`M_VIF.cdreq_addr   <= '0;
 
 //-------------------------------------------------------------------
 task `THISCLASS::drive_snp_transfer();
@@ -156,16 +211,16 @@ task `THISCLASS::drive_snp_transfer();
     `uvm_info(m_msg_name, $sformatf("drive snoop request: t_req=%s", t_req.convert2string()), UVM_DEBUG)
     t_rsp = new t_req;
 
-    `M_VIF.sur_op    <= t_req.sur_op;
-    `M_VIF.sur_addr  <= t_req.sur_addr;
+    `M_VIF.sureq_op    <= t_req.sureq_op;
+    `M_VIF.sureq_addr  <= t_req.sureq_addr;
 
     @m_vif.mon_cb;
-    t_rsp.sut_rsp  = sut_e'(m_vif.sut_rsp);
-    t_rsp.sut_data = m_vif.sut_data;
+    t_rsp.sdrsp_rsp  = sdrsp_e'(m_vif.sdrsp_rsp);
+    t_rsp.sdrsp_data = m_vif.sdrsp_data;
 
     @`M_VIF;
-    `M_VIF.sur_op    <= SUR_RD;
-    `M_VIF.sur_addr  <= '0;
+    `M_VIF.sureq_op    <= SUREQ_RD;
+    `M_VIF.sureq_addr  <= '0;
 
     `uvm_info(m_msg_name, $sformatf("put snoop response: %s", t_rsp.convert2string()), UVM_DEBUG)
     send_reponse(t_rsp);
@@ -196,23 +251,54 @@ endtask: reset_monitoring
 
 //-------------------------------------------------------------------
 task `THISCLASS::reset_signals();
-  `M_VIF.cdr_op     <= CDR_RD;
-  `M_VIF.cdr_addr   <= '0;
-  `M_VIF.cdr_data   <= '0;
+  //`M_VIF.cdreq_op     <= CDREQ_RD;
+  //`M_VIF.cdreq_addr   <= '0;
+  //`M_VIF.cdreq_data   <= '0;
 
-  `M_VIF.sur_op    <= SUR_RD;
-  `M_VIF.sur_addr  <= '0;
-  `M_VIF.sdr_data  <= '0;
-  `M_VIF.sdr_rsp   <= SDR_OKAY;
+  //`M_VIF.sureq_op    <= SUREQ_RD;
+  //`M_VIF.sureq_addr  <= '0;
+  //`M_VIF.sursp_data  <= '0;
+  //`M_VIF.sursp_rsp   <= SURSP_OKAY;
+
+  `M_VIF.cdreq_valid  <= 1'b0;
+  `M_VIF.cdreq_op     <= 'x;
+  `M_VIF.cdreq_addr   <= 'x;
+  `M_VIF.cdreq_data   <= 'x;
+
+  `M_VIF.cursp_ready  <= 1'b0;
+
+  `M_VIF.cureq_ready  <= 1'b0;
+
+  `M_VIF.cdrsp_valid  <= 1'b0;
+  `M_VIF.cdrsp_rsp    <= 'x;
+  `M_VIF.cdrsp_data   <= 'x;
+
+  `M_VIF.sdreq_ready  <= 1'b0;
+
+  `M_VIF.sursp_valid  <= 1'b0;
+  `M_VIF.sursp_rsp    <= 'x;
+  `M_VIF.sursp_data   <= 'x;
+
+  `M_VIF.sureq_valid  <= 1'b0;
+  `M_VIF.sureq_op     <= 'x;
+  `M_VIF.sureq_addr   <= 'x;
+
+  `M_VIF.sdrsp_ready  <= 1'b0;
 endtask: reset_signals
 
 //-------------------------------------------------------------------
 task `THISCLASS::put(cache_txn_c txn);
   cache_txn_c loc_txn = new txn;
+  if(loc_txn.Type == L1_REQ)  begin
+    l1_req_q.push_back(loc_txn);
+    `uvm_info(m_msg_name, $sformatf("put req to l1_req_q=%0d req=%s", l1_req_q.size(), loc_txn.convert2string()), UVM_DEBUG)
+  end
+  else if (loc_txn.Type == SNP_REQ) begin
+    snp_req_q.push_back(loc_txn);
+  end
+  else
+    `uvm_fatal(m_msg_name, "Can not determine request type")
   put_flag = 1'b1;
-  if      (loc_txn.Type == L1_REQ)  l1_req_q.push_back(loc_txn);
-  else if (loc_txn.Type == SNP_REQ) snp_req_q.push_back(loc_txn);
-  else                              `uvm_fatal(m_msg_name, "Can not determine request type")
 endtask: put
 
 //-------------------------------------------------------------------
