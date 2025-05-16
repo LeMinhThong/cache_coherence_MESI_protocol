@@ -129,14 +129,14 @@ task `THISCLASS::drive_l1_transfer();
           @`M_VIF;
         end
         `M_VIF.cdreq_valid  <= 1'b0;
-        `M_VIF.cdreq_op     <= 'x;
-        `M_VIF.cdreq_addr   <= 'x;
-        `M_VIF.cdreq_data   <= 'x;
+        `M_VIF.cdreq_op     <= '0;
+        `M_VIF.cdreq_addr   <= '0;
+        `M_VIF.cdreq_data   <= '0;
       end
 
       begin: RESPONSE_SDREQ_BLK
         @(posedge `M_VIF.sdreq_valid);
-        @`M_VIF;
+        repeat(2) @`M_VIF;
         sdreq_op_loc = sdreq_e'(`M_VIF.sdreq_op);
         // accept request from sdreq
         `M_VIF.sdreq_ready  <= 1'b1;
@@ -156,8 +156,8 @@ task `THISCLASS::drive_l1_transfer();
         end
         @(posedge `M_VIF.sursp_ready);
         `M_VIF.sursp_valid  <= 1'b0;
-        `M_VIF.sursp_rsp    <= 'x;
-        `M_VIF.sursp_data   <= 'x;
+        `M_VIF.sursp_rsp    <= '0;
+        `M_VIF.sursp_data   <= '0;
       end: RESPONSE_SDREQ_BLK
 
       begin
@@ -165,6 +165,7 @@ task `THISCLASS::drive_l1_transfer();
         t_rsp.cursp_rsp   = cursp_e'(`M_VIF.cursp_rsp);
         t_rsp.cursp_data  = `M_VIF.cursp_data;
 
+        repeat(2) @`M_VIF;
         `M_VIF.cursp_ready <= 1'b1;
         @`M_VIF;
         `M_VIF.cursp_ready <= 1'b0;
@@ -261,27 +262,27 @@ task `THISCLASS::reset_signals();
   //`M_VIF.sursp_rsp   <= SURSP_OKAY;
 
   `M_VIF.cdreq_valid  <= 1'b0;
-  `M_VIF.cdreq_op     <= 'x;
-  `M_VIF.cdreq_addr   <= 'x;
-  `M_VIF.cdreq_data   <= 'x;
+  `M_VIF.cdreq_op     <= '0;
+  `M_VIF.cdreq_addr   <= '0;
+  `M_VIF.cdreq_data   <= '0;
 
   `M_VIF.cursp_ready  <= 1'b0;
 
   `M_VIF.cureq_ready  <= 1'b0;
 
   `M_VIF.cdrsp_valid  <= 1'b0;
-  `M_VIF.cdrsp_rsp    <= 'x;
-  `M_VIF.cdrsp_data   <= 'x;
+  `M_VIF.cdrsp_rsp    <= '0;
+  `M_VIF.cdrsp_data   <= '0;
 
   `M_VIF.sdreq_ready  <= 1'b0;
 
   `M_VIF.sursp_valid  <= 1'b0;
-  `M_VIF.sursp_rsp    <= 'x;
-  `M_VIF.sursp_data   <= 'x;
+  `M_VIF.sursp_rsp    <= '0;
+  `M_VIF.sursp_data   <= '0;
 
   `M_VIF.sureq_valid  <= 1'b0;
-  `M_VIF.sureq_op     <= 'x;
-  `M_VIF.sureq_addr   <= 'x;
+  `M_VIF.sureq_op     <= '0;
+  `M_VIF.sureq_addr   <= '0;
 
   `M_VIF.sdrsp_ready  <= 1'b0;
 endtask: reset_signals

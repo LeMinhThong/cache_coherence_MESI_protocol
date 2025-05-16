@@ -21,13 +21,13 @@ task `THIS_CLASS::run_seq();
 
   fork
     begin
-      m_l1_seq.set_seq(CDREQ_RFO, 64'h40);
-      m_l1_seq.set_snp_rsp(SURSP_FETCH, 512'habc);
+      m_l1_seq.set_seq(CDREQ_RFO, 64'h440);
+      m_l1_seq.set_snp_rsp(SURSP_OKAY, 512'habc);
       `START_SEQ(m_l1_seq)
     end
 
     begin
-      #100ns;
+      #200ns;
       `uvm_info(get_type_name, "test timeout", UVM_LOW)
     end
   join_any

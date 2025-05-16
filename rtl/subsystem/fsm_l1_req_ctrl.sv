@@ -18,6 +18,7 @@ module fsm_l1_req_ctrl (
   //-----------------------------------------------------------------
   //assign snp_wb   = ((blk_curSt == MODIFIED) && (wr_miss || rd_miss)) ? 1'b1 : 1'b0;
   //assign cursp_rsp = wr_miss || rd_miss;
+  assign cursp_rsp = CURSP_OKAY;
 
   //-----------------------------------------------------------------
   // cache state fsm
@@ -29,7 +30,7 @@ module fsm_l1_req_ctrl (
       req_status[WRITE_HIT]:  blk_nxtSt = MODIFIED;
       req_status[READ_MISS]:
             begin
-              if(req_curSt == REQ_RSP_CURSP) // REQ_RSP
+              if(req_curSt == REQ_RSP_CURSP)
                 case(sursp_rsp)
                   SURSP_SNOOP: blk_nxtSt = SHARED;
                   SURSP_FETCH: blk_nxtSt = EXCLUSIVE;
