@@ -79,9 +79,6 @@ module cache_mem #(
   // ----------------------------------------------------------------
   // internal signals definition
   // ----------------------------------------------------------------
-  //logic [2:0]             _cdreq_op;
-  //logic [SADDR_WIDTH-1:0] _cdreq_addr;
-  //logic [BLK_WIDTH-1:0]   _cdreq_data;
 
   // ----------------------------------------------------------------
   // inbound channels handshake control
@@ -90,21 +87,33 @@ module cache_mem #(
   localparam HS_ASSERT    = 2'b01;
   localparam HS_DEASSERT  = 2'b10;
 
-  logic cdreq_en;
-  logic cdrsp_en;
-  logic sureq_en;
-  logic sursp_en;
+  // inbound channels handshake complete acknowledgement
+  logic cdreq_hs_ack;
+  logic cdrsp_hs_ack;
+  logic sureq_hs_ack;
+  logic sursp_hs_ack;
+
+  // FIXME always allowed to receive flit
+  assign cdreq_hs_ack = cdreq_valid;
+  assign cdrsp_hs_ack = cdrsp_valid;
+  assign sureq_hs_ack = sureq_valid;
+  assign sursp_hs_ack = sursp_valid;
+
+  // outbound channels handshake complete acknowledgement
+  logic cureq_hs_comp; 
+  logic cursp_hs_comp; 
+  logic sdreq_hs_comp; 
+  logic sdrsp_hs_comp; 
+
+  assign cureq_hs_comp = cureq_valid && cureq_ready;
+  assign cursp_hs_comp = cursp_valid && cursp_ready;
+  assign sdreq_hs_comp = sdreq_valid && sdreq_ready;
+  assign sdrsp_hs_comp = sdrsp_valid && sdrsp_ready;
 
   logic [2:0] cdreq_hs_curSt, cdreq_hs_nxtSt;
   logic [2:0] cdrsp_hs_curSt, cdrsp_hs_nxtSt;
   logic [2:0] sureq_hs_curSt, sureq_hs_nxtSt;
   logic [2:0] sursp_hs_curSt, sursp_hs_nxtSt;
-
-  // FIXME always allowed to receive flit
-  assign cdreq_en = cdreq_valid;
-  assign cdrsp_en = cdrsp_valid;
-  assign sureq_en = sureq_valid;
-  assign sursp_en = sursp_valid;
 
   always_ff @(posedge clk or negedge rst_n) begin
     if(!rst_n) begin
@@ -123,13 +132,7 @@ module cache_mem #(
 
   always_comb begin
     case(cdreq_hs_curSt)
-      HS_IDLE:
-            begin
-              if((cdreq_valid == 1'b1) && (cdreq_en == 1'b1))
-                cdreq_hs_nxtSt = HS_ASSERT;
-              else
-                cdreq_hs_nxtSt = HS_IDLE;
-            end
+      HS_IDLE:      cdreq_hs_nxtSt = (cdreq_hs_ack) ? HS_ASSERT : HS_IDLE;
       HS_ASSERT:    cdreq_hs_nxtSt = HS_DEASSERT;
       HS_DEASSERT:  cdreq_hs_nxtSt = HS_IDLE;
       default:      cdreq_hs_nxtSt = HS_IDLE;
@@ -138,13 +141,7 @@ module cache_mem #(
 
   always_comb begin
     case(cdrsp_hs_curSt)
-      HS_IDLE:
-            begin
-              if((cdrsp_valid == 1'b1) && (cdrsp_en == 1'b1))
-                cdrsp_hs_nxtSt = HS_ASSERT;
-              else
-                cdrsp_hs_nxtSt = HS_IDLE;
-            end
+      HS_IDLE:      cdrsp_hs_nxtSt = (cdrsp_hs_ack) ? HS_ASSERT : HS_IDLE;
       HS_ASSERT:    cdrsp_hs_nxtSt = HS_DEASSERT;
       HS_DEASSERT:  cdrsp_hs_nxtSt = HS_IDLE;
       default:      cdrsp_hs_nxtSt = HS_IDLE;
@@ -153,13 +150,7 @@ module cache_mem #(
 
   always_comb begin
     case(sureq_hs_curSt)
-      HS_IDLE:
-            begin
-              if((sureq_valid == 1'b1) && (sureq_en == 1'b1))
-                sureq_hs_nxtSt = HS_ASSERT;
-              else
-                sureq_hs_nxtSt = HS_IDLE;
-            end
+      HS_IDLE:      sureq_hs_nxtSt = (sureq_hs_ack) ? HS_ASSERT : HS_IDLE;
       HS_ASSERT:    sureq_hs_nxtSt = HS_DEASSERT;
       HS_DEASSERT:  sureq_hs_nxtSt = HS_IDLE;
       default:      sureq_hs_nxtSt = HS_IDLE;
@@ -168,13 +159,7 @@ module cache_mem #(
 
   always_comb begin
     case(sursp_hs_curSt)
-      HS_IDLE:
-            begin
-              if((sursp_valid == 1'b1) && (sursp_en == 1'b1))
-                sursp_hs_nxtSt = HS_ASSERT;
-              else
-                sursp_hs_nxtSt = HS_IDLE;
-            end
+      HS_IDLE:     sursp_hs_nxtSt = (sursp_hs_ack) ? HS_ASSERT : HS_IDLE;
       HS_ASSERT:    sursp_hs_nxtSt = HS_DEASSERT;
       HS_DEASSERT:  sursp_hs_nxtSt = HS_IDLE;
       default:      sursp_hs_nxtSt = HS_IDLE;
@@ -209,14 +194,8 @@ module cache_mem #(
   logic snp_ret_dat;
 
   // ----------------------------------------------------------------
-  // downstream cache request fsm
+  // downstream cache request processing FSM
   // ----------------------------------------------------------------
-  //parameter REQ_IDLE          = 3'b000;
-  //parameter REQ_ALLOCATE      = 3'b001;
-  //parameter REQ_INIT_SDREQ    = 3'b010;
-  //parameter REQ_WAIT_SNP_RSP  = 3'b011;
-  //parameter REQ_RSP_CURSP     = 3'b100;
-
   logic [2:0] cdreq_req_curSt;
   logic [2:0] cdreq_req_nxtSt;
 
@@ -229,50 +208,21 @@ module cache_mem #(
 
   always_comb begin
     case(cdreq_req_curSt)
-      REQ_IDLE:
-            begin
-              if((cdreq_valid == 1'b1) && (cdreq_en == 1'b1))
-                cdreq_req_nxtSt = REQ_ALLOCATE;
-              else
-                cdreq_req_nxtSt = REQ_IDLE;
-            end
-      REQ_ALLOCATE:
-            begin
-              if(cac_hit == 1'b1)
-                cdreq_req_nxtSt = REQ_RSP_CURSP;
-              else
-                cdreq_req_nxtSt = REQ_INIT_SDREQ;
-            end
-      REQ_INIT_SDREQ:
-            begin
-              if((sdreq_valid == 1'b1) && (sdreq_ready == 1'b1))
-                cdreq_req_nxtSt = REQ_WAIT_SNP_RSP;
-              else
-                cdreq_req_nxtSt = REQ_INIT_SDREQ;
-            end
-      REQ_WAIT_SNP_RSP:
-            begin
-              if((sursp_valid == 1'b1) && (sursp_en == 1'b1))
-                cdreq_req_nxtSt = REQ_RSP_CURSP;
-              else
-                cdreq_req_nxtSt = REQ_WAIT_SNP_RSP;
-            end
-      REQ_RSP_CURSP:
-            begin
-              if((cursp_valid == 1'b1) && (cursp_ready == 1'b1))
-                cdreq_req_nxtSt = REQ_IDLE;
-              else
-                cdreq_req_nxtSt = REQ_RSP_CURSP;
-            end
+      REQ_IDLE:       cdreq_req_nxtSt = (cdreq_hs_ack ) ? REQ_ALLOCATE   : REQ_IDLE;
+      REQ_ALLOCATE:   cdreq_req_nxtSt = (cac_hit      ) ? REQ_RSP_CURSP  : REQ_INIT_SDREQ;
+      REQ_INIT_SDREQ: cdreq_req_nxtSt = (sdreq_hs_comp) ? REQ_WAIT_SURSP : REQ_INIT_SDREQ;
+      REQ_WAIT_SURSP: cdreq_req_nxtSt = (sursp_hs_ack ) ? REQ_RSP_CURSP  : REQ_WAIT_SURSP;
+      REQ_RSP_CURSP:  cdreq_req_nxtSt = (cursp_hs_comp) ? REQ_IDLE       : REQ_RSP_CURSP;
+      default:        cdreq_req_nxtSt = REQ_IDLE;
     endcase // cdreq_req_curSt
   end
 
   // ----------------------------------------------------------------
   // outbound channels handshake control
   // ----------------------------------------------------------------
-  assign cursp_valid = (cdreq_req_curSt == REQ_RSP_CURSP) ? 1'b1 : 1'b0;
+  assign cursp_valid = (cdreq_req_curSt == REQ_RSP_CURSP)   ? 1'b1 : 1'b0;
   assign cureq_valid = 1'b1;
-  assign sdreq_valid = (cdreq_req_curSt == REQ_INIT_SDREQ) ? 1'b1 : 1'b0;
+  assign sdreq_valid = (cdreq_req_curSt == REQ_INIT_SDREQ)  ? 1'b1 : 1'b0;
   assign sdrsp_valid = 1'b1;
 
   // ----------------------------------------------------------------
@@ -285,30 +235,18 @@ module cache_mem #(
   logic [BLK_WIDTH-1:0]   cdreq_data_bf;
 
   always_ff @(posedge clk or negedge rst_n) begin
-    if(!rst_n) begin
+    if(!rst_n || cursp_hs_comp) begin
       cdreq_ot      <= 1'b0;
-      cdreq_op_bf   <= `CDREQ_RD;
+      cdreq_op_bf   <= CDREQ_RD;
       cdreq_addr_bf <= {SADDR_WIDTH{1'b0}};
       cdreq_data_bf <= {BLK_WIDTH{1'b0}};
     end
     else begin
-      if((cdreq_valid == 1'b1) && (cdreq_en == 1'b1)) begin
+      if(cdreq_hs_ack) begin
         cdreq_ot      <= 1'b1;
         cdreq_op_bf   <= cdreq_op;
         cdreq_addr_bf <= cdreq_addr;
         cdreq_data_bf <= cdreq_data;
-      end
-      else if((cursp_valid == 1'b1) && (cdrsp_ready == 1'b1)) begin
-        cdreq_ot      <= 1'b0;
-        cdreq_op_bf   <= `CDREQ_RD;
-        cdreq_addr_bf <= {SADDR_WIDTH{1'b0}};
-        cdreq_data_bf <= {BLK_WIDTH{1'b0}};
-      end
-      else begin
-        cdreq_ot      <= cdreq_ot;
-        cdreq_op_bf   <= cdreq_op_bf;
-        cdreq_addr_bf <= cdreq_addr_bf;
-        cdreq_data_bf <= cdreq_data_bf;
       end
     end
   end
@@ -319,12 +257,12 @@ module cache_mem #(
   assign cdreq_blk_curSt  = cac_mem[cdreq_addr_bf[`IDX]][`ST];
   assign sureq_blk_curSt  = cac_mem[sureq_addr[`IDX]][`ST];
 
-  assign cac_wr   = ((cdreq_ot == 1'b1) && ((cdreq_op_bf == `CDREQ_MD) || (cdreq_op_bf == `CDREQ_WB) || (cdreq_op_bf == `CDREQ_RFO)))  ? 1'b1 : 1'b0;
-  assign cac_rd   = ((cdreq_ot == 1'b1) && (cdreq_op_bf == `CDREQ_RD)) ? 1'b1 : 1'b0;
+  assign cac_wr   = (cdreq_ot && ((cdreq_op_bf == CDREQ_MD) || (cdreq_op_bf == CDREQ_WB) || (cdreq_op_bf == CDREQ_RFO)))  ? 1'b1 : 1'b0;
+  assign cac_rd   = (cdreq_ot && (cdreq_op_bf == CDREQ_RD)) ? 1'b1 : 1'b0;
   assign cac_req  = cac_wr || cac_rd;
 
-  assign cac_hit  = ((cdreq_ot == 1'b1) && (cac_mem[cdreq_addr_bf[`IDX]][`VALID] == 1'b1) && (cdreq_addr_bf[`ADDR_TAG] == cac_mem[cdreq_addr_bf[`IDX]][`RAM_TAG])) ? 1'b1 : 1'b0;
-  assign snp_hit  = ((cac_mem[sureq_addr[`IDX]][`VALID] == 1'b1) && (sureq_addr[`ADDR_TAG] == cac_mem[sureq_addr[`IDX]][`RAM_TAG])) ? 1'b1 : 1'b0;
+  assign cac_hit  = (cdreq_ot && cac_mem[cdreq_addr_bf[`IDX]][`VALID] && (cdreq_addr_bf[`ADDR_TAG] == cac_mem[cdreq_addr_bf[`IDX]][`RAM_TAG])) ? 1'b1 : 1'b0;
+  assign snp_hit  = (cac_mem[sureq_addr[`IDX]][`VALID] && (sureq_addr[`ADDR_TAG] == cac_mem[sureq_addr[`IDX]][`RAM_TAG])) ? 1'b1 : 1'b0;
 
   assign wr_hit   = cac_wr && cac_hit;
   assign rd_hit   = cac_rd && cac_hit;
@@ -339,7 +277,7 @@ module cache_mem #(
   // ----------------------------------------------------------------
   // SNP side output
   // ----------------------------------------------------------------
-  assign sdreq_addr = (cac_hit == 1'b0) ? cdreq_addr_bf : {SADDR_WIDTH{1'b0}};
+  assign sdreq_addr = (!cac_hit) ? cdreq_addr_bf : {SADDR_WIDTH{1'b0}};
   assign sdrsp_data = cac_mem[sureq_addr[`IDX]][`DAT];
 
   // ----------------------------------------------------------------
@@ -373,7 +311,7 @@ module cache_mem #(
   always_ff @(posedge clk) begin
     if(!rst_n) begin
       for(int i = 0; i < NUM_BLK; i++) begin
-        cac_mem[i][`ST] <= `INVALID;
+        cac_mem[i][`ST] <= INVALID;
       end
     end else begin // FIXME: shouldn't have order
       if(cac_req)
@@ -386,7 +324,11 @@ module cache_mem #(
   // ----------------------------------------------------------------
   // Update Tag when l1 request miss
   // ----------------------------------------------------------------
-  assign snp_ret_dat = ((sursp_rsp == `SURSP_SNOOP) || (sursp_rsp == `SURSP_FETCH)) ? 1'b1 : 1'b0;
+  assign snp_ret_dat = ((sursp_rsp == SURSP_SNOOP) || (sursp_rsp == SURSP_FETCH)) ? 1'b1 : 1'b0;
+  //always_ff @(posedge clk or negedge rst_n) begin
+  //  if(!rst_n)
+  //    snp_ret_dat
+  //end
 
   always_ff @(posedge clk) begin
     if(!rst_n) begin
