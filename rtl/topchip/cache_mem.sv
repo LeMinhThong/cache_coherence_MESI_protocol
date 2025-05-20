@@ -94,10 +94,10 @@ module cache_mem #(
   logic sursp_hs_en;
 
   // FIXME always allowed to receive flit
-  assign cdreq_hs_en = cdreq_valid;
-  assign cdrsp_hs_en = cdrsp_valid;
-  assign sureq_hs_en = sureq_valid;
-  assign sursp_hs_en = sursp_valid;
+  assign cdreq_hs_en = (!rst_n) ? 1'b0 : cdreq_valid;
+  assign cdrsp_hs_en = (!rst_n) ? 1'b0 : cdrsp_valid;
+  assign sureq_hs_en = (!rst_n) ? 1'b0 : sureq_valid;
+  assign sursp_hs_en = (!rst_n) ? 1'b0 : sursp_valid;
 
   // outbound channels handshake complete acknowledgement
   logic cureq_hs_comp; 
@@ -352,7 +352,7 @@ module cache_mem #(
         `rtl_print_if_dff(cac_mem[cdreq_addr_bf[`IDX]][`DAT], cdreq_data_bf, cdreq_addr_bf, "data updated")
         cac_mem[cdreq_addr_bf[`IDX]][`DAT] <= cdreq_data_bf;
       end
-      else if((cdreq_op_bf == CDREQ_RFO) && (cdreq_req_curSt == REQ_RSP_CURSP) && sursp_hs_en) begin
+      else if(((cdreq_op_bf == CDREQ_RFO) || (cdreq_op_bf == CDREQ_RD)) && (cdreq_req_curSt == REQ_RSP_CURSP) && sursp_hs_en) begin
         `rtl_print_if_dff(cac_mem[cdreq_addr_bf[`IDX]][`DAT], sursp_data, cdreq_addr_bf, "data updated")
         cac_mem[cdreq_addr_bf[`IDX]][`DAT] <= sursp_data;
       end

@@ -15,6 +15,15 @@ class `THIS_CLASS extends uvm_test;
 
   time m_timeout = 100us;
 
+  extern  virtual task            send_l1_rd  (address_t addr, sursp_e sursp_rsp=3'b111);
+  extern  virtual task            send_l1_rfo (address_t addr);
+  extern  virtual task            send_l1_md  (address_t addr);
+  extern  virtual task            send_l1_wb  (address_t addr, data_t data=-1);
+
+  extern  virtual task            send_snp_rd (address_t addr);
+  extern  virtual task            send_snp_rfo(address_t addr);
+  extern  virtual task            send_snp_inv(address_t addr);
+
   extern  virtual function  void  build_phase(uvm_phase phase);
   extern  virtual function  void  end_of_elaboration_phase(uvm_phase phase);
   extern  virtual task            main_phase(uvm_phase phase);
@@ -50,9 +59,14 @@ task `THIS_CLASS::main_phase(uvm_phase phase);
   `uvm_info(get_type_name(), "Start test", UVM_LOW)
 
   fork
-    #m_timeout `uvm_fatal(get_type_name(), "Test main phase reached timeout")
+    begin
+      #m_timeout `uvm_fatal(get_type_name(), "Test main phase reached timeout")
+    end
 
-    run_seq();
+    begin
+      #50ns;
+      run_seq();
+    end
   join_any
 
   #50ns;
@@ -66,6 +80,76 @@ task `THIS_CLASS::run_seq();
   `uvm_info(get_type_name(), "hello from base run_seq", UVM_LOW)
   #50ns;
 endtask: run_seq
+
+// ------------------------------------------------------------------
+task `THIS_CLASS::send_l1_rd(address_t addr, sursp_e sursp_rsp=3'b111);
+  l1_req_seq_c m_seq  = new();
+
+  m_seq.m_op          = CDREQ_RD;
+  m_seq.m_addr        = addr;
+  m_seq.m_sursp_rsp   = sursp_rsp;
+  std::randomize(m_seq.m_sursp_data);
+  `START_SEQ(m_seq);
+endtask: send_l1_rd
+
+// ------------------------------------------------------------------
+task `THIS_CLASS::send_l1_rfo(address_t addr);
+  l1_req_seq_c m_seq  = new();
+
+  m_seq.m_op          = CDREQ_RFO;
+  m_seq.m_addr        = addr;
+  std::randomize(m_seq.m_sursp_data);
+  `START_SEQ(m_seq);
+endtask: send_l1_rfo
+
+// ------------------------------------------------------------------
+task `THIS_CLASS::send_l1_md(address_t addr);
+  l1_req_seq_c m_seq  = new();
+
+  m_seq.m_op          = CDREQ_MD;
+  m_seq.m_addr        = addr;
+  `START_SEQ(m_seq);
+endtask: send_l1_md
+
+// ------------------------------------------------------------------
+task `THIS_CLASS::send_l1_wb(address_t addr, data_t data=-1);
+  l1_req_seq_c m_seq  = new();
+
+  m_seq.m_op          = CDREQ_WB;
+  m_seq.m_addr        = addr;
+  if(data == -1)
+    std::randomize(m_seq.m_cdreq_data);
+  else
+    m_seq.m_cdreq_data = data;
+  `START_SEQ(m_seq);
+endtask: send_l1_wb
+
+// ------------------------------------------------------------------
+task `THIS_CLASS::send_snp_rd(address_t addr);
+  snp_req_seq_c m_seq = new();
+
+  m_seq.m_op    = SUREQ_RD;
+  m_seq.m_addr  = addr;
+  `START_SEQ(m_seq);
+endtask: send_snp_rd
+
+// ------------------------------------------------------------------
+task `THIS_CLASS::send_snp_rfo(address_t addr);
+  snp_req_seq_c m_seq = new();
+
+  m_seq.m_op    = SUREQ_RFO;
+  m_seq.m_addr  = addr;
+  `START_SEQ(m_seq);
+endtask: send_snp_rfo
+
+// ------------------------------------------------------------------
+task `THIS_CLASS::send_snp_inv(address_t addr);
+  snp_req_seq_c m_seq = new();
+
+  m_seq.m_op    = SUREQ_INV;
+  m_seq.m_addr  = addr;
+  `START_SEQ(m_seq);
+endtask: send_snp_inv
 
 `undef THIS_CLASS
 `endif

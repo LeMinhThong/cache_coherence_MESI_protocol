@@ -11,7 +11,7 @@ module fsm_l1_req_ctrl (
       input   logic [2:0] sursp_rsp,
 
       output  logic [2:0] blk_nxtSt,
-      output  logic       cursp_rsp,
+      output  logic [1:0] cursp_rsp,
       output  logic [2:0] init_sdreq 
 );
 

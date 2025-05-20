@@ -14,33 +14,17 @@ endclass: `THIS_CLASS
 
 // ------------------------------------------------------------------
 task `THIS_CLASS::run_seq();
-  l1_req_seq_c  m_l1_seq  = new();
-  snp_req_seq_c m_snp_seq = new();
+  //l1_req_seq_c  m_l1_seq  = new();
 
-  #50ns;
-
-  fork
-    begin
-      m_l1_seq.set_seq(CDREQ_RFO, 64'h440);
-      m_l1_seq.set_snp_rsp(SURSP_OKAY, 512'habc);
-      `START_SEQ(m_l1_seq)
-    end
-
-    begin
-      #200ns;
-      `uvm_info(get_type_name, "test timeout", UVM_LOW)
-    end
-  join_any
-
-  //@`M_VIF;
-  //m_l1_seq = new();
-  //m_l1_seq.set_as_wr_seq(64'h20, 32'hbb);
+  //m_l1_seq.set_seq(CDREQ_RD, 64'h400);
+  //m_l1_seq.set_snp_rsp(SURSP_FETCH, 512'h1);
   //`START_SEQ(m_l1_seq)
 
-  //@`M_VIF;
   //m_l1_seq = new();
-  //m_l1_seq.set_as_rd_seq(64'h20);
+  //m_l1_seq.set_seq(CDREQ_RFO, 64'h401);
+  //m_l1_seq.set_snp_rsp(SURSP_OKAY, 512'h2);
   //`START_SEQ(m_l1_seq)
+  `uvm_info(get_type_name(), "seq complete", UVM_LOW)
 endtask: run_seq
 
 `undef THIS_CLASS

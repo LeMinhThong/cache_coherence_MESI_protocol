@@ -24,6 +24,6 @@
 `define rtl_print_if_dff(var_1, var_2, addr, message) \
   begin \
     if(var_1 != var_2) \
-      $display("%0t ns: [0x%0h] %s: 0x%0h --> 0x%0h", $time, addr, message, var_1, var_2); \
+      $display("%0tns: RTL_INTER [Addr=0x%0h] %s: 0x%0h --> 0x%0h", $time, addr, message, var_1, var_2); \
   end
 `endif

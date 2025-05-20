@@ -15,7 +15,7 @@ class `THIS_CLASS extends uvm_sequence #(cache_txn_c, cache_txn_c);
   int m_rand_wr_rate;
 
   extern  virtual task            body();
-  extern  virtual task            gen_rand_seq();
+  //extern  virtual task            gen_rand_seq();
   extern  virtual task            send_seq(input cache_txn_c t_req, output cache_txn_c t_rsp);
   extern  virtual function  void  response_handler(uvm_sequence_item response);
   extern  virtual task            wait_for_resp(output cache_txn_c t_rsp);
@@ -36,24 +36,24 @@ task `THIS_CLASS::body();
 endtask: body
 
 //-------------------------------------------------------------------
-task `THIS_CLASS::gen_rand_seq();
-  cache_txn_c t_req = new();
-  cache_txn_c t_rsp = new();
-
-  if(!t_req.randomize()) `uvm_fatal(get_type_name(), "sequence randomize fail");
-  `uvm_info(get_type_name(), $sformatf("generate random sequence: %s", t_req.convert2string()), UVM_LOW)
-  randcase
-    m_rand_wr_rate:     t_req.set_as_wr_req();
-    100-m_rand_wr_rate: t_req.set_as_rd_req();
-  endcase
-  if(t_req.is_wr_req()) begin
-    if(!std::randomize(t_req.cdreq_data)) `uvm_fatal(get_type_name(), "randomize write data failed")
-  end else begin
-    t_req.cdreq_data = '0;
-  end
-  send_seq(t_req, t_rsp);
-  #50ns;
-endtask: gen_rand_seq
+//task `THIS_CLASS::gen_rand_seq();
+//  cache_txn_c t_req = new();
+//  cache_txn_c t_rsp = new();
+//
+//  if(!t_req.randomize()) `uvm_fatal(get_type_name(), "sequence randomize fail");
+//  `uvm_info(get_type_name(), $sformatf("generate random sequence: %s", t_req.convert2string()), UVM_LOW)
+//  randcase
+//    m_rand_wr_rate:     t_req.set_as_wr_req();
+//    100-m_rand_wr_rate: t_req.set_as_rd_req();
+//  endcase
+//  if(t_req.is_wr_req()) begin
+//    if(!std::randomize(t_req.cdreq_data)) `uvm_fatal(get_type_name(), "randomize write data failed")
+//  end else begin
+//    t_req.cdreq_data = '0;
+//  end
+//  send_seq(t_req, t_rsp);
+//  #50ns;
+//endtask: gen_rand_seq
 
 //-------------------------------------------------------------------
 task `THIS_CLASS::send_seq(input cache_txn_c t_req, output cache_txn_c t_rsp);

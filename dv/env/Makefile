@@ -72,7 +72,7 @@ clean:
 
 #--------------------------------------------------------------------
 vlog:
-	mkdir -p run_dir wave_dir
+	mkdir -p run_dir wave_dir rtl_tracker
 	vlib work
 	vlib work.uvm_pkg
 	vlog -sv $(UVM_DIR) -work work.uvm_pkg $(UVM_PKG) $(VLOG_DEF)
@@ -83,6 +83,8 @@ vsim:
 	vsim work.$(TB_NAME) +UVM_VERBOSITY=DEBUG +UVM_TESTNAME=$(TEST_NAME) -nodpiexports -novopt -sv_seed $(SEED) $(CMD_OPT) -wlf wave_dir/$(TEST_NAME).wlf -do "$(VSIM_RUN)" | tee -a run_dir/$(TEST_NAME).log
 	sed 's/^#//' run_dir/$(TEST_NAME).log > tmp.log && mv tmp.log run_dir/$(TEST_NAME).log
 	sed -i '/  log -r \/\\*/d' run_dir/$(TEST_NAME).log
+	rm -rf rtl_tracker/$(TEST_NAME).log
+	grep "RTL_TRACKER\|RTL_INTER" run_dir/$(TEST_NAME).log >> rtl_tracker/$(TEST_NAME).log
 
 #--------------------------------------------------------------------
 vlog_rtl:

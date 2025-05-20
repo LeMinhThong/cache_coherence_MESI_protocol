@@ -1,0 +1,6 @@
+ 155ns: RTL_TRACKER [Addr=0x400] state updated: 0x0 --> 0x1
+ 155ns: RTL_TRACKER [Addr=0x400] tag updated: 0x0 --> 0x1
+ 155ns: RTL_TRACKER [Addr=0x400] data updated: 0x0 --> 0x1
+ 305ns: RTL_TRACKER [Addr=0x401] state updated: 0x0 --> 0x3
+ 305ns: RTL_TRACKER [Addr=0x401] tag updated: 0x0 --> 0x1
+ 305ns: RTL_TRACKER [Addr=0x401] data updated: 0x0 --> 0x2
