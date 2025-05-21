@@ -14,8 +14,9 @@ class `THISCLASS extends uvm_component;
   cache_txn_c l1_req_q[$];
   cache_txn_c snp_req_q[$];
 
-  string  m_msg_name = "DRV_BFM";
-  bit     rand_snp_delay = 0;
+  string  m_msg_name            = "DRV_BFM";
+  int     wt_ready_en_rand_max  = 5;
+  int     wt_send_rsp_rand_max  = 5;
 
   bit     reset_check;
   //bit     init_transfer;
@@ -115,11 +116,11 @@ task `THISCLASS::drive_l1_transfer();
     t_rsp = new t_req;
 
     fork
-      begin
+      begin // CDREQ
         `M_VIF.cdreq_valid  <= 1'b1;
         `M_VIF.cdreq_op     <= t_req.cdreq_op;
         `M_VIF.cdreq_addr   <= t_req.cdreq_addr;
-        if(t_req.is_wr_req())
+        if(t_req.cdreq_op == CDREQ_WB)
           `M_VIF.cdreq_data <= t_req.cdreq_data;
         else
           `M_VIF.cdreq_data <= '0;
@@ -128,78 +129,70 @@ task `THISCLASS::drive_l1_transfer();
         while(`M_VIF.cdreq_ready != 1'b1) begin
           @`M_VIF;
         end
+
         `M_VIF.cdreq_valid  <= 1'b0;
         `M_VIF.cdreq_op     <= '0;
         `M_VIF.cdreq_addr   <= '0;
         `M_VIF.cdreq_data   <= '0;
       end
 
-      begin: RESPONSE_SDREQ_BLK
+      begin: SURSP_CRTL_BLK // SURSP
+        // accept request from SDREQ
         @(posedge `M_VIF.sdreq_valid);
-        repeat(2) @`M_VIF;
+        repeat($urandom_range(0, wt_ready_en_rand_max)) begin
+          @`M_VIF;
+        end
         sdreq_op_loc = sdreq_e'(`M_VIF.sdreq_op);
-        // accept request from sdreq
         `M_VIF.sdreq_ready  <= 1'b1;
         @`M_VIF;
         `M_VIF.sdreq_ready  <= 1'b0;
         @`M_VIF;
 
-        // send response on sursp
+        // wait before send response
+        repeat($urandom_range(0, wt_send_rsp_rand_max)) begin
+          @`M_VIF;
+        end
+
+        // send response on SURSP
         `M_VIF.sursp_valid  <= 1'b1;
-        if(sdreq_op_loc inside {SDREQ_RD, SDREQ_RFO}) begin
-          `M_VIF.sursp_rsp  <= t_req.sursp_rsp;
+        if(sdreq_op_loc == SDREQ_RD)
+          `M_VIF.sursp_rsp <= t_req.sursp_rsp;
+        else
+          `M_VIF.sursp_rsp <= SURSP_OKAY;
+
+        if(sdreq_op_loc inside {SDREQ_RD, SDREQ_RFO})
           `M_VIF.sursp_data <= t_req.sursp_data;
-        end
-        else begin
-          `M_VIF.sursp_rsp  <= SURSP_OKAY;
+        else
           `M_VIF.sursp_data <= '0;
-        end
+
         @(posedge `M_VIF.sursp_ready);
         `M_VIF.sursp_valid  <= 1'b0;
         `M_VIF.sursp_rsp    <= '0;
         `M_VIF.sursp_data   <= '0;
-      end: RESPONSE_SDREQ_BLK
+      end: SURSP_CRTL_BLK
 
-      begin
+      begin // CURSP
         @(posedge `M_VIF.cursp_valid);
+        // disable SURSP channel controller in cases no SDREQ request is initiated
+        disable SURSP_CRTL_BLK;
+
+        repeat($urandom_range(0, wt_ready_en_rand_max)) begin
+          @`M_VIF;
+        end
+        `M_VIF.cursp_ready <= 1'b1;
         t_rsp.cursp_rsp   = cursp_e'(`M_VIF.cursp_rsp);
         t_rsp.cursp_data  = `M_VIF.cursp_data;
 
-        repeat(2) @`M_VIF;
-        `M_VIF.cursp_ready <= 1'b1;
         @`M_VIF;
         `M_VIF.cursp_ready <= 1'b0;
-        // out fork join in cases no sdreq request initiated
-        disable RESPONSE_SDREQ_BLK;
       end
     join
+
+    `uvm_info(m_msg_name, $sformatf("put L1 response: %s", t_rsp.convert2string()), UVM_DEBUG)
+    send_reponse(t_rsp);
   end
   init_l1_transfer = 1'b0;
 endtask: drive_l1_transfer
-
-    //@m_vif.mon_cb;
-    //if(m_vif.sdreq_op != SDREQ_RD) begin
-    //  @`M_VIF;
-    //  `uvm_info(m_msg_name, $sformatf("<CACHE_MISS> snp_rsp: %s, snp_data: 0x%0h", t_req.sursp_rsp.name(), t_req.sursp_data), UVM_DEBUG)
-    //  if(rand_snp_delay) begin
-    //    repeat($urandom_range(1, 5)) @`M_VIF;
-    //  end
-    //  `M_VIF.sursp_rsp   <= t_req.sursp_rsp;
-    //  `M_VIF.sursp_data  <= t_req.sursp_data;
-
-    //  @`M_VIF;
-    //  `M_VIF.sursp_rsp   <= SURSP_OKAY;
-    //  `M_VIF.sursp_data  <= '0;
-    //end
-
-    //if(!t_req.is_wr_req())  t_rsp.cursp_data = m_vif.cursp_data;
-
-    //`uvm_info(m_msg_name, $sformatf("put L1 response: %s", t_rsp.convert2string()), UVM_DEBUG)
-    //send_reponse(t_rsp);
-
-    //@`M_VIF;
-    //`M_VIF.cdreq_op     <= CDREQ_RD;
-    //`M_VIF.cdreq_addr   <= '0;
 
 //-------------------------------------------------------------------
 task `THISCLASS::drive_snp_transfer();
@@ -212,22 +205,84 @@ task `THISCLASS::drive_snp_transfer();
     `uvm_info(m_msg_name, $sformatf("drive snoop request: t_req=%s", t_req.convert2string()), UVM_DEBUG)
     t_rsp = new t_req;
 
-    `M_VIF.sureq_op    <= t_req.sureq_op;
-    `M_VIF.sureq_addr  <= t_req.sureq_addr;
+    fork
+      begin // SUREQ
+        `M_VIF.sureq_valid  <= 1'b1;
+        `M_VIF.sureq_op     <= t_req.sureq_op;
+        `M_VIF.sureq_addr   <= t_req.sureq_addr;
 
-    @m_vif.mon_cb;
-    t_rsp.sdrsp_rsp  = sdrsp_e'(m_vif.sdrsp_rsp);
-    t_rsp.sdrsp_data = m_vif.sdrsp_data;
+        @`M_VIF;
+        while(`M_VIF.sureq_ready != 1'b1) begin
+          @`M_VIF;
+        end
 
-    @`M_VIF;
-    `M_VIF.sureq_op    <= SUREQ_RD;
-    `M_VIF.sureq_addr  <= '0;
+        `M_VIF.sureq_valid  <= 1'b0;
+        `M_VIF.sureq_op     <= '0;
+        `M_VIF.sureq_addr   <= '0;
+      end
+
+      begin: CDRSP_CRTL_BLK // CDRSP
+        // accept request from CUREQ
+        @(posedge `M_VIF.cureq_valid);
+        repeat($urandom_range(0, wt_ready_en_rand_max)) begin
+          @`M_VIF;
+        end
+        `M_VIF.cureq_ready <= 1'b1;
+        @`M_VIF;
+        `M_VIF.cureq_ready <= 1'b0;
+        @`M_VIF;
+
+        // wait before send response
+        repeat($urandom_range(0, wt_send_rsp_rand_max)) begin
+          @`M_VIF;
+        end
+
+        // send response on CDRSP
+        `M_VIF.cdrsp_valid  <= 1'b1;
+        `M_VIF.cdrsp_rsp    <= CDRSP_OKAY;
+        `M_VIF.cdrsp_data   <= t_req.cdrsp_data;
+
+        @(posedge `M_VIF.cdrsp_ready);
+        `M_VIF.cdrsp_valid  <= 1'b0;
+        `M_VIF.cdrsp_rsp    <= '0;
+        `M_VIF.cdrsp_data   <= '0;
+      end: CDRSP_CRTL_BLK
+
+      begin // SDRSP
+        @(posedge `M_VIF.sdrsp_valid);
+        // disable CDRSP channel controller in cases no CUREQ request is initiated
+        disable CDRSP_CRTL_BLK;
+
+        repeat($urandom_range(0, wt_ready_en_rand_max)) begin
+          @`M_VIF;
+        end
+        `M_VIF.sdrsp_ready <= 1'b1;
+        t_rsp.sdrsp_rsp   = sdrsp_e'(`M_VIF.sdrsp_rsp);
+        t_rsp.sdrsp_data  = `M_VIF.sdrsp_data;
+
+        @`M_VIF;
+        `M_VIF.sdrsp_ready <= 1'b0;
+      end
+    join
 
     `uvm_info(m_msg_name, $sformatf("put snoop response: %s", t_rsp.convert2string()), UVM_DEBUG)
     send_reponse(t_rsp);
   end
   init_snp_transfer = 1'b0;
-endtask
+endtask: drive_snp_transfer
+    //`M_VIF.sureq_op    <= t_req.sureq_op;
+    //`M_VIF.sureq_addr  <= t_req.sureq_addr;
+
+    //@m_vif.mon_cb;
+    //t_rsp.sdrsp_rsp  = sdrsp_e'(m_vif.sdrsp_rsp);
+    //t_rsp.sdrsp_data = m_vif.sdrsp_data;
+
+    //@`M_VIF;
+    //`M_VIF.sureq_op    <= SUREQ_RD;
+    //`M_VIF.sureq_addr  <= '0;
+
+    //`uvm_info(m_msg_name, $sformatf("put snoop response: %s", t_rsp.convert2string()), UVM_DEBUG)
+    //send_reponse(t_rsp);
 
 //-------------------------------------------------------------------
 task `THISCLASS::reset_monitoring();
@@ -252,15 +307,6 @@ endtask: reset_monitoring
 
 //-------------------------------------------------------------------
 task `THISCLASS::reset_signals();
-  //`M_VIF.cdreq_op     <= CDREQ_RD;
-  //`M_VIF.cdreq_addr   <= '0;
-  //`M_VIF.cdreq_data   <= '0;
-
-  //`M_VIF.sureq_op    <= SUREQ_RD;
-  //`M_VIF.sureq_addr  <= '0;
-  //`M_VIF.sursp_data  <= '0;
-  //`M_VIF.sursp_rsp   <= SURSP_OKAY;
-
   `M_VIF.cdreq_valid  <= 1'b0;
   `M_VIF.cdreq_op     <= '0;
   `M_VIF.cdreq_addr   <= '0;

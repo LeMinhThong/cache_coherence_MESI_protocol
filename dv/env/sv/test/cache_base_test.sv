@@ -15,10 +15,10 @@ class `THIS_CLASS extends uvm_test;
 
   time m_timeout = 100us;
 
-  extern  virtual task            send_l1_rd  (address_t addr, sursp_e sursp_rsp=3'b111);
+  extern  virtual task            send_l1_rd  (address_t addr, sursp_e sursp_rsp=SURSP_OKAY);
   extern  virtual task            send_l1_rfo (address_t addr);
   extern  virtual task            send_l1_md  (address_t addr);
-  extern  virtual task            send_l1_wb  (address_t addr, data_t data=-1);
+  extern  virtual task            send_l1_wb  (address_t addr);
 
   extern  virtual task            send_snp_rd (address_t addr);
   extern  virtual task            send_snp_rfo(address_t addr);
@@ -82,13 +82,13 @@ task `THIS_CLASS::run_seq();
 endtask: run_seq
 
 // ------------------------------------------------------------------
-task `THIS_CLASS::send_l1_rd(address_t addr, sursp_e sursp_rsp=3'b111);
+task `THIS_CLASS::send_l1_rd(address_t addr, sursp_e sursp_rsp=SURSP_OKAY);
   l1_req_seq_c m_seq  = new();
 
   m_seq.m_op          = CDREQ_RD;
   m_seq.m_addr        = addr;
   m_seq.m_sursp_rsp   = sursp_rsp;
-  std::randomize(m_seq.m_sursp_data);
+  //std::randomize(m_seq.m_sursp_data);
   `START_SEQ(m_seq);
 endtask: send_l1_rd
 
@@ -98,7 +98,7 @@ task `THIS_CLASS::send_l1_rfo(address_t addr);
 
   m_seq.m_op          = CDREQ_RFO;
   m_seq.m_addr        = addr;
-  std::randomize(m_seq.m_sursp_data);
+  //std::randomize(m_seq.m_sursp_data);
   `START_SEQ(m_seq);
 endtask: send_l1_rfo
 
@@ -112,15 +112,15 @@ task `THIS_CLASS::send_l1_md(address_t addr);
 endtask: send_l1_md
 
 // ------------------------------------------------------------------
-task `THIS_CLASS::send_l1_wb(address_t addr, data_t data=-1);
+task `THIS_CLASS::send_l1_wb(address_t addr);
   l1_req_seq_c m_seq  = new();
 
   m_seq.m_op          = CDREQ_WB;
   m_seq.m_addr        = addr;
-  if(data == -1)
-    std::randomize(m_seq.m_cdreq_data);
-  else
-    m_seq.m_cdreq_data = data;
+  //if(data == -1)
+  //  std::randomize(m_seq.m_cdreq_data);
+  //else
+  //  m_seq.m_cdreq_data = data;
   `START_SEQ(m_seq);
 endtask: send_l1_wb
 
@@ -130,6 +130,7 @@ task `THIS_CLASS::send_snp_rd(address_t addr);
 
   m_seq.m_op    = SUREQ_RD;
   m_seq.m_addr  = addr;
+  //std::randomize(m_seq.m_cdrsp_data);
   `START_SEQ(m_seq);
 endtask: send_snp_rd
 
@@ -139,6 +140,7 @@ task `THIS_CLASS::send_snp_rfo(address_t addr);
 
   m_seq.m_op    = SUREQ_RFO;
   m_seq.m_addr  = addr;
+  //std::randomize(m_seq.m_seq.m_cdrsp_data);
   `START_SEQ(m_seq);
 endtask: send_snp_rfo
 

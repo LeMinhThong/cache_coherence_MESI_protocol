@@ -5,26 +5,25 @@
 import cache_pkg::*;
 
 module fsm_snp_req_ctrl (
-      input   logic [2:0] curSt,
+      input   logic [2:0] blk_curSt,
       input   logic [1:0] snp_op,
 
-      output  logic [2:0] nxtSt,
+      output  logic [2:0] blk_nxtSt,
       output  logic [1:0] snp_rsp
 );
 
   //-----------------------------------------------------------------
-  //assign snp_wb   = ((curSt == MODIFIED) && ((snp_op == SNP_RD) || (snp_op == SNP_RWITM))) ? 1'b1 : 1'b0;
-  assign snp_rsp  = (curSt[0] && ((snp_op == SUREQ_RD) || (snp_op == SUREQ_RFO))) ? SDRSP_OKAY : SDRSP_INV;
+  assign snp_rsp  = (blk_curSt == INVALID) ? SDRSP_INV : SDRSP_OKAY;
 
   //-----------------------------------------------------------------
   always_comb begin
-    nxtSt = curSt;
+    blk_nxtSt = INVALID;
     case(snp_op)
-      SUREQ_RD:   nxtSt = SHARED;
-      SUREQ_INV:  nxtSt = INVALID;
-      SUREQ_RFO:  nxtSt = INVALID;
+      SUREQ_RD:   blk_nxtSt = SHARED;
+      SUREQ_RFO:  blk_nxtSt = INVALID;
+      SUREQ_INV:  blk_nxtSt = INVALID;
       default: ;
-    endcase // curSt
+    endcase // blk_curSt
   end
 endmodule
 

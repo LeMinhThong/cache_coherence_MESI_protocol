@@ -1,8 +1,15 @@
 QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
-Start time: 22:45:24 on May 12,2025
-vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/topchip" "+incdir+../../rtl/subsystem" "+incdir+../lib" "+incdir+../lib/agent" "+incdir+../lib/interface" "+incdir+./sv/test" "+incdir+./sv/seq" "+incdir+./tb" ../../rtl/topchip/cache_def.sv ../../rtl/subsystem/fsm_l1_req_ctrl.sv ../../rtl/subsystem/fsm_snp_req_ctrl.sv ../../rtl/topchip/cache_mem.sv ../lib/cache_vip_pkg.sv ../lib/if/cache_if.sv ./sv/cache_test_pkg.sv ./tb/cache_mem_tb_top.sv -l run_dir/cache_base_test_c.log 
+Start time: 17:15:12 on May 21,2025
+vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/topchip" "+incdir+../../rtl/subsystem" "+incdir+../lib" "+incdir+../lib/agent" "+incdir+../lib/interface" "+incdir+./sv/test" "+incdir+./sv/seq" "+incdir+./tb" ../../rtl/topchip/cache_def.sv ../../rtl/topchip/cache_pkg.sv ../../rtl/subsystem/fsm_l1_req_ctrl.sv ../../rtl/subsystem/fsm_snp_req_ctrl.sv ../../rtl/topchip/cache_mem.sv ../lib/cache_vip_pkg.sv ../lib/if/cache_if.sv ./sv/cache_test_pkg.sv ./tb/cache_mem_tb_top.sv -l run_dir/cache_base_test_c.log 
+-- Compiling package cache_pkg
+-- Compiling package fsm_l1_req_ctrl_sv_unit
+-- Importing package cache_pkg
 -- Compiling module fsm_l1_req_ctrl
+-- Compiling package fsm_snp_req_ctrl_sv_unit
+-- Importing package cache_pkg
 -- Compiling module fsm_snp_req_ctrl
+-- Compiling package cache_mem_sv_unit
+-- Importing package cache_pkg
 -- Compiling module cache_mem
 -- Compiling package cache_vip_pkg
 -- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
@@ -10,20 +17,29 @@ vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/topchip" "+incdir+../../rt
 -- Compiling interface cache_if
 -- Compiling package cache_test_pkg
 -- Importing package cache_vip_pkg
-** Warning: ./sv/seq/cache_base_seq.sv(50): (vlog-2961) Argument #1 for std::randomize() function is non-LRM compliant.
+** Warning: ./sv/test/cache_base_test.sv(91): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+** Warning: ./sv/test/cache_base_test.sv(91): (vlog-2961) Argument #1 for std::randomize() function is non-LRM compliant.
+** Warning: ./sv/test/cache_base_test.sv(101): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+** Warning: ./sv/test/cache_base_test.sv(101): (vlog-2961) Argument #1 for std::randomize() function is non-LRM compliant.
+** Warning: ./sv/test/cache_base_test.sv(121): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+** Warning: ./sv/test/cache_base_test.sv(121): (vlog-2961) Argument #1 for std::randomize() function is non-LRM compliant.
+** Warning: ./sv/test/cache_base_test.sv(133): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+** Warning: ./sv/test/cache_base_test.sv(133): (vlog-2961) Argument #1 for std::randomize() function is non-LRM compliant.
+** Warning: ./sv/test/cache_base_test.sv(143): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+** Warning: ./sv/test/cache_base_test.sv(143): (vlog-2961) Argument #1 for std::randomize() function is non-LRM compliant.
 -- Compiling module cache_mem_tb_top
 -- Importing package cache_test_pkg
 
 Top level modules:
 	cache_mem_tb_top
-End time: 22:45:24 on May 12,2025, Elapsed time: 0:00:00
-Errors: 0, Warnings: 1
+End time: 17:15:12 on May 21,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 10
 Reading E:/questaSim/main/tcl/vsim/pref.tcl
 
  10.6c
 
  vsim work.cache_mem_tb_top "+UVM_VERBOSITY=DEBUG" "+UVM_TESTNAME=cache_base_test_c" -nodpiexports -novopt -sv_seed random -wlf wave_dir/cache_base_test_c.wlf -do " log -r /*; run -all; quit -f;" 
- Start time: 22:45:26 on May 12,2025
+ Start time: 17:15:14 on May 21,2025
  ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
  //  Questa Sim-64
  //  Version 10.6c win64 Jul 26 2017
@@ -40,8 +56,10 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  //  18 U.S.C. Section 1905.
  //
  Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem_tb_top
- Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_if
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_pkg
  Loading sv_std.std
+ Loading work.cache_pkg
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_if
  Loading work.cache_if
  Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_test_pkg
  Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_vip_pkg
@@ -50,19 +68,20 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  Loading work.cache_test_pkg
  Loading work.cache_mem_tb_top
  Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem_sv_unit
+ Loading work.cache_mem_sv_unit
  Loading work.cache_mem
  Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.fsm_l1_req_ctrl
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.fsm_l1_req_ctrl_sv_unit
+ Loading work.fsm_l1_req_ctrl_sv_unit
  Loading work.fsm_l1_req_ctrl
  Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.fsm_snp_req_ctrl
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.fsm_snp_req_ctrl_sv_unit
+ Loading work.fsm_snp_req_ctrl_sv_unit
  Loading work.fsm_snp_req_ctrl
  Loading mtiUvm.questa_uvm_pkg
- ** Warning: (vsim-3015) ../../rtl/topchip/cache_mem.sv(135): [PCDPC] - Port size (1) does not match connection size (2) for port 'cursp_rsp'. The port definition is at: ../../rtl/subsystem/fsm_l1_req_ctrl.sv(15).
-    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut/l1_req_crtl File: ../../rtl/subsystem/fsm_l1_req_ctrl.sv
- ** Warning: (vsim-8441) ../lib/agent/cache_drv.svh(69): Clocking block output m_vif.drv_cb.rst_n is not legal in this
- or another expression.
-    Time: 0 ns  Iteration: 0  Region: /cache_vip_pkg::cache_drv_c File: ../lib/cache_vip_pkg.sv
  Loading E:/questaSim/main/uvm-1.1d\win64\uvm_dpi.dll
- Sv_Seed = 1386405146
+ Sv_Seed = 1054142014
   run -all
  ----------------------------------------------------------------
  UVM-1.1d
@@ -87,40 +106,26 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(192) @ 0: reporter [Questa UVM] Add Phase
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(106): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(278): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(107): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(279): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(113): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(285): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(113): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(285): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(114): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(286): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(114): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(286): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(124): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(301): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(130): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(307): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(312): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  hello from cache_mem_tb
  UVM_INFO @ 0: reporter [RNTST] Running test cache_base_test_c...
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(106): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(124): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(113): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(113): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(107): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(130): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(114): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(114): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
  UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
  ----------------------------------------------------------------
  Name                       Type                      Size  Value
@@ -163,46 +168,33 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_configure' (id=232) PHASE READY TO END
  UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_main'
  UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_main' (id=244) PHASE READY TO END
- UVM_INFO ./sv/test/cache_base_test.sv(50) @ 0: uvm_test_top [cache_base_test_c] Start test
- UVM_INFO ./sv/test/cache_base_test.sv(66) @ 0: uvm_test_top [cache_base_test_c] hello from base run_seq
+ UVM_INFO ./sv/test/cache_base_test.sv(59) @ 0: uvm_test_top [cache_base_test_c] Start test
  UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'main'
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(106): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(107): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(113): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(113): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(114): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(114): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(124): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(130): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- UVM_INFO ./sv/test/cache_base_test.sv(60) @ 100: uvm_test_top [cache_base_test_c] Complete test
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1199) @ 100: reporter [PH/TRC/EXE/ALLDROP] Phase 'uvm.uvm_sched.main' (id=256) PHASE EXIT ALL_DROPPED
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 100: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.main' (id=256) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 100: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_main'
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 100: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_main' (id=268) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 100: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_shutdown'
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 100: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_shutdown' (id=280) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 100: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'shutdown'
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 100: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.shutdown' (id=292) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 100: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_shutdown'
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 100: reporter [PH_READY_TO_END] Phase 'common.run' (id=93) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 100: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_shutdown' (id=304) PHASE READY TO END
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(293) @ 5: uvm_test_top.env.agt.drv_bfm [DRV_BFM] Reset is handling
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(300) @ 35: uvm_test_top.env.agt.drv_bfm [DRV_BFM] Reset has completed
+ UVM_INFO ./sv/test/cache_base_test.sv(80) @ 50: uvm_test_top [cache_base_test_c] hello from base run_seq
+ UVM_INFO ./sv/test/cache_base_test.sv(74) @ 150: uvm_test_top [cache_base_test_c] Complete test
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1199) @ 150: reporter [PH/TRC/EXE/ALLDROP] Phase 'uvm.uvm_sched.main' (id=256) PHASE EXIT ALL_DROPPED
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 150: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.main' (id=256) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 150: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_main'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 150: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_main' (id=268) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 150: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_shutdown'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 150: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_shutdown' (id=280) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 150: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'shutdown'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 150: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.shutdown' (id=292) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 150: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_shutdown'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 150: reporter [PH_READY_TO_END] Phase 'common.run' (id=93) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 150: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_shutdown' (id=304) PHASE READY TO END
  
  --- UVM Report Summary ---
  
  ** Report counts by severity
- UVM_INFO :   36
+ UVM_INFO :   38
  UVM_WARNING :    0
  UVM_ERROR :    0
  UVM_FATAL :    0
  ** Report counts by id
+ [DRV_BFM]     2
  [PH/TRC/EXE/ALLDROP]     1
  [PHASESEQ]    13
  [PH_READY_TO_END]    13
@@ -211,6 +203,6 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  [UVMTOP]     1
  [cache_base_test_c]     3
  ** Note: $finish    : E:/questaSim/main/win64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
-    Time: 100 ns  Iteration: 97  Instance: /cache_mem_tb_top
- End time: 22:45:30 on May 12,2025, Elapsed time: 0:00:04
- Errors: 0, Warnings: 27
+    Time: 150 ns  Iteration: 97  Instance: /cache_mem_tb_top
+ End time: 17:15:18 on May 21,2025, Elapsed time: 0:00:04
+ Errors: 0, Warnings: 10

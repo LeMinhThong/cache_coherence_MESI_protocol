@@ -8,9 +8,9 @@ package cache_pkg;
   // 2:SHARED | 1:EXCLUSIVE/MODIFIED | 0: VALID
   parameter INVALID   = 3'b000;
   parameter EXCLUSIVE = 3'b001;
-  parameter MODIFIED  = 3'b011;
+  parameter MODIFIED  = 3'b011; // up-to-date data is in L2
+  parameter MIGRATED  = 3'b111; // up-to-date data is in L1
   parameter SHARED    = 3'b101;
-  //parameter OWNED     = 3'b111;
 
   // ----------------------------------------------------------------
   // request status
@@ -21,13 +21,26 @@ package cache_pkg;
   parameter WRITE_MISS = 3;
 
   // ----------------------------------------------------------------
-  // downstream cache request processing states
+  // downstream L1 request states
   // ----------------------------------------------------------------
-  parameter REQ_IDLE        = 3'b000;
-  parameter REQ_ALLOCATE    = 3'b001;
-  parameter REQ_INIT_SDREQ  = 3'b010;
-  parameter REQ_WAIT_SURSP  = 3'b011;
-  parameter REQ_RSP_CURSP   = 3'b100;
+  parameter CDREQ_IDLE        = 3'b000;
+  parameter CDREQ_ALLOCATE    = 3'b001;
+  parameter CDREQ_INIT_SDREQ  = 3'b010;
+  parameter CDREQ_WAIT_SURSP  = 3'b011;
+  parameter CDREQ_UPDATE      = 3'b100;
+  parameter CDREQ_SEND_RSP    = 3'b101;
+
+  // ----------------------------------------------------------------
+  // upstream snoop request states
+  // ----------------------------------------------------------------
+  parameter SUREQ_IDLE        = 3'b000;
+  parameter SUREQ_ALLOCATE    = 3'b001;
+  parameter SUREQ_INIT_CUREQ  = 3'b010;
+  parameter SUREQ_WAIT_CDRSP  = 3'b011;
+  parameter SUREQ_INIT_SDREQ  = 3'b100;
+  parameter SUREQ_WAIT_SURSP  = 3'b101;
+  parameter SUREQ_UPDATE      = 3'b110;
+  parameter SUREQ_SEND_RSP    = 3'b111;
 
   // ----------------------------------------------------------------
   // cdreq_op encode

@@ -7,10 +7,10 @@ class `THIS_CLASS extends cache_base_seq_c;
 
   cdreq_e   m_op;
   address_t m_addr;
-  data_t    m_cdreq_data;
+  //data_t    m_cdreq_data;
 
   sursp_e   m_sursp_rsp;
-  data_t    m_sursp_data;
+  //data_t    m_sursp_data;
 
   extern  virtual task  body();
 
@@ -29,13 +29,13 @@ task `THIS_CLASS::body();
     t_req.Type        == L1_REQ;
     t_req.cdreq_op    == m_op;
     t_req.cdreq_addr  == m_addr;
-    if(m_op == CDREQ_WB)
-      t_req.cdreq_data == m_cdreq_data;
-    else
-      t_req.cdreq_data == '0;
+    //if(m_op == CDREQ_WB)
+    //  t_req.cdreq_data == m_cdreq_data;
+    //else
+    //  t_req.cdreq_data == '0;
 
     if(m_op == CDREQ_RD) {
-      if(m_sursp_rsp == 3'b111)
+      if(m_sursp_rsp == SURSP_OKAY)
         t_req.sursp_rsp inside {SURSP_FETCH, SURSP_SNOOP};
       else
         t_req.sursp_rsp == m_sursp_rsp;
@@ -43,7 +43,7 @@ task `THIS_CLASS::body();
     else {
       t_req.sursp_rsp == SURSP_OKAY;
     }
-    t_req.sursp_data == m_sursp_data;
+    //t_req.sursp_data == m_sursp_data;
   }) else `uvm_fatal(get_type_name(), "randomize transaction with failed")
 
   send_seq(t_req, t_rsp);

@@ -30,16 +30,18 @@ module fsm_l1_req_ctrl (
       req_status[WRITE_HIT]:  blk_nxtSt = MODIFIED;
       req_status[READ_MISS]:
             begin
-              if(req_curSt == REQ_RSP_CURSP)
+              if(req_curSt == CDREQ_SEND_RSP) begin
                 case(sursp_rsp)
                   SURSP_SNOOP: blk_nxtSt = SHARED;
                   SURSP_FETCH: blk_nxtSt = EXCLUSIVE;
                   default: ;
                 endcase // sursp_rsp
-              else
+              end
+              else begin
                 blk_nxtSt = INVALID;
+              end
             end
-      req_status[WRITE_MISS]: blk_nxtSt = (req_curSt == REQ_RSP_CURSP) ? MODIFIED : INVALID;
+      req_status[WRITE_MISS]: blk_nxtSt = (req_curSt == CDREQ_SEND_RSP) ? MODIFIED : INVALID;
       default: ;
     endcase // req_status
   end

@@ -8,6 +8,8 @@ class `THIS_CLASS extends cache_base_seq_c;
   sureq_e   m_op;
   address_t m_addr;
 
+  //data_t    m_cdrsp_data;
+
   extern  virtual task  body();
 
   function new(string name="`THIS_CLASS");
@@ -25,6 +27,8 @@ task `THIS_CLASS::body();
     t_req.Type        == SNP_REQ;
     t_req.sureq_op    == m_op;
     t_req.sureq_addr  == m_addr;
+
+    //t_req.cdrsp_data  == m_cdrsp_data;
   }) else `uvm_fatal(get_type_name(), "randomize transaction with failed")
 
   send_seq(t_req, t_rsp);

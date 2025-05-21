@@ -1,5 +1,5 @@
 QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
-Start time: 00:22:58 on May 21,2025
+Start time: 20:04:32 on May 21,2025
 vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/topchip" "+incdir+../../rtl/subsystem" "+incdir+../lib" "+incdir+../lib/agent" "+incdir+../lib/interface" "+incdir+./sv/test" "+incdir+./sv/seq" "+incdir+./tb" ../../rtl/topchip/cache_def.sv ../../rtl/topchip/cache_pkg.sv ../../rtl/subsystem/fsm_l1_req_ctrl.sv ../../rtl/subsystem/fsm_snp_req_ctrl.sv ../../rtl/topchip/cache_mem.sv ../lib/cache_vip_pkg.sv ../lib/if/cache_if.sv ./sv/cache_test_pkg.sv ./tb/cache_mem_tb_top.sv -l run_dir/mesi_test_c.log 
 -- Compiling package cache_pkg
 -- Compiling package fsm_l1_req_ctrl_sv_unit
@@ -17,26 +17,19 @@ vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/topchip" "+incdir+../../rt
 -- Compiling interface cache_if
 -- Compiling package cache_test_pkg
 -- Importing package cache_vip_pkg
-** Warning: ./sv/test/cache_base_test.sv(91): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
-** Warning: ./sv/test/cache_base_test.sv(91): (vlog-2961) Argument #1 for std::randomize() function is non-LRM compliant.
-** Warning: ./sv/test/cache_base_test.sv(101): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
-** Warning: ./sv/test/cache_base_test.sv(101): (vlog-2961) Argument #1 for std::randomize() function is non-LRM compliant.
-** Warning: ./sv/test/cache_base_test.sv(121): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
-** Warning: ./sv/test/cache_base_test.sv(121): (vlog-2961) Argument #1 for std::randomize() function is non-LRM compliant.
-** Warning: ./sv/seq/l1_req_seq.sv(38): (vlog-2577) Enum type mismatch between operands of '==' expression.
 -- Compiling module cache_mem_tb_top
 -- Importing package cache_test_pkg
 
 Top level modules:
 	cache_mem_tb_top
-End time: 00:22:59 on May 21,2025, Elapsed time: 0:00:01
-Errors: 0, Warnings: 7
+End time: 20:04:32 on May 21,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
 Reading E:/questaSim/main/tcl/vsim/pref.tcl
 
  10.6c
 
  vsim work.cache_mem_tb_top "+UVM_VERBOSITY=DEBUG" "+UVM_TESTNAME=mesi_test_c" -nodpiexports -novopt -sv_seed random -wlf wave_dir/mesi_test_c.wlf -do " log -r /*; run -all; quit -f;" 
- Start time: 00:23:00 on May 21,2025
+ Start time: 20:04:34 on May 21,2025
  ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
  //  Questa Sim-64
  //  Version 10.6c win64 Jul 26 2017
@@ -77,8 +70,10 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  Loading work.fsm_snp_req_ctrl_sv_unit
  Loading work.fsm_snp_req_ctrl
  Loading mtiUvm.questa_uvm_pkg
+ ** Warning: (vsim-3015) ../../rtl/topchip/cache_mem.sv(368): [PCDPC] - Port size (2) does not match connection size (3) for port 'snp_op'. The port definition is at: ../../rtl/subsystem/fsm_snp_req_ctrl.sv(9).
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut/snp_req_crtl File: ../../rtl/subsystem/fsm_snp_req_ctrl.sv
  Loading E:/questaSim/main/uvm-1.1d\win64\uvm_dpi.dll
- Sv_Seed = 2121758406
+ Sv_Seed = 838454554
   run -all
  ----------------------------------------------------------------
  UVM-1.1d
@@ -103,36 +98,26 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(192) @ 0: reporter [Questa UVM] Add Phase
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(255): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(315): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(256): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(316): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(262): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(322): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(262): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(322): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(263): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(323): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(263): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(323): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(273): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(338): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(279): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(344): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(280): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(349): Index xxxxxxxxxx into array dimension [0:1023] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  hello from cache_mem_tb
  UVM_INFO @ 0: reporter [RNTST] Running test mesi_test_c...
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(256): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(279): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(280): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(263): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(263): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
  UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
  ----------------------------------------------------------------
  Name                       Type                      Size  Value
@@ -162,14 +147,6 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(277) @ 0: reporter [Questa UVM] End Of Elaboration
  UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'run'
  UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_reset'
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(256): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(263): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(263): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(280): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
  UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_reset' (id=172) PHASE READY TO END
  UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'reset'
  UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.reset' (id=184) PHASE READY TO END
@@ -185,64 +162,76 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 0: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_main' (id=244) PHASE READY TO END
  UVM_INFO ./sv/test/cache_base_test.sv(59) @ 0: uvm_test_top [mesi_test_c] Start test
  UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 0: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'main'
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(256): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(263): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(263): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(280): Index zzzzzzzzzz into array dimension [0:1023] is out of bounds.
-    Time: 5 ns  Iteration: 2  Instance: /cache_mem_tb_top/dut
- UVM_INFO ../lib/agent/cache_drv_bfm.svh(248) @ 5: uvm_test_top.env.agt.drv_bfm [DRV_BFM] Reset is handling
- UVM_INFO ../lib/agent/cache_drv_bfm.svh(255) @ 35: uvm_test_top.env.agt.drv_bfm [DRV_BFM] Reset has completed
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(293) @ 5: uvm_test_top.env.agt.drv_bfm [DRV_BFM] Reset is handling
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(300) @ 35: uvm_test_top.env.agt.drv_bfm [DRV_BFM] Reset has completed
  UVM_INFO ./sv/seq/l1_req_seq.sv(27) @ 50: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] start body
  UVM_INFO ./sv/seq/cache_base_seq.sv(65) @ 50: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] INC_REQ_CNT: req_cnt=1  rsp_cnt=0
- UVM_INFO ../lib/agent/cache_drv.svh(60) @ 50: uvm_test_top.env.agt.drv [DRV] Received request from sequencer: TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x440  cdreq_data=0x0  cursp_rsp=CURSP_OKAY  cursp_data=0x93357cc6842577f543fd7d40488d82563b4869f8a8b3ffa9eeccafa2ac9485d1cb43cf1e64d41e4ea281e673885e591c7b744838f9365c550a3a3bbc0ef76c38  cureq_op=CUREQ_INV  cureq_addr=0x30cd8ca59f058a1  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0x1debcfec5dfd41828dbbe0d788477d02db1b7bb67bac1e36453044d2245aaf0c7d2273ead1ce56eaf0d9d8fc0543c3887439b0475b1509b2f746ae93210d4d1b  sdreq_op=SDREQ_RD  sdreq_addr=0x8f035e1efcf506  sdreq_data=0xc3deda313aff875e61263ea885dfb8cdd8b51cc1eabbf94e29061f70922098173091ca6e030eb1cee017b25d3149147022a5e73a71c87138786063ca8e9633  sursp_rsp=SURSP_FETCH  sursp_data=0xe7333e86b6b881fba6b53c51fbe9eaac0a7e8e1b62c0e78a4e6a91fe291bfd008c5c7d9f9cc01ba4f93f697e80d5f35d370edfc46b1ddda1c5be295323ee15c6  sureq_op=SUREQ_INV  sureq_addr=0x265ccd41be0499f  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xe62c2666b25977688a65937ac34623281dd65910b2bfbf6272f2defb8db73762f524ead00c3806b11c6f9f3b7ca34536484d54637294db7fed0655c13ee63b80  
- UVM_INFO ../lib/agent/cache_drv_bfm.svh(296) @ 50: uvm_test_top.env.agt.drv_bfm [DRV_BFM] put req to l1_req_q=1 req=TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x440  cdreq_data=0x0  cursp_rsp=CURSP_OKAY  cursp_data=0x93357cc6842577f543fd7d40488d82563b4869f8a8b3ffa9eeccafa2ac9485d1cb43cf1e64d41e4ea281e673885e591c7b744838f9365c550a3a3bbc0ef76c38  cureq_op=CUREQ_INV  cureq_addr=0x30cd8ca59f058a1  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0x1debcfec5dfd41828dbbe0d788477d02db1b7bb67bac1e36453044d2245aaf0c7d2273ead1ce56eaf0d9d8fc0543c3887439b0475b1509b2f746ae93210d4d1b  sdreq_op=SDREQ_RD  sdreq_addr=0x8f035e1efcf506  sdreq_data=0xc3deda313aff875e61263ea885dfb8cdd8b51cc1eabbf94e29061f70922098173091ca6e030eb1cee017b25d3149147022a5e73a71c87138786063ca8e9633  sursp_rsp=SURSP_FETCH  sursp_data=0xe7333e86b6b881fba6b53c51fbe9eaac0a7e8e1b62c0e78a4e6a91fe291bfd008c5c7d9f9cc01ba4f93f697e80d5f35d370edfc46b1ddda1c5be295323ee15c6  sureq_op=SUREQ_INV  sureq_addr=0x265ccd41be0499f  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xe62c2666b25977688a65937ac34623281dd65910b2bfbf6272f2defb8db73762f524ead00c3806b11c6f9f3b7ca34536484d54637294db7fed0655c13ee63b80  
- UVM_INFO ../lib/agent/cache_drv_bfm.svh(115) @ 55: uvm_test_top.env.agt.drv_bfm [DRV_BFM] drive L1 request: t_req=TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x440  cdreq_data=0x0  cursp_rsp=CURSP_OKAY  cursp_data=0x93357cc6842577f543fd7d40488d82563b4869f8a8b3ffa9eeccafa2ac9485d1cb43cf1e64d41e4ea281e673885e591c7b744838f9365c550a3a3bbc0ef76c38  cureq_op=CUREQ_INV  cureq_addr=0x30cd8ca59f058a1  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0x1debcfec5dfd41828dbbe0d788477d02db1b7bb67bac1e36453044d2245aaf0c7d2273ead1ce56eaf0d9d8fc0543c3887439b0475b1509b2f746ae93210d4d1b  sdreq_op=SDREQ_RD  sdreq_addr=0x8f035e1efcf506  sdreq_data=0xc3deda313aff875e61263ea885dfb8cdd8b51cc1eabbf94e29061f70922098173091ca6e030eb1cee017b25d3149147022a5e73a71c87138786063ca8e9633  sursp_rsp=SURSP_FETCH  sursp_data=0xe7333e86b6b881fba6b53c51fbe9eaac0a7e8e1b62c0e78a4e6a91fe291bfd008c5c7d9f9cc01ba4f93f697e80d5f35d370edfc46b1ddda1c5be295323ee15c6  sureq_op=SUREQ_INV  sureq_addr=0x265ccd41be0499f  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xe62c2666b25977688a65937ac34623281dd65910b2bfbf6272f2defb8db73762f524ead00c3806b11c6f9f3b7ca34536484d54637294db7fed0655c13ee63b80  
- 165ns: RTL_INTER [Addr=0x440] state updated: 0x0 --> 0x1
- 165ns: RTL_INTER [Addr=0x440] tag updated: 0x0 --> 0x1
- 165ns: RTL_INTER [Addr=0x440] data updated: 0x0 --> 0xe7333e86b6b881fba6b53c51fbe9eaac0a7e8e1b62c0e78a4e6a91fe291bfd008c5c7d9f9cc01ba4f93f697e80d5f35d370edfc46b1ddda1c5be295323ee15c6
- 175ns: RTL_TRACKER [Addr=0x440] state update: 0x0 --> 0x1
- 175ns: RTL_TRACKER [Addr=0x440] tag update: 0x0 --> 0x1
- 175ns: RTL_TRACKER [Addr=0x440] data update: 0x0 --> 0xe7333e86b6b881fba6b53c51fbe9eaac0a7e8e1b62c0e78a4e6a91fe291bfd008c5c7d9f9cc01ba4f93f697e80d5f35d370edfc46b1ddda1c5be295323ee15c6
- UVM_INFO ../lib/agent/cache_drv_bfm.svh(184) @ 185: uvm_test_top.env.agt.drv_bfm [DRV_BFM] put L1 response: TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x440  cdreq_data=0x0  cursp_rsp=CURSP_OKAY  cursp_data=0xe7333e86b6b881fba6b53c51fbe9eaac0a7e8e1b62c0e78a4e6a91fe291bfd008c5c7d9f9cc01ba4f93f697e80d5f35d370edfc46b1ddda1c5be295323ee15c6  cureq_op=CUREQ_INV  cureq_addr=0x30cd8ca59f058a1  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0x1debcfec5dfd41828dbbe0d788477d02db1b7bb67bac1e36453044d2245aaf0c7d2273ead1ce56eaf0d9d8fc0543c3887439b0475b1509b2f746ae93210d4d1b  sdreq_op=SDREQ_RD  sdreq_addr=0x8f035e1efcf506  sdreq_data=0xc3deda313aff875e61263ea885dfb8cdd8b51cc1eabbf94e29061f70922098173091ca6e030eb1cee017b25d3149147022a5e73a71c87138786063ca8e9633  sursp_rsp=SURSP_FETCH  sursp_data=0xe7333e86b6b881fba6b53c51fbe9eaac0a7e8e1b62c0e78a4e6a91fe291bfd008c5c7d9f9cc01ba4f93f697e80d5f35d370edfc46b1ddda1c5be295323ee15c6  sureq_op=SUREQ_INV  sureq_addr=0x265ccd41be0499f  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xe62c2666b25977688a65937ac34623281dd65910b2bfbf6272f2defb8db73762f524ead00c3806b11c6f9f3b7ca34536484d54637294db7fed0655c13ee63b80  
- UVM_INFO ./sv/seq/cache_base_seq.sv(76) @ 185: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] INC_RSP_CNT: req_cnt=1  rsp_cnt=1
- UVM_INFO ./sv/seq/cache_base_seq.sv(67) @ 185: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] received response: TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x440  cdreq_data=0x0  cursp_rsp=CURSP_OKAY  cursp_data=0xe7333e86b6b881fba6b53c51fbe9eaac0a7e8e1b62c0e78a4e6a91fe291bfd008c5c7d9f9cc01ba4f93f697e80d5f35d370edfc46b1ddda1c5be295323ee15c6  cureq_op=CUREQ_INV  cureq_addr=0x30cd8ca59f058a1  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0x1debcfec5dfd41828dbbe0d788477d02db1b7bb67bac1e36453044d2245aaf0c7d2273ead1ce56eaf0d9d8fc0543c3887439b0475b1509b2f746ae93210d4d1b  sdreq_op=SDREQ_RD  sdreq_addr=0x8f035e1efcf506  sdreq_data=0xc3deda313aff875e61263ea885dfb8cdd8b51cc1eabbf94e29061f70922098173091ca6e030eb1cee017b25d3149147022a5e73a71c87138786063ca8e9633  sursp_rsp=SURSP_FETCH  sursp_data=0xe7333e86b6b881fba6b53c51fbe9eaac0a7e8e1b62c0e78a4e6a91fe291bfd008c5c7d9f9cc01ba4f93f697e80d5f35d370edfc46b1ddda1c5be295323ee15c6  sureq_op=SUREQ_INV  sureq_addr=0x265ccd41be0499f  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xe62c2666b25977688a65937ac34623281dd65910b2bfbf6272f2defb8db73762f524ead00c3806b11c6f9f3b7ca34536484d54637294db7fed0655c13ee63b80  
- UVM_INFO ./sv/seq/l1_req_seq.sv(50) @ 185: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] complete body
- UVM_INFO ./sv/test/mesi_test.svh(18) @ 185: uvm_test_top [mesi_test_c] run_seq complete
- UVM_INFO ./sv/test/cache_base_test.sv(74) @ 235: uvm_test_top [mesi_test_c] Complete test
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1199) @ 235: reporter [PH/TRC/EXE/ALLDROP] Phase 'uvm.uvm_sched.main' (id=256) PHASE EXIT ALL_DROPPED
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 235: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.main' (id=256) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 235: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_main'
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 235: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_main' (id=268) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 235: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_shutdown'
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 235: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_shutdown' (id=280) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 235: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'shutdown'
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 235: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.shutdown' (id=292) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 235: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_shutdown'
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 235: reporter [PH_READY_TO_END] Phase 'common.run' (id=93) PHASE READY TO END
- UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 235: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_shutdown' (id=304) PHASE READY TO END
+ UVM_INFO ../lib/agent/cache_drv.svh(60) @ 50: uvm_test_top.env.agt.drv [DRV] Received request from sequencer: TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xb811119073790937398bf0b43d21eacbb96742f8ccb3514da32f846d0eba447a75c1a26e23575d5c5e1a0feadeb8f90827773a28616f01b8704cd10cd7c2f227  cursp_rsp=CURSP_OKAY  cursp_data=0x988c3025a7c74eda80f6b17d4a035aa2f31786a1356104010528b9019319dec4ce875702f0f2194ed8581d35a40fda3b0a2815e453a36098810a42724582fa30  cureq_op=CUREQ_INV  cureq_addr=0xd4c496f38d633d  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0xc992f7b300a87adeec17c0d32b98b0deb5f32d5779cdbb3ca4fedffe5b8297a1dbfbb08f765ed88d12ac12b3fe93ff42c187c72be3a4342842d9dcd0e2bc4940  sdreq_op=SDREQ_INV  sdreq_addr=0x17e06398c61e4f  sdreq_data=0xfc127fdb802e5cbe138fad56eaff77883fbe2710363ccbb667023f004230231ad0f9a727ab6f353677284f985ac279ffa3ba7676fa61aa5d8f5e9a03b2c247f0  sursp_rsp=SURSP_FETCH  sursp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  sureq_op=SUREQ_RFO  sureq_addr=0x126ea3f1c68e1ec  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x5d27ac3f19c84bb6a4b318781024fc32a787f3a1dbf395492dcd6c624107e2102c4954b4e7cfa4e859c5a77587e175125b3db1adf0a6a2ac2d4147a51b75f364  
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(341) @ 50: uvm_test_top.env.agt.drv_bfm [DRV_BFM] put req to l1_req_q=1 req=TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xb811119073790937398bf0b43d21eacbb96742f8ccb3514da32f846d0eba447a75c1a26e23575d5c5e1a0feadeb8f90827773a28616f01b8704cd10cd7c2f227  cursp_rsp=CURSP_OKAY  cursp_data=0x988c3025a7c74eda80f6b17d4a035aa2f31786a1356104010528b9019319dec4ce875702f0f2194ed8581d35a40fda3b0a2815e453a36098810a42724582fa30  cureq_op=CUREQ_INV  cureq_addr=0xd4c496f38d633d  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0xc992f7b300a87adeec17c0d32b98b0deb5f32d5779cdbb3ca4fedffe5b8297a1dbfbb08f765ed88d12ac12b3fe93ff42c187c72be3a4342842d9dcd0e2bc4940  sdreq_op=SDREQ_INV  sdreq_addr=0x17e06398c61e4f  sdreq_data=0xfc127fdb802e5cbe138fad56eaff77883fbe2710363ccbb667023f004230231ad0f9a727ab6f353677284f985ac279ffa3ba7676fa61aa5d8f5e9a03b2c247f0  sursp_rsp=SURSP_FETCH  sursp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  sureq_op=SUREQ_RFO  sureq_addr=0x126ea3f1c68e1ec  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x5d27ac3f19c84bb6a4b318781024fc32a787f3a1dbf395492dcd6c624107e2102c4954b4e7cfa4e859c5a77587e175125b3db1adf0a6a2ac2d4147a51b75f364  
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(115) @ 55: uvm_test_top.env.agt.drv_bfm [DRV_BFM] drive L1 request: t_req=TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xb811119073790937398bf0b43d21eacbb96742f8ccb3514da32f846d0eba447a75c1a26e23575d5c5e1a0feadeb8f90827773a28616f01b8704cd10cd7c2f227  cursp_rsp=CURSP_OKAY  cursp_data=0x988c3025a7c74eda80f6b17d4a035aa2f31786a1356104010528b9019319dec4ce875702f0f2194ed8581d35a40fda3b0a2815e453a36098810a42724582fa30  cureq_op=CUREQ_INV  cureq_addr=0xd4c496f38d633d  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0xc992f7b300a87adeec17c0d32b98b0deb5f32d5779cdbb3ca4fedffe5b8297a1dbfbb08f765ed88d12ac12b3fe93ff42c187c72be3a4342842d9dcd0e2bc4940  sdreq_op=SDREQ_INV  sdreq_addr=0x17e06398c61e4f  sdreq_data=0xfc127fdb802e5cbe138fad56eaff77883fbe2710363ccbb667023f004230231ad0f9a727ab6f353677284f985ac279ffa3ba7676fa61aa5d8f5e9a03b2c247f0  sursp_rsp=SURSP_FETCH  sursp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  sureq_op=SUREQ_RFO  sureq_addr=0x126ea3f1c68e1ec  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x5d27ac3f19c84bb6a4b318781024fc32a787f3a1dbf395492dcd6c624107e2102c4954b4e7cfa4e859c5a77587e175125b3db1adf0a6a2ac2d4147a51b75f364  
+ 155ns: RTL_INTER [Addr=0x400] state updated: 0x0 --> 0x1
+ 155ns: RTL_INTER [Addr=0x400] tag updated: 0x0 --> 0x1
+ 155ns: RTL_INTER [Addr=0x400] data updated: 0x0 --> 0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec
+ 165ns: RTL_TRACKER [Addr=0x400] state update: 0x0 --> 0x1
+ 165ns: RTL_TRACKER [Addr=0x400] tag update: 0x0 --> 0x1
+ 165ns: RTL_TRACKER [Addr=0x400] data update: 0x0 --> 0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(191) @ 195: uvm_test_top.env.agt.drv_bfm [DRV_BFM] put L1 response: TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xb811119073790937398bf0b43d21eacbb96742f8ccb3514da32f846d0eba447a75c1a26e23575d5c5e1a0feadeb8f90827773a28616f01b8704cd10cd7c2f227  cursp_rsp=CURSP_OKAY  cursp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  cureq_op=CUREQ_INV  cureq_addr=0xd4c496f38d633d  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0xc992f7b300a87adeec17c0d32b98b0deb5f32d5779cdbb3ca4fedffe5b8297a1dbfbb08f765ed88d12ac12b3fe93ff42c187c72be3a4342842d9dcd0e2bc4940  sdreq_op=SDREQ_INV  sdreq_addr=0x17e06398c61e4f  sdreq_data=0xfc127fdb802e5cbe138fad56eaff77883fbe2710363ccbb667023f004230231ad0f9a727ab6f353677284f985ac279ffa3ba7676fa61aa5d8f5e9a03b2c247f0  sursp_rsp=SURSP_FETCH  sursp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  sureq_op=SUREQ_RFO  sureq_addr=0x126ea3f1c68e1ec  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x5d27ac3f19c84bb6a4b318781024fc32a787f3a1dbf395492dcd6c624107e2102c4954b4e7cfa4e859c5a77587e175125b3db1adf0a6a2ac2d4147a51b75f364  
+ UVM_INFO ./sv/seq/cache_base_seq.sv(76) @ 195: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] INC_RSP_CNT: req_cnt=1  rsp_cnt=1
+ UVM_INFO ./sv/seq/cache_base_seq.sv(67) @ 195: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] received response: TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xb811119073790937398bf0b43d21eacbb96742f8ccb3514da32f846d0eba447a75c1a26e23575d5c5e1a0feadeb8f90827773a28616f01b8704cd10cd7c2f227  cursp_rsp=CURSP_OKAY  cursp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  cureq_op=CUREQ_INV  cureq_addr=0xd4c496f38d633d  cdrsp_rsp=CDRSP_ERROR  cdrsp_data=0xc992f7b300a87adeec17c0d32b98b0deb5f32d5779cdbb3ca4fedffe5b8297a1dbfbb08f765ed88d12ac12b3fe93ff42c187c72be3a4342842d9dcd0e2bc4940  sdreq_op=SDREQ_INV  sdreq_addr=0x17e06398c61e4f  sdreq_data=0xfc127fdb802e5cbe138fad56eaff77883fbe2710363ccbb667023f004230231ad0f9a727ab6f353677284f985ac279ffa3ba7676fa61aa5d8f5e9a03b2c247f0  sursp_rsp=SURSP_FETCH  sursp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  sureq_op=SUREQ_RFO  sureq_addr=0x126ea3f1c68e1ec  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x5d27ac3f19c84bb6a4b318781024fc32a787f3a1dbf395492dcd6c624107e2102c4954b4e7cfa4e859c5a77587e175125b3db1adf0a6a2ac2d4147a51b75f364  
+ UVM_INFO ./sv/seq/l1_req_seq.sv(50) @ 195: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] complete body
+ UVM_INFO ./sv/seq/l1_req_seq.sv(27) @ 195: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] start body
+ UVM_INFO ./sv/seq/cache_base_seq.sv(65) @ 195: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] INC_REQ_CNT: req_cnt=1  rsp_cnt=0
+ UVM_INFO ../lib/agent/cache_drv.svh(60) @ 195: uvm_test_top.env.agt.drv [DRV] Received request from sequencer: TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xbd53189a6213f3fc4997c8cf2ad8861b98c8a6c8b72c9af03f6d78c98a9b31ee2d6274781dc286d6192207b6e268ba4730b6b53b452047100e141a4e7e481712  cursp_rsp=CURSP_ERROR  cursp_data=0xb4b5ebc67e1f874c90751ce6171e5bead7e9b75ffcd17956906882d02406e337668a13074d4d5efda8d550e0b099f94f7c18cdfd2d69a75888b95c55ebf8fc8c  cureq_op=CUREQ_RD  cureq_addr=0x670f9a859115c0  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x601f8e51791f90ade966265a3afe4510829bd3b1248590a94705ae7bab308fb276c5566670deea8ba26695c6c76c948c2ed6397feb585345f12501b15037aeea  sdreq_op=SDREQ_RFO  sdreq_addr=0x247fe234a1b73d9  sdreq_data=0xcec051ae7811692b108baf35119f57b6a9c959b7e5866946690c8cfcf33d7c434d51d798ca530f67926e9c24431f8cc0ff3670c240afd1d68ad0579fe6e7bef8  sursp_rsp=SURSP_FETCH  sursp_data=0x12b3385b59fbf02e6737aa3494daeb07fdef3ce26af0ce1a0215bdecf24e900e89d1087f9a9c579bddf5ce330f08856d76f9226a7b1344b3ed2a341eccf571de  sureq_op=SUREQ_RFO  sureq_addr=0x79bed877bd7631  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xea35650bdcd99266df93d572b424d1fe47b4a1f0b118e69c0b4dc25035f3457f960403ff1bde0c0f7681c15b322ad9c704c07e9f90db9e4244d9f41208dbbec6  
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(341) @ 195: uvm_test_top.env.agt.drv_bfm [DRV_BFM] put req to l1_req_q=1 req=TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xbd53189a6213f3fc4997c8cf2ad8861b98c8a6c8b72c9af03f6d78c98a9b31ee2d6274781dc286d6192207b6e268ba4730b6b53b452047100e141a4e7e481712  cursp_rsp=CURSP_ERROR  cursp_data=0xb4b5ebc67e1f874c90751ce6171e5bead7e9b75ffcd17956906882d02406e337668a13074d4d5efda8d550e0b099f94f7c18cdfd2d69a75888b95c55ebf8fc8c  cureq_op=CUREQ_RD  cureq_addr=0x670f9a859115c0  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x601f8e51791f90ade966265a3afe4510829bd3b1248590a94705ae7bab308fb276c5566670deea8ba26695c6c76c948c2ed6397feb585345f12501b15037aeea  sdreq_op=SDREQ_RFO  sdreq_addr=0x247fe234a1b73d9  sdreq_data=0xcec051ae7811692b108baf35119f57b6a9c959b7e5866946690c8cfcf33d7c434d51d798ca530f67926e9c24431f8cc0ff3670c240afd1d68ad0579fe6e7bef8  sursp_rsp=SURSP_FETCH  sursp_data=0x12b3385b59fbf02e6737aa3494daeb07fdef3ce26af0ce1a0215bdecf24e900e89d1087f9a9c579bddf5ce330f08856d76f9226a7b1344b3ed2a341eccf571de  sureq_op=SUREQ_RFO  sureq_addr=0x79bed877bd7631  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xea35650bdcd99266df93d572b424d1fe47b4a1f0b118e69c0b4dc25035f3457f960403ff1bde0c0f7681c15b322ad9c704c07e9f90db9e4244d9f41208dbbec6  
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(115) @ 205: uvm_test_top.env.agt.drv_bfm [DRV_BFM] drive L1 request: t_req=TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xbd53189a6213f3fc4997c8cf2ad8861b98c8a6c8b72c9af03f6d78c98a9b31ee2d6274781dc286d6192207b6e268ba4730b6b53b452047100e141a4e7e481712  cursp_rsp=CURSP_ERROR  cursp_data=0xb4b5ebc67e1f874c90751ce6171e5bead7e9b75ffcd17956906882d02406e337668a13074d4d5efda8d550e0b099f94f7c18cdfd2d69a75888b95c55ebf8fc8c  cureq_op=CUREQ_RD  cureq_addr=0x670f9a859115c0  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x601f8e51791f90ade966265a3afe4510829bd3b1248590a94705ae7bab308fb276c5566670deea8ba26695c6c76c948c2ed6397feb585345f12501b15037aeea  sdreq_op=SDREQ_RFO  sdreq_addr=0x247fe234a1b73d9  sdreq_data=0xcec051ae7811692b108baf35119f57b6a9c959b7e5866946690c8cfcf33d7c434d51d798ca530f67926e9c24431f8cc0ff3670c240afd1d68ad0579fe6e7bef8  sursp_rsp=SURSP_FETCH  sursp_data=0x12b3385b59fbf02e6737aa3494daeb07fdef3ce26af0ce1a0215bdecf24e900e89d1087f9a9c579bddf5ce330f08856d76f9226a7b1344b3ed2a341eccf571de  sureq_op=SUREQ_RFO  sureq_addr=0x79bed877bd7631  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xea35650bdcd99266df93d572b424d1fe47b4a1f0b118e69c0b4dc25035f3457f960403ff1bde0c0f7681c15b322ad9c704c07e9f90db9e4244d9f41208dbbec6  
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(191) @ 245: uvm_test_top.env.agt.drv_bfm [DRV_BFM] put L1 response: TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xbd53189a6213f3fc4997c8cf2ad8861b98c8a6c8b72c9af03f6d78c98a9b31ee2d6274781dc286d6192207b6e268ba4730b6b53b452047100e141a4e7e481712  cursp_rsp=CURSP_OKAY  cursp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  cureq_op=CUREQ_RD  cureq_addr=0x670f9a859115c0  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x601f8e51791f90ade966265a3afe4510829bd3b1248590a94705ae7bab308fb276c5566670deea8ba26695c6c76c948c2ed6397feb585345f12501b15037aeea  sdreq_op=SDREQ_RFO  sdreq_addr=0x247fe234a1b73d9  sdreq_data=0xcec051ae7811692b108baf35119f57b6a9c959b7e5866946690c8cfcf33d7c434d51d798ca530f67926e9c24431f8cc0ff3670c240afd1d68ad0579fe6e7bef8  sursp_rsp=SURSP_FETCH  sursp_data=0x12b3385b59fbf02e6737aa3494daeb07fdef3ce26af0ce1a0215bdecf24e900e89d1087f9a9c579bddf5ce330f08856d76f9226a7b1344b3ed2a341eccf571de  sureq_op=SUREQ_RFO  sureq_addr=0x79bed877bd7631  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xea35650bdcd99266df93d572b424d1fe47b4a1f0b118e69c0b4dc25035f3457f960403ff1bde0c0f7681c15b322ad9c704c07e9f90db9e4244d9f41208dbbec6  
+ UVM_INFO ./sv/seq/cache_base_seq.sv(76) @ 245: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] INC_RSP_CNT: req_cnt=1  rsp_cnt=1
+ UVM_INFO ./sv/seq/cache_base_seq.sv(67) @ 245: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] received response: TxnId=-1  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0xbd53189a6213f3fc4997c8cf2ad8861b98c8a6c8b72c9af03f6d78c98a9b31ee2d6274781dc286d6192207b6e268ba4730b6b53b452047100e141a4e7e481712  cursp_rsp=CURSP_OKAY  cursp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  cureq_op=CUREQ_RD  cureq_addr=0x670f9a859115c0  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x601f8e51791f90ade966265a3afe4510829bd3b1248590a94705ae7bab308fb276c5566670deea8ba26695c6c76c948c2ed6397feb585345f12501b15037aeea  sdreq_op=SDREQ_RFO  sdreq_addr=0x247fe234a1b73d9  sdreq_data=0xcec051ae7811692b108baf35119f57b6a9c959b7e5866946690c8cfcf33d7c434d51d798ca530f67926e9c24431f8cc0ff3670c240afd1d68ad0579fe6e7bef8  sursp_rsp=SURSP_FETCH  sursp_data=0x12b3385b59fbf02e6737aa3494daeb07fdef3ce26af0ce1a0215bdecf24e900e89d1087f9a9c579bddf5ce330f08856d76f9226a7b1344b3ed2a341eccf571de  sureq_op=SUREQ_RFO  sureq_addr=0x79bed877bd7631  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0xea35650bdcd99266df93d572b424d1fe47b4a1f0b118e69c0b4dc25035f3457f960403ff1bde0c0f7681c15b322ad9c704c07e9f90db9e4244d9f41208dbbec6  
+ UVM_INFO ./sv/seq/l1_req_seq.sv(50) @ 245: uvm_test_top.env.agt.sqr@@`THIS_CLASS [l1_req_seq_c] complete body
+ UVM_INFO ./sv/seq/snp_req_seq.sv(25) @ 245: uvm_test_top.env.agt.sqr@@`THIS_CLASS [snp_req_seq_c] start body
+ UVM_INFO ./sv/seq/cache_base_seq.sv(65) @ 245: uvm_test_top.env.agt.sqr@@`THIS_CLASS [snp_req_seq_c] INC_REQ_CNT: req_cnt=1  rsp_cnt=0
+ UVM_INFO ../lib/agent/cache_drv.svh(60) @ 245: uvm_test_top.env.agt.drv [DRV] Received request from sequencer: TxnId=-1  Type=SNP_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x909b57c1fd104b  cdreq_data=0x9fde5cf9acd0ad3b088a2adc197e923282f46bedec2be170b6f40239bc9ad64560be43811dc5a881ad85eaa986a622c82071005bd583ae86c9db209f12d9ddf4  cursp_rsp=CURSP_ERROR  cursp_data=0x5bc264ffc9c2ea467feedf73093a12edbeebd8c106731d2281ef6290c3f2c1c5c8c3ba5e10f191433292439930ae6329962b46b1c57928dd1abbfdf0fe7fb37  cureq_op=CUREQ_INV  cureq_addr=0x2fa4cea7d72d5ce  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x8e4cb5235d7be88e088ebacd2f5fed192e77bbec58cf6a68fadc3cc717bda3e928d6b099a776d3e9bec6990ad142c64023c2a9b751040b049792b7c970a7945d  sdreq_op=SDREQ_INV  sdreq_addr=0x3eeef0ec4d04ea0  sdreq_data=0xb70a913c99338fcfdfc6f30b34978fe95f405b5ca06467bd09c21dd8f471f302cdf68b776b34e120737459aa0b1229a201f9bd1528eaec104bc555767e3c8c95  sursp_rsp=SURSP_ERROR  sursp_data=0x2e3d43655ca8badd1635d3a47fe687d4ce1bf3b0b0f24aacebb720123ddd3ad0fd83b3647b275ecfb54ab19f50493e289961a9189c5f033d0a48a96252452829  sureq_op=SUREQ_RFO  sureq_addr=0x400  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x20bb722f7265e2d8916cd7dd17d1c8ccf770b99c6a6bfe9f06775f8ba1bbdb9ee79c16dd6327ac1624268e94a0e2c831be95a6420eac81f301d029b7b22b3e88  
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(205) @ 255: uvm_test_top.env.agt.drv_bfm [DRV_BFM] drive snoop request: t_req=TxnId=-1  Type=SNP_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x909b57c1fd104b  cdreq_data=0x9fde5cf9acd0ad3b088a2adc197e923282f46bedec2be170b6f40239bc9ad64560be43811dc5a881ad85eaa986a622c82071005bd583ae86c9db209f12d9ddf4  cursp_rsp=CURSP_ERROR  cursp_data=0x5bc264ffc9c2ea467feedf73093a12edbeebd8c106731d2281ef6290c3f2c1c5c8c3ba5e10f191433292439930ae6329962b46b1c57928dd1abbfdf0fe7fb37  cureq_op=CUREQ_INV  cureq_addr=0x2fa4cea7d72d5ce  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x8e4cb5235d7be88e088ebacd2f5fed192e77bbec58cf6a68fadc3cc717bda3e928d6b099a776d3e9bec6990ad142c64023c2a9b751040b049792b7c970a7945d  sdreq_op=SDREQ_INV  sdreq_addr=0x3eeef0ec4d04ea0  sdreq_data=0xb70a913c99338fcfdfc6f30b34978fe95f405b5ca06467bd09c21dd8f471f302cdf68b776b34e120737459aa0b1229a201f9bd1528eaec104bc555767e3c8c95  sursp_rsp=SURSP_ERROR  sursp_data=0x2e3d43655ca8badd1635d3a47fe687d4ce1bf3b0b0f24aacebb720123ddd3ad0fd83b3647b275ecfb54ab19f50493e289961a9189c5f033d0a48a96252452829  sureq_op=SUREQ_RFO  sureq_addr=0x400  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x20bb722f7265e2d8916cd7dd17d1c8ccf770b99c6a6bfe9f06775f8ba1bbdb9ee79c16dd6327ac1624268e94a0e2c831be95a6420eac81f301d029b7b22b3e88  
+ 335ns: RTL_INTER [Addr=0x0] state updated: 0x1 --> 0x0
+ UVM_INFO ../lib/agent/cache_drv_bfm.svh(268) @ 335: uvm_test_top.env.agt.drv_bfm [DRV_BFM] put snoop response: TxnId=-1  Type=SNP_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x909b57c1fd104b  cdreq_data=0x9fde5cf9acd0ad3b088a2adc197e923282f46bedec2be170b6f40239bc9ad64560be43811dc5a881ad85eaa986a622c82071005bd583ae86c9db209f12d9ddf4  cursp_rsp=CURSP_ERROR  cursp_data=0x5bc264ffc9c2ea467feedf73093a12edbeebd8c106731d2281ef6290c3f2c1c5c8c3ba5e10f191433292439930ae6329962b46b1c57928dd1abbfdf0fe7fb37  cureq_op=CUREQ_INV  cureq_addr=0x2fa4cea7d72d5ce  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x8e4cb5235d7be88e088ebacd2f5fed192e77bbec58cf6a68fadc3cc717bda3e928d6b099a776d3e9bec6990ad142c64023c2a9b751040b049792b7c970a7945d  sdreq_op=SDREQ_INV  sdreq_addr=0x3eeef0ec4d04ea0  sdreq_data=0xb70a913c99338fcfdfc6f30b34978fe95f405b5ca06467bd09c21dd8f471f302cdf68b776b34e120737459aa0b1229a201f9bd1528eaec104bc555767e3c8c95  sursp_rsp=SURSP_ERROR  sursp_data=0x2e3d43655ca8badd1635d3a47fe687d4ce1bf3b0b0f24aacebb720123ddd3ad0fd83b3647b275ecfb54ab19f50493e289961a9189c5f033d0a48a96252452829  sureq_op=SUREQ_RFO  sureq_addr=0x400  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  
+ UVM_INFO ./sv/seq/cache_base_seq.sv(76) @ 335: uvm_test_top.env.agt.sqr@@`THIS_CLASS [snp_req_seq_c] INC_RSP_CNT: req_cnt=1  rsp_cnt=1
+ UVM_INFO ./sv/seq/cache_base_seq.sv(67) @ 335: uvm_test_top.env.agt.sqr@@`THIS_CLASS [snp_req_seq_c] received response: TxnId=-1  Type=SNP_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x909b57c1fd104b  cdreq_data=0x9fde5cf9acd0ad3b088a2adc197e923282f46bedec2be170b6f40239bc9ad64560be43811dc5a881ad85eaa986a622c82071005bd583ae86c9db209f12d9ddf4  cursp_rsp=CURSP_ERROR  cursp_data=0x5bc264ffc9c2ea467feedf73093a12edbeebd8c106731d2281ef6290c3f2c1c5c8c3ba5e10f191433292439930ae6329962b46b1c57928dd1abbfdf0fe7fb37  cureq_op=CUREQ_INV  cureq_addr=0x2fa4cea7d72d5ce  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x8e4cb5235d7be88e088ebacd2f5fed192e77bbec58cf6a68fadc3cc717bda3e928d6b099a776d3e9bec6990ad142c64023c2a9b751040b049792b7c970a7945d  sdreq_op=SDREQ_INV  sdreq_addr=0x3eeef0ec4d04ea0  sdreq_data=0xb70a913c99338fcfdfc6f30b34978fe95f405b5ca06467bd09c21dd8f471f302cdf68b776b34e120737459aa0b1229a201f9bd1528eaec104bc555767e3c8c95  sursp_rsp=SURSP_ERROR  sursp_data=0x2e3d43655ca8badd1635d3a47fe687d4ce1bf3b0b0f24aacebb720123ddd3ad0fd83b3647b275ecfb54ab19f50493e289961a9189c5f033d0a48a96252452829  sureq_op=SUREQ_RFO  sureq_addr=0x400  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x4634f8cef8cd27d8419af952e8cb820dde8475b5cc819de9c008cb9f7a32fb36b0b94d42740c5f06697a68411d36f3f67c5894d8e383123cfbf60560289d53ec  
+ UVM_INFO ./sv/seq/snp_req_seq.sv(35) @ 335: uvm_test_top.env.agt.sqr@@`THIS_CLASS [snp_req_seq_c] complete body
+ UVM_INFO ./sv/test/mesi_test.svh(28) @ 335: uvm_test_top [mesi_test_c] run_seq complete
+ 345ns: RTL_TRACKER [Addr=0x0] state update: 0x1 --> 0x0
+ UVM_INFO ./sv/test/cache_base_test.sv(74) @ 385: uvm_test_top [mesi_test_c] Complete test
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1199) @ 385: reporter [PH/TRC/EXE/ALLDROP] Phase 'uvm.uvm_sched.main' (id=256) PHASE EXIT ALL_DROPPED
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 385: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.main' (id=256) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 385: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_main'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 385: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_main' (id=268) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 385: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'pre_shutdown'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 385: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.pre_shutdown' (id=280) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 385: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'shutdown'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 385: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.shutdown' (id=292) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/seq/uvm_sequencer_base.svh(1385) @ 385: uvm_test_top.env.agt.sqr [PHASESEQ] No default phase sequence for phase 'post_shutdown'
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 385: reporter [PH_READY_TO_END] Phase 'common.run' (id=93) PHASE READY TO END
+ UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_phase.svh(1215) @ 385: reporter [PH_READY_TO_END] Phase 'uvm.uvm_sched.post_shutdown' (id=304) PHASE READY TO END
  
  --- UVM Report Summary ---
  
  ** Report counts by severity
- UVM_INFO :   47
+ UVM_INFO :   64
  UVM_WARNING :    0
  UVM_ERROR :    0
  UVM_FATAL :    0
  ** Report counts by id
- [DRV]     1
- [DRV_BFM]     5
+ [DRV]     3
+ [DRV_BFM]    10
  [PH/TRC/EXE/ALLDROP]     1
  [PHASESEQ]    13
  [PH_READY_TO_END]    13
  [Questa UVM]     4
  [RNTST]     1
  [UVMTOP]     1
- [l1_req_seq_c]     5
+ [l1_req_seq_c]    10
  [mesi_test_c]     3
+ [snp_req_seq_c]     5
  ** Note: $finish    : E:/questaSim/main/win64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
-    Time: 235 ns  Iteration: 97  Instance: /cache_mem_tb_top
- End time: 00:23:05 on May 21,2025, Elapsed time: 0:00:05
- Errors: 0, Warnings: 23
+    Time: 385 ns  Iteration: 97  Instance: /cache_mem_tb_top
+ End time: 20:04:38 on May 21,2025, Elapsed time: 0:00:04
+ Errors: 0, Warnings: 11
