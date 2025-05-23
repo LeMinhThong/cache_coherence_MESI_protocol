@@ -208,18 +208,18 @@ module cache_mem_tb_top;
       end
     end
     else begin
-      #10ns;
+      #1ns;
       for(int i=0; i < NUM_BLK; i++) begin
         if(dut.cac_mem[i][`ST] != state_prev[i]) begin
-          $display("%0tns: RTL_TRACKER [Addr=0x%0h] state update: 0x%0h --> 0x%0h", $time, dut.cdreq_addr_bf, state_prev[i], dut.cac_mem[i][`ST]);
+          $display("%0tns: RTL_TRACKER [Set=0x%0h] state update: 0x%0h --> 0x%0h \n", $time, i, state_prev[i], dut.cac_mem[i][`ST]);
           state_prev[i] <= dut.cac_mem[i][`ST];
         end
         if(dut.cac_mem[i][`RAM_TAG] != tag_prev[i]) begin
-          $display("%0tns: RTL_TRACKER [Addr=0x%0h] tag update: 0x%0h --> 0x%0h", $time, dut.cdreq_addr_bf, tag_prev[i], dut.cac_mem[i][`RAM_TAG]);
+          $display("%0tns: RTL_TRACKER [Set=0x%0h] tag update: 0x%0h --> 0x%0h \n", $time, i, tag_prev[i], dut.cac_mem[i][`RAM_TAG]);
           tag_prev[i] <= dut.cac_mem[i][`RAM_TAG];
         end
         if(dut.cac_mem[i][`DAT] != data_prev[i]) begin
-          $display("%0tns: RTL_TRACKER [Addr=0x%0h] data update: 0x%0h --> 0x%0h", $time, dut.cdreq_addr_bf, data_prev[i], dut.cac_mem[i][`DAT]);
+          $display("%0tns: RTL_TRACKER [Set=0x%0h] data update: 0x%0h --> 0x%0h \n", $time, i, data_prev[i], dut.cac_mem[i][`DAT]);
           data_prev[i] <= dut.cac_mem[i][`DAT];
         end
       end

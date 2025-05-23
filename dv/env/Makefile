@@ -84,7 +84,7 @@ vsim:
 	sed 's/^#//' run_dir/$(TEST_NAME).log > tmp.log && mv tmp.log run_dir/$(TEST_NAME).log
 	sed -i '/  log -r \/\\*/d' run_dir/$(TEST_NAME).log
 	rm -rf rtl_tracker/$(TEST_NAME).log
-	grep "RTL_TRACKER\|RTL_INTER" run_dir/$(TEST_NAME).log >> rtl_tracker/$(TEST_NAME).log
+	grep "RTL_TRACKER" run_dir/$(TEST_NAME).log >> rtl_tracker/$(TEST_NAME).log
 
 #--------------------------------------------------------------------
 vlog_rtl:

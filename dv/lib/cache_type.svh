@@ -30,9 +30,9 @@ typedef enum reg [1:0] {
 } cursp_e;
 
 typedef enum reg [1:0] {
-  CUREQ_RD    = 2'b00,
-  CUREQ_INV   = 2'b01,
-  CUREQ_RDINV = 2'b10
+  CUREQ_RD  = 2'b00,
+  CUREQ_RFO = 2'b01,
+  CUREQ_INV = 2'b10
 } cureq_e;
 
 typedef enum reg [1:0] {
