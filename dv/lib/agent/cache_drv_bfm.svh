@@ -175,8 +175,6 @@ task `THISCLASS::drive_l1_transfer();
 
       begin // CURSP
         @(posedge `M_VIF.cursp_valid);
-        // disable SURSP channel controller in cases no SDREQ request is initiated
-        disable CAC_SDREQ_HANDLER_BLK;
 
         repeat($urandom_range(0, wt_ready_en_rand_max)) begin
           @`M_VIF;
@@ -187,6 +185,8 @@ task `THISCLASS::drive_l1_transfer();
 
         @`M_VIF;
         `M_VIF.cursp_ready <= 1'b0;
+        // disable SURSP channel controller in cases no SDREQ request is initiated
+        disable CAC_SDREQ_HANDLER_BLK;
       end
     join
 
@@ -291,9 +291,6 @@ task `THISCLASS::drive_snp_transfer();
 
       begin // SDRSP
         @(posedge `M_VIF.sdrsp_valid);
-        // disable CUREQ or SDREQ handler when L2 send response on SDRRSP
-        disable CUREQ_HANDLER_BLK;
-        disable SNP_SDREQ_HANDLER_BLK;
 
         repeat($urandom_range(0, wt_ready_en_rand_max)) begin
           @`M_VIF;
@@ -304,6 +301,10 @@ task `THISCLASS::drive_snp_transfer();
 
         @`M_VIF;
         `M_VIF.sdrsp_ready <= 1'b0;
+
+        // disable CUREQ or SDREQ handler when L2 send response on SDRRSP
+        disable CUREQ_HANDLER_BLK;
+        disable SNP_SDREQ_HANDLER_BLK;
       end
     join
 
