@@ -38,9 +38,9 @@ DV_INCDIR += +incdir+$(TB_DIR)
 #--------------------------------------------------------------------
 RTL_SRC += $(RTL_DIR)/topchip/cache_def.sv
 RTL_SRC += $(RTL_DIR)/topchip/cache_pkg.sv
-RTL_SRC += $(RTL_DIR)/subsystem/fsm_l1_req_ctrl.sv
-RTL_SRC += $(RTL_DIR)/subsystem/fsm_snp_req_ctrl.sv
 RTL_SRC += $(RTL_DIR)/topchip/cache_mem.sv
+#RTL_SRC += $(RTL_DIR)/subsystem/fsm_l1_req_ctrl.sv
+#RTL_SRC += $(RTL_DIR)/subsystem/fsm_snp_req_ctrl.sv
 
 #--------------------------------------------------------------------
 DV_SRC += $(VIP_DIR)/cache_vip_pkg.sv

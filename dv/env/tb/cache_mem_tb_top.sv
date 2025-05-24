@@ -191,14 +191,6 @@ module cache_mem_tb_top;
   logic [BLK_WIDTH-1:0] data_prev  [0:NUM_BLK-1];
   logic [TAG_WIDTH-1:0] tag_prev   [0:NUM_BLK-1];
 
-  //initial begin
-  //  for(int i = 0; i < NUM_BLK; i++) begin
-  //    state_prev[i] <= INVALID;
-  //    tag_prev[i]   <= {TAG_WIDTH{1'b0}};
-  //    data_prev[i]  <= {BLK_WIDTH{1'b0}};
-  //  end
-  //end
-
   always @(posedge clk or negedge rst_n) begin
     if(!rst_n) begin
       for(int i=0; i < NUM_BLK; i++) begin
@@ -210,17 +202,17 @@ module cache_mem_tb_top;
     else begin
       #1ns;
       for(int i=0; i < NUM_BLK; i++) begin
-        if(dut.cac_mem[i][`ST] != state_prev[i]) begin
-          $display("%0tns: RTL_TRACKER [Set=0x%0h] state update: 0x%0h --> 0x%0h \n", $time, i, state_prev[i], dut.cac_mem[i][`ST]);
-          state_prev[i] <= dut.cac_mem[i][`ST];
+        if(dut.mem[i][`ST] != state_prev[i]) begin
+          $display("%0tns: RTL_TRACKER [Set=0x%0h] state update: 0x%0h --> 0x%0h \n", $time, i, state_prev[i], dut.mem[i][`ST]);
+          state_prev[i] <= dut.mem[i][`ST];
         end
-        if(dut.cac_mem[i][`RAM_TAG] != tag_prev[i]) begin
-          $display("%0tns: RTL_TRACKER [Set=0x%0h] tag update: 0x%0h --> 0x%0h \n", $time, i, tag_prev[i], dut.cac_mem[i][`RAM_TAG]);
-          tag_prev[i] <= dut.cac_mem[i][`RAM_TAG];
+        if(dut.mem[i][`RAM_TAG] != tag_prev[i]) begin
+          $display("%0tns: RTL_TRACKER [Set=0x%0h] tag update: 0x%0h --> 0x%0h \n", $time, i, tag_prev[i], dut.mem[i][`RAM_TAG]);
+          tag_prev[i] <= dut.mem[i][`RAM_TAG];
         end
-        if(dut.cac_mem[i][`DAT] != data_prev[i]) begin
-          $display("%0tns: RTL_TRACKER [Set=0x%0h] data update: 0x%0h --> 0x%0h \n", $time, i, data_prev[i], dut.cac_mem[i][`DAT]);
-          data_prev[i] <= dut.cac_mem[i][`DAT];
+        if(dut.mem[i][`DAT] != data_prev[i]) begin
+          $display("%0tns: RTL_TRACKER [Set=0x%0h] data update: 0x%0h --> 0x%0h \n", $time, i, data_prev[i], dut.mem[i][`DAT]);
+          data_prev[i] <= dut.mem[i][`DAT];
         end
       end
     end
