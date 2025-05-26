@@ -10,6 +10,18 @@ typedef enum {
   SNP_REQ = 1
 } type_e;
 
+typedef enum {
+  CDREQ_XFR = 0,
+  CURSP_XFR = 1,
+  CUREQ_XFR = 2,
+  CDRSP_XFR = 3,
+  SDREQ_XFR = 4,
+  SURSP_XFR = 5,
+  SUREQ_XFR = 6,
+  SDRSP_XFR = 7,
+  ALL_CH    = 8
+} xfr_e;
+
 typedef enum reg [2:0] {
   INVALID   = 3'b000,
   EXCLUSIVE = 3'b001,

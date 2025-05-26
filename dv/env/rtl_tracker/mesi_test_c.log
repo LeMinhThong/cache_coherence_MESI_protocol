@@ -1,41 +1,142 @@
- 206ns: RTL_TRACKER [Set=0x0] data update: 0x0 --> 0x3e28ce0b96acb514b23fd5eeefc17e054e5ef41c82334386f0e77f187b4e7218974c9136e1a5593edffd173d3c697b5c59396cc074847ad2d21c4537130c122b 
- 216ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x1 
- 216ns: RTL_TRACKER [Set=0x0] tag update: 0x0 --> 0x1 
- 476ns: RTL_TRACKER [Set=0x0] state update: 0x1 --> 0x0 
- 626ns: RTL_TRACKER [Set=0x0] data update: 0x3e28ce0b96acb514b23fd5eeefc17e054e5ef41c82334386f0e77f187b4e7218974c9136e1a5593edffd173d3c697b5c59396cc074847ad2d21c4537130c122b --> 0x30251a5e34ff7eb79cd1516b9526b214eb4b22b872e00eee88c96fda9d01ba06d9a7924c18c75a92772f2aca69c10f313b4ec60f7747b0ece871debeaaae101a 
- 636ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x1 
- 736ns: RTL_TRACKER [Set=0x0] state update: 0x1 --> 0x7 
- 796ns: RTL_TRACKER [Set=0x0] data update: 0x30251a5e34ff7eb79cd1516b9526b214eb4b22b872e00eee88c96fda9d01ba06d9a7924c18c75a92772f2aca69c10f313b4ec60f7747b0ece871debeaaae101a --> 0x67786a94262266d6e0529dbd42f789072e9a978b9750eb9e66694305b59a64a654624f9ff598e07e9e990bcd818fcb94c3d5ee7bb35ed47d84e671db1ac98661 
- 806ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x3 
- 966ns: RTL_TRACKER [Set=0x0] state update: 0x3 --> 0x7 
- 1176ns: RTL_TRACKER [Set=0x0] data update: 0x67786a94262266d6e0529dbd42f789072e9a978b9750eb9e66694305b59a64a654624f9ff598e07e9e990bcd818fcb94c3d5ee7bb35ed47d84e671db1ac98661 --> 0x2ca41f16455fe35a9970234e88c8fc5284295f5e865bce530d8c3828aab08b12af686568a6af417f92eefe948a466fe36165010a3e8b19364a0ddb1d83748944 
- 1246ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x5 
- 1536ns: RTL_TRACKER [Set=0x0] state update: 0x5 --> 0x0 
- 1676ns: RTL_TRACKER [Set=0x0] data update: 0x2ca41f16455fe35a9970234e88c8fc5284295f5e865bce530d8c3828aab08b12af686568a6af417f92eefe948a466fe36165010a3e8b19364a0ddb1d83748944 --> 0x795d260737743b9ce9e3d1603e8817a89060c581bdbc5fc2727f201620e1b4efd5e1ad3725da6390239b86c06137187b83f2d03b4b35751688a1b50f21b6925 
- 1686ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x7 
- 1846ns: RTL_TRACKER [Set=0x0] data update: 0x795d260737743b9ce9e3d1603e8817a89060c581bdbc5fc2727f201620e1b4efd5e1ad3725da6390239b86c06137187b83f2d03b4b35751688a1b50f21b6925 --> 0x46ed8d516cba1915f45f1b5615c280f84cfce017d41ab0dfea3787320d85078ffb3fa523ab3069c8a6f8bca082ba102e9f95f068b1d068ebe337a3cdb76ef92 
- 1896ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x0 
- 1996ns: RTL_TRACKER [Set=0x0] data update: 0x46ed8d516cba1915f45f1b5615c280f84cfce017d41ab0dfea3787320d85078ffb3fa523ab3069c8a6f8bca082ba102e9f95f068b1d068ebe337a3cdb76ef92 --> 0xbf9ac16ba023c59674c15d1a830f6fc92635249a063b4d05ec90afd971e0c2722b9b0199f7919c5b23e2da51816176ff142f510c590babbcc7b08efca300583d 
- 2006ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x5 
- 2246ns: RTL_TRACKER [Set=0x0] state update: 0x5 --> 0x7 
- 2356ns: RTL_TRACKER [Set=0x0] data update: 0xbf9ac16ba023c59674c15d1a830f6fc92635249a063b4d05ec90afd971e0c2722b9b0199f7919c5b23e2da51816176ff142f510c590babbcc7b08efca300583d --> 0x2d566b78b0c59f96e41ddf893a43912adc59af977d7836a79b21114c75fea806ed4c83b3d5deb6629e1e6164fcc56450d927b722a2b5b989c2f4305d074e2ca2 
- 2376ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x5 
- 2496ns: RTL_TRACKER [Set=0x0] state update: 0x5 --> 0x0 
- 2626ns: RTL_TRACKER [Set=0x0] data update: 0x2d566b78b0c59f96e41ddf893a43912adc59af977d7836a79b21114c75fea806ed4c83b3d5deb6629e1e6164fcc56450d927b722a2b5b989c2f4305d074e2ca2 --> 0xa2db44d9c887d822dc7a20e9468e50d674390e933b95f063a3f694ac427cc737defed1eede2260ff7ad962e246ab061d92177461b9b8e6e87fb0b8ea00a363f2 
- 2636ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x1 
- 2716ns: RTL_TRACKER [Set=0x0] state update: 0x1 --> 0x5 
- 2826ns: RTL_TRACKER [Set=0x0] state update: 0x5 --> 0x7 
- 2866ns: RTL_TRACKER [Set=0x0] data update: 0xa2db44d9c887d822dc7a20e9468e50d674390e933b95f063a3f694ac427cc737defed1eede2260ff7ad962e246ab061d92177461b9b8e6e87fb0b8ea00a363f2 --> 0xc830f9182db3bd8925a8ef7e7207c6b8fdeaff3a5ea506d732010c00c89f7e0c14fc66faa6406cd69ad27274ee818973303a58ac1d4409825df2f1451e6554bb 
- 2876ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x3 
- 2926ns: RTL_TRACKER [Set=0x0] state update: 0x3 --> 0x7 
- 2976ns: RTL_TRACKER [Set=0x0] data update: 0xc830f9182db3bd8925a8ef7e7207c6b8fdeaff3a5ea506d732010c00c89f7e0c14fc66faa6406cd69ad27274ee818973303a58ac1d4409825df2f1451e6554bb --> 0x7ba29c0729a8d1896c1d112eace6cfc0e9da305295f06fa67bbc395433a1e744d131dc35168ac2c9e064607d86dfad87f129209d9f9cb2e03b51ae633755e534 
- 2986ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x3 
- 3286ns: RTL_TRACKER [Set=0x0] data update: 0x7ba29c0729a8d1896c1d112eace6cfc0e9da305295f06fa67bbc395433a1e744d131dc35168ac2c9e064607d86dfad87f129209d9f9cb2e03b51ae633755e534 --> 0x0 
- 3346ns: RTL_TRACKER [Set=0x0] state update: 0x3 --> 0x0 
- 3656ns: RTL_TRACKER [Set=0x0] data update: 0x0 --> 0x44cdfd22dd400d7eda81fb142367fb18aa5ee9cf3d815907a8da664f5f65ed77c021f71875d7b6d2cdb0b7af4c75abd81a7f9af07cfd7276f01a41de9190f830 
- 3666ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x1 
- 3746ns: RTL_TRACKER [Set=0x0] state update: 0x1 --> 0x7 
- 3836ns: RTL_TRACKER [Set=0x0] data update: 0x44cdfd22dd400d7eda81fb142367fb18aa5ee9cf3d815907a8da664f5f65ed77c021f71875d7b6d2cdb0b7af4c75abd81a7f9af07cfd7276f01a41de9190f830 --> 0xc10db3697d10ad125cdd54756228164d3aa6cd81de3a536a9b8ec0baf5e500b8f093ca558ded6ae6214ee8995b7eae94262c74faafef5be4796fb124b20b3295 
- 3846ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x3 
- 3986ns: RTL_TRACKER [Set=0x0] data update: 0xc10db3697d10ad125cdd54756228164d3aa6cd81de3a536a9b8ec0baf5e500b8f093ca558ded6ae6214ee8995b7eae94262c74faafef5be4796fb124b20b3295 --> 0x0 
- 4036ns: RTL_TRACKER [Set=0x0] state update: 0x3 --> 0x5 
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 70: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 120: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x400  sdreq_data=0x0  
+ 156ns: RTL_TRACKER [Set=0x0] data update: 0x0 --> 0xae0ab7650aaccf5d164bb106aa459d19fd48a3c9609764603463b74777b2425e62d16311dff28ded1bd19e020df8a681e81533a323d74136ec1719f5713e75d2 
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 160: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0xae0ab7650aaccf5d164bb106aa459d19fd48a3c9609764603463b74777b2425e62d16311dff28ded1bd19e020df8a681e81533a323d74136ec1719f5713e75d2  
+ 166ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x1 
+ 166ns: RTL_TRACKER [Set=0x0] tag update: 0x0 --> 0x1 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 190: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xae0ab7650aaccf5d164bb106aa459d19fd48a3c9609764603463b74777b2425e62d16311dff28ded1bd19e020df8a681e81533a323d74136ec1719f5713e75d2  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 220: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 280: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xae0ab7650aaccf5d164bb106aa459d19fd48a3c9609764603463b74777b2425e62d16311dff28ded1bd19e020df8a681e81533a323d74136ec1719f5713e75d2  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 310: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RFO  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(96) @ 340: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CUREQ_XFR  Type=L1_REQ  cureq_op=CUREQ_INV  cureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(112) @ 370: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDRSP_XFR  Type=L1_REQ  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 420: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xae0ab7650aaccf5d164bb106aa459d19fd48a3c9609764603463b74777b2425e62d16311dff28ded1bd19e020df8a681e81533a323d74136ec1719f5713e75d2  
+ 426ns: RTL_TRACKER [Set=0x0] state update: 0x1 --> 0x0 
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 450: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 480: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x400  sdreq_data=0x0  
+ 516ns: RTL_TRACKER [Set=0x0] data update: 0xae0ab7650aaccf5d164bb106aa459d19fd48a3c9609764603463b74777b2425e62d16311dff28ded1bd19e020df8a681e81533a323d74136ec1719f5713e75d2 --> 0xa460b180b33cfb67e74f9bb7b15c3e1feaab03bd10042bb83993d091fe029899ad31c834d06fc67bd15ec21a8eed119841ad323c1434d95e45dadee568b934e2 
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 520: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0xa460b180b33cfb67e74f9bb7b15c3e1feaab03bd10042bb83993d091fe029899ad31c834d06fc67bd15ec21a8eed119841ad323c1434d95e45dadee568b934e2  
+ 526ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x1 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 570: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xa460b180b33cfb67e74f9bb7b15c3e1feaab03bd10042bb83993d091fe029899ad31c834d06fc67bd15ec21a8eed119841ad323c1434d95e45dadee568b934e2  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 600: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RFO  cdreq_addr=0x400  cdreq_data=0x0  
+ 616ns: RTL_TRACKER [Set=0x0] state update: 0x1 --> 0x7 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 670: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xa460b180b33cfb67e74f9bb7b15c3e1feaab03bd10042bb83993d091fe029899ad31c834d06fc67bd15ec21a8eed119841ad323c1434d95e45dadee568b934e2  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 700: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_WB  cdreq_addr=0x400  cdreq_data=0x7c3ed9434af6e83ddc0b12aedd0fc84b4ca870c1de071c423f6c21906615b14d3c296b80c8491d8b337fa4ae5b30a6761f425c0e668170d91ea174adbb98314d  
+ 706ns: RTL_TRACKER [Set=0x0] data update: 0xa460b180b33cfb67e74f9bb7b15c3e1feaab03bd10042bb83993d091fe029899ad31c834d06fc67bd15ec21a8eed119841ad323c1434d95e45dadee568b934e2 --> 0x7c3ed9434af6e83ddc0b12aedd0fc84b4ca870c1de071c423f6c21906615b14d3c296b80c8491d8b337fa4ae5b30a6761f425c0e668170d91ea174adbb98314d 
+ 716ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x3 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 730: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 760: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 830: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x7c3ed9434af6e83ddc0b12aedd0fc84b4ca870c1de071c423f6c21906615b14d3c296b80c8491d8b337fa4ae5b30a6761f425c0e668170d91ea174adbb98314d  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 860: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_MD  cdreq_addr=0x400  cdreq_data=0x0  
+ 876ns: RTL_TRACKER [Set=0x0] state update: 0x3 --> 0x7 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 880: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 910: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_MD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 970: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 1000: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RD  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(96) @ 1030: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CUREQ_XFR  Type=L1_REQ  cureq_op=CUREQ_RD  cureq_addr=0x400  
+ 1086ns: RTL_TRACKER [Set=0x0] data update: 0x7c3ed9434af6e83ddc0b12aedd0fc84b4ca870c1de071c423f6c21906615b14d3c296b80c8491d8b337fa4ae5b30a6761f425c0e668170d91ea174adbb98314d --> 0x509e31cb6d68c2a4da977e61814d17ce80e30b4a9d145cdd75eea008d9a3b4d134f47575517684ee28c0851c047224502f303b95d603c3ca879e213a79b62d33 
+ UVM_INFO ../lib/agent/cache_mon.svh(112) @ 1090: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDRSP_XFR  Type=L1_REQ  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x509e31cb6d68c2a4da977e61814d17ce80e30b4a9d145cdd75eea008d9a3b4d134f47575517684ee28c0851c047224502f303b95d603c3ca879e213a79b62d33  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 1130: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x509e31cb6d68c2a4da977e61814d17ce80e30b4a9d145cdd75eea008d9a3b4d134f47575517684ee28c0851c047224502f303b95d603c3ca879e213a79b62d33  
+ 1136ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x5 
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 1160: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RD  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 1220: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x509e31cb6d68c2a4da977e61814d17ce80e30b4a9d145cdd75eea008d9a3b4d134f47575517684ee28c0851c047224502f303b95d603c3ca879e213a79b62d33  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 1250: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RFO  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(96) @ 1300: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CUREQ_XFR  Type=L1_REQ  cureq_op=CUREQ_INV  cureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(112) @ 1380: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDRSP_XFR  Type=L1_REQ  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 1420: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x509e31cb6d68c2a4da977e61814d17ce80e30b4a9d145cdd75eea008d9a3b4d134f47575517684ee28c0851c047224502f303b95d603c3ca879e213a79b62d33  
+ 1426ns: RTL_TRACKER [Set=0x0] state update: 0x5 --> 0x0 
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 1450: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RFO  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 1520: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RFO  sdreq_addr=0x400  sdreq_data=0x0  
+ 1556ns: RTL_TRACKER [Set=0x0] data update: 0x509e31cb6d68c2a4da977e61814d17ce80e30b4a9d145cdd75eea008d9a3b4d134f47575517684ee28c0851c047224502f303b95d603c3ca879e213a79b62d33 --> 0x3fd1040583c4aeb6d4b463ffe7cf6a545683b94b25238850d404d4fb7efb6d53c092406d67f241bfaa57271060c1d2c3c218961dd702cc4f81a126a131a89eab 
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 1560: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_OKAY  sursp_data=0x3fd1040583c4aeb6d4b463ffe7cf6a545683b94b25238850d404d4fb7efb6d53c092406d67f241bfaa57271060c1d2c3c218961dd702cc4f81a126a131a89eab  
+ 1566ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x7 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 1620: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x3fd1040583c4aeb6d4b463ffe7cf6a545683b94b25238850d404d4fb7efb6d53c092406d67f241bfaa57271060c1d2c3c218961dd702cc4f81a126a131a89eab  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 1650: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RFO  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(96) @ 1670: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CUREQ_XFR  Type=L1_REQ  cureq_op=CUREQ_RFO  cureq_addr=0x400  
+ 1716ns: RTL_TRACKER [Set=0x0] data update: 0x3fd1040583c4aeb6d4b463ffe7cf6a545683b94b25238850d404d4fb7efb6d53c092406d67f241bfaa57271060c1d2c3c218961dd702cc4f81a126a131a89eab --> 0x91d221232735d47b76a241049ef37b235d6077c3979d3064c0c6dbb280d2c065e87bdfe6adf1bea496fd37ba5491d241d7aac290f876434fa074d7a55d8e9c 
+ UVM_INFO ../lib/agent/cache_mon.svh(112) @ 1720: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDRSP_XFR  Type=L1_REQ  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x91d221232735d47b76a241049ef37b235d6077c3979d3064c0c6dbb280d2c065e87bdfe6adf1bea496fd37ba5491d241d7aac290f876434fa074d7a55d8e9c  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 1770: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x91d221232735d47b76a241049ef37b235d6077c3979d3064c0c6dbb280d2c065e87bdfe6adf1bea496fd37ba5491d241d7aac290f876434fa074d7a55d8e9c  
+ 1776ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x0 
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 1800: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 1850: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x400  sdreq_data=0x0  
+ 1886ns: RTL_TRACKER [Set=0x0] data update: 0x91d221232735d47b76a241049ef37b235d6077c3979d3064c0c6dbb280d2c065e87bdfe6adf1bea496fd37ba5491d241d7aac290f876434fa074d7a55d8e9c --> 0x799eedbbd2673d95d4fba880a7d70d9a81954e91b6fad598ce62933e83317600380c9594cf7219c745b31c1e74a0f13617c3aed37b51c0727de8abadad03e7e7 
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 1890: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_SNOOP  sursp_data=0x799eedbbd2673d95d4fba880a7d70d9a81954e91b6fad598ce62933e83317600380c9594cf7219c745b31c1e74a0f13617c3aed37b51c0727de8abadad03e7e7  
+ 1896ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x5 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 1960: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x799eedbbd2673d95d4fba880a7d70d9a81954e91b6fad598ce62933e83317600380c9594cf7219c745b31c1e74a0f13617c3aed37b51c0727de8abadad03e7e7  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 1990: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 2040: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x799eedbbd2673d95d4fba880a7d70d9a81954e91b6fad598ce62933e83317600380c9594cf7219c745b31c1e74a0f13617c3aed37b51c0727de8abadad03e7e7  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 2070: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RFO  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 2110: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_INV  sdreq_addr=0x400  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 2140: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_OKAY  sursp_data=0x0  
+ 2146ns: RTL_TRACKER [Set=0x0] state update: 0x5 --> 0x7 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 2190: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x799eedbbd2673d95d4fba880a7d70d9a81954e91b6fad598ce62933e83317600380c9594cf7219c745b31c1e74a0f13617c3aed37b51c0727de8abadad03e7e7  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 2220: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RD  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(96) @ 2260: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CUREQ_XFR  Type=L1_REQ  cureq_op=CUREQ_RD  cureq_addr=0x400  
+ 2306ns: RTL_TRACKER [Set=0x0] data update: 0x799eedbbd2673d95d4fba880a7d70d9a81954e91b6fad598ce62933e83317600380c9594cf7219c745b31c1e74a0f13617c3aed37b51c0727de8abadad03e7e7 --> 0xc7af0423340a4d6e91e2ef81214491635d1896a1b4ee82bd6abe41ad9688da07ce8ed1950f95cc8934a1f1951a89349781b5e3e1d36594bbf39974546b9d9039 
+ UVM_INFO ../lib/agent/cache_mon.svh(112) @ 2310: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDRSP_XFR  Type=L1_REQ  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0xc7af0423340a4d6e91e2ef81214491635d1896a1b4ee82bd6abe41ad9688da07ce8ed1950f95cc8934a1f1951a89349781b5e3e1d36594bbf39974546b9d9039  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 2350: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xc7af0423340a4d6e91e2ef81214491635d1896a1b4ee82bd6abe41ad9688da07ce8ed1950f95cc8934a1f1951a89349781b5e3e1d36594bbf39974546b9d9039  
+ 2356ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x5 
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 2380: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_INV  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(96) @ 2430: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CUREQ_XFR  Type=L1_REQ  cureq_op=CUREQ_INV  cureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(112) @ 2490: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDRSP_XFR  Type=L1_REQ  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 2550: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x0  
+ 2556ns: RTL_TRACKER [Set=0x0] state update: 0x5 --> 0x0 
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 2580: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 2610: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x400  sdreq_data=0x0  
+ 2646ns: RTL_TRACKER [Set=0x0] data update: 0xc7af0423340a4d6e91e2ef81214491635d1896a1b4ee82bd6abe41ad9688da07ce8ed1950f95cc8934a1f1951a89349781b5e3e1d36594bbf39974546b9d9039 --> 0xd207b65589d36e1483e275201c954cfb74e7e7c9f0ecae2e5bfcfd0ec37de226bcc63a2ce9f422ffc244a7cb948be98f49af0ce615e3efbeb658ed5e59cebf64 
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 2650: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0xd207b65589d36e1483e275201c954cfb74e7e7c9f0ecae2e5bfcfd0ec37de226bcc63a2ce9f422ffc244a7cb948be98f49af0ce615e3efbeb658ed5e59cebf64  
+ 2656ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x1 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 2690: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xd207b65589d36e1483e275201c954cfb74e7e7c9f0ecae2e5bfcfd0ec37de226bcc63a2ce9f422ffc244a7cb948be98f49af0ce615e3efbeb658ed5e59cebf64  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 2720: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RD  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 2770: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xd207b65589d36e1483e275201c954cfb74e7e7c9f0ecae2e5bfcfd0ec37de226bcc63a2ce9f422ffc244a7cb948be98f49af0ce615e3efbeb658ed5e59cebf64  
+ 2776ns: RTL_TRACKER [Set=0x0] state update: 0x1 --> 0x5 
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 2800: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_MD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 2850: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_INV  sdreq_addr=0x400  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 2880: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_OKAY  sursp_data=0x0  
+ 2886ns: RTL_TRACKER [Set=0x0] state update: 0x5 --> 0x7 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 2890: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 2920: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_WB  cdreq_addr=0x400  cdreq_data=0x34821d88e719279d841cc4bf08a9c8a8fccad93371f8d0b44ec7249799d2b24b450ae0096a276e37fc653b8e6335208560ca75c6e86891d086675a2b05e2a418  
+ 2926ns: RTL_TRACKER [Set=0x0] data update: 0xd207b65589d36e1483e275201c954cfb74e7e7c9f0ecae2e5bfcfd0ec37de226bcc63a2ce9f422ffc244a7cb948be98f49af0ce615e3efbeb658ed5e59cebf64 --> 0x34821d88e719279d841cc4bf08a9c8a8fccad93371f8d0b44ec7249799d2b24b450ae0096a276e37fc653b8e6335208560ca75c6e86891d086675a2b05e2a418 
+ 2936ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x3 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 2980: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 3010: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RFO  cdreq_addr=0x400  cdreq_data=0x0  
+ 3026ns: RTL_TRACKER [Set=0x0] state update: 0x3 --> 0x7 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 3040: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x34821d88e719279d841cc4bf08a9c8a8fccad93371f8d0b44ec7249799d2b24b450ae0096a276e37fc653b8e6335208560ca75c6e86891d086675a2b05e2a418  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 3070: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_WB  cdreq_addr=0x400  cdreq_data=0x79f21fa4e441de4f7b63cec9436a1593a22d9661310ce7ae8f7a233d4b22f7d9295205204ea7eacd7466426dfce8e282bbc65d338125d7488caabc2b57c2ffb  
+ 3076ns: RTL_TRACKER [Set=0x0] data update: 0x34821d88e719279d841cc4bf08a9c8a8fccad93371f8d0b44ec7249799d2b24b450ae0096a276e37fc653b8e6335208560ca75c6e86891d086675a2b05e2a418 --> 0x79f21fa4e441de4f7b63cec9436a1593a22d9661310ce7ae8f7a233d4b22f7d9295205204ea7eacd7466426dfce8e282bbc65d338125d7488caabc2b57c2ffb 
+ 3086ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x3 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 3130: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 3160: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RFO  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(96) @ 3180: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CUREQ_XFR  Type=L1_REQ  cureq_op=CUREQ_INV  cureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(112) @ 3230: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDRSP_XFR  Type=L1_REQ  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 3270: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_WB  sdreq_addr=0x400  sdreq_data=0x79f21fa4e441de4f7b63cec9436a1593a22d9661310ce7ae8f7a233d4b22f7d9295205204ea7eacd7466426dfce8e282bbc65d338125d7488caabc2b57c2ffb  
+ 3306ns: RTL_TRACKER [Set=0x0] data update: 0x79f21fa4e441de4f7b63cec9436a1593a22d9661310ce7ae8f7a233d4b22f7d9295205204ea7eacd7466426dfce8e282bbc65d338125d7488caabc2b57c2ffb --> 0x0 
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 3310: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_OKAY  sursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 3360: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x0  
+ 3366ns: RTL_TRACKER [Set=0x0] state update: 0x3 --> 0x0 
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 3390: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RD  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 3460: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 3490: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RFO  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 3520: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 3550: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_INV  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 3600: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 3630: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 3660: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x400  sdreq_data=0x0  
+ 3726ns: RTL_TRACKER [Set=0x0] data update: 0x0 --> 0x61e19d9aa9fb832150c92c03c1cbb0ea3d7b0f4bcbfa60bdb3a736e3399451da901f0ec9d74acb9d90b5c76c045d52406f1d3c59c330b6b7974acbe7c8d5e54f 
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 3730: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0x61e19d9aa9fb832150c92c03c1cbb0ea3d7b0f4bcbfa60bdb3a736e3399451da901f0ec9d74acb9d90b5c76c045d52406f1d3c59c330b6b7974acbe7c8d5e54f  
+ 3736ns: RTL_TRACKER [Set=0x0] state update: 0x0 --> 0x1 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 3770: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x61e19d9aa9fb832150c92c03c1cbb0ea3d7b0f4bcbfa60bdb3a736e3399451da901f0ec9d74acb9d90b5c76c045d52406f1d3c59c330b6b7974acbe7c8d5e54f  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 3800: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_MD  cdreq_addr=0x400  cdreq_data=0x0  
+ 3816ns: RTL_TRACKER [Set=0x0] state update: 0x1 --> 0x7 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 3840: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(64) @ 3870: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_WB  cdreq_addr=0x400  cdreq_data=0xb2e862455552301c85d5a89cfc514481fa968cf74130904c492578f8b1f82a06e18098a6300c97b1df1da17e6bc8774dd3d2d3086380e057dd36951ea14a0741  
+ 3876ns: RTL_TRACKER [Set=0x0] data update: 0x61e19d9aa9fb832150c92c03c1cbb0ea3d7b0f4bcbfa60bdb3a736e3399451da901f0ec9d74acb9d90b5c76c045d52406f1d3c59c330b6b7974acbe7c8d5e54f --> 0xb2e862455552301c85d5a89cfc514481fa968cf74130904c492578f8b1f82a06e18098a6300c97b1df1da17e6bc8774dd3d2d3086380e057dd36951ea14a0741 
+ 3886ns: RTL_TRACKER [Set=0x0] state update: 0x7 --> 0x3 
+ UVM_INFO ../lib/agent/cache_mon.svh(80) @ 3910: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(161) @ 3940: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SUREQ_XFR  Type=L1_REQ  sureq_op=SUREQ_RD  sureq_addr=0x400  
+ UVM_INFO ../lib/agent/cache_mon.svh(129) @ 4010: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_WB  sdreq_addr=0x400  sdreq_data=0xb2e862455552301c85d5a89cfc514481fa968cf74130904c492578f8b1f82a06e18098a6300c97b1df1da17e6bc8774dd3d2d3086380e057dd36951ea14a0741  
+ 4056ns: RTL_TRACKER [Set=0x0] data update: 0xb2e862455552301c85d5a89cfc514481fa968cf74130904c492578f8b1f82a06e18098a6300c97b1df1da17e6bc8774dd3d2d3086380e057dd36951ea14a0741 --> 0x0 
+ UVM_INFO ../lib/agent/cache_mon.svh(145) @ 4060: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_OKAY  sursp_data=0x0  
+ UVM_INFO ../lib/agent/cache_mon.svh(177) @ 4080: uvm_test_top.env.agt.mon [MON] TxnId=-1  Type_xfr=SDRSP_XFR  Type=L1_REQ  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x0  
+ 4086ns: RTL_TRACKER [Set=0x0] state update: 0x3 --> 0x5 
+ [MON]   100

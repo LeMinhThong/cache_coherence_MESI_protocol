@@ -4,6 +4,7 @@
 
 class `THIS_CLASS extends uvm_sequence_item;
         int       TxnId;
+        xfr_e     Type_xfr = ALL_CH;
   rand  type_e    Type;
 
   rand  cdreq_e   cdreq_op;
@@ -35,6 +36,7 @@ class `THIS_CLASS extends uvm_sequence_item;
   // ----------------------------------------------------------------
   `uvm_object_utils_begin(`THIS_CLASS)
     `uvm_field_int  (         TxnId       ,UVM_DEFAULT)
+    `uvm_field_enum (xfr_e,   Type_xfr    ,UVM_DEFAULT)
     `uvm_field_enum (type_e,  Type        ,UVM_DEFAULT)
 
     `uvm_field_enum (cdreq_e, cdreq_op    ,UVM_DEFAULT)
@@ -85,33 +87,42 @@ function string `THIS_CLASS::convert2string();
   string tmp_str;
 
   str = {str, $sformatf("TxnId=%0d  ",        TxnId             )};
+  str = {str, $sformatf("Type_xfr=%s  ",      Type_xfr.name()   )};
   str = {str, $sformatf("Type=%s  ",          Type.name()       )};
-
-  str = {str, $sformatf("cdreq_op=%s  ",      cdreq_op.name()   )};
-  str = {str, $sformatf("cdreq_addr=0x%0h  ", cdreq_addr        )};
-  str = {str, $sformatf("cdreq_data=0x%0h  ", cdreq_data        )};
-
-  str = {str, $sformatf("cursp_rsp=%s  ",     cursp_rsp.name()  )};
-  str = {str, $sformatf("cursp_data=0x%0h  ", cursp_data        )};
-
-  str = {str, $sformatf("cureq_op=%s  ",      cureq_op.name()   )};
-  str = {str, $sformatf("cureq_addr=0x%0h  ", cureq_addr        )};
-
-  str = {str, $sformatf("cdrsp_rsp=%s  ",     cdrsp_rsp.name()  )};
-  str = {str, $sformatf("cdrsp_data=0x%0h  ", cdrsp_data        )};
-
-  str = {str, $sformatf("sdreq_op=%s  ",      sdreq_op.name()   )};
-  str = {str, $sformatf("sdreq_addr=0x%0h  ", sdreq_addr        )};
-  str = {str, $sformatf("sdreq_data=0x%0h  ", sdreq_data        )};
-
-  str = {str, $sformatf("sursp_rsp=%s  ",     sursp_rsp.name()  )};
-  str = {str, $sformatf("sursp_data=0x%0h  ", sursp_data        )};
-
-  str = {str, $sformatf("sureq_op=%s  ",      sureq_op.name()   )};
-  str = {str, $sformatf("sureq_addr=0x%0h  ", sureq_addr        )};
-
-  str = {str, $sformatf("sdrsp_rsp=%s  ",     sdrsp_rsp.name()  )};
-  str = {str, $sformatf("sdrsp_data=0x%0h  ", sdrsp_data        )};
+  if((Type_xfr == CDREQ_XFR) || (Type_xfr == ALL_CH)) begin
+    str = {str, $sformatf("cdreq_op=%s  ",      cdreq_op.name()   )};
+    str = {str, $sformatf("cdreq_addr=0x%0h  ", cdreq_addr        )};
+    str = {str, $sformatf("cdreq_data=0x%0h  ", cdreq_data        )};
+  end
+  if((Type_xfr == CURSP_XFR) || (Type_xfr == ALL_CH)) begin
+    str = {str, $sformatf("cursp_rsp=%s  ",     cursp_rsp.name()  )};
+    str = {str, $sformatf("cursp_data=0x%0h  ", cursp_data        )};
+  end
+  if((Type_xfr == CUREQ_XFR) || (Type_xfr == ALL_CH)) begin
+    str = {str, $sformatf("cureq_op=%s  ",      cureq_op.name()   )};
+    str = {str, $sformatf("cureq_addr=0x%0h  ", cureq_addr        )};
+  end
+  if((Type_xfr == CDRSP_XFR) || (Type_xfr == ALL_CH)) begin
+    str = {str, $sformatf("cdrsp_rsp=%s  ",     cdrsp_rsp.name()  )};
+    str = {str, $sformatf("cdrsp_data=0x%0h  ", cdrsp_data        )};
+  end
+  if((Type_xfr == SDREQ_XFR) || (Type_xfr == ALL_CH)) begin
+    str = {str, $sformatf("sdreq_op=%s  ",      sdreq_op.name()   )};
+    str = {str, $sformatf("sdreq_addr=0x%0h  ", sdreq_addr        )};
+    str = {str, $sformatf("sdreq_data=0x%0h  ", sdreq_data        )};
+  end
+  if((Type_xfr == SURSP_XFR) || (Type_xfr == ALL_CH)) begin
+    str = {str, $sformatf("sursp_rsp=%s  ",     sursp_rsp.name()  )};
+    str = {str, $sformatf("sursp_data=0x%0h  ", sursp_data        )};
+  end
+  if((Type_xfr == SUREQ_XFR) || (Type_xfr == ALL_CH)) begin
+    str = {str, $sformatf("sureq_op=%s  ",      sureq_op.name()   )};
+    str = {str, $sformatf("sureq_addr=0x%0h  ", sureq_addr        )};
+  end
+  if((Type_xfr == SDRSP_XFR) || (Type_xfr == ALL_CH)) begin
+    str = {str, $sformatf("sdrsp_rsp=%s  ",     sdrsp_rsp.name()  )};
+    str = {str, $sformatf("sdrsp_data=0x%0h  ", sdrsp_data        )};
+  end
 
   return str;
 endfunction: convert2string
