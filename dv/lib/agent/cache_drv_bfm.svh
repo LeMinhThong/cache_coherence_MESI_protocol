@@ -1,12 +1,12 @@
 `ifndef CACHE_DRV_BFM_SVH
 `define CACHE_DRV_BFM_SVH
-`define THISCLASS cache_drv_bfm_c
+`define THIS_CLASS cache_drv_bfm_c
 `define M_VIF m_vif.drv_cb
 
-class `THISCLASS extends uvm_component;
-  `uvm_component_utils(`THISCLASS)
+class `THIS_CLASS extends uvm_component;
+  `uvm_component_utils(`THIS_CLASS)
 
-  uvm_blocking_put_imp      #(cache_txn_c, `THISCLASS)  req_imp;
+  uvm_blocking_put_imp      #(cache_txn_c, `THIS_CLASS) req_imp;
   uvm_nonblocking_put_port  #(cache_txn_c)              rsp_port;
 
   virtual cache_if m_vif;
@@ -37,13 +37,13 @@ class `THISCLASS extends uvm_component;
   extern  virtual task            put(cache_txn_c txn);
   extern  virtual task            send_reponse(cache_txn_c t_rsp);
 
-  function new(string name="`THISCLASS", uvm_component parent);
+  function new(string name="`THIS_CLASS", uvm_component parent);
     super.new(name, parent);
   endfunction: new
-endclass: `THISCLASS
+endclass: `THIS_CLASS
 
 //-------------------------------------------------------------------
-function void `THISCLASS::build_phase(uvm_phase phase);
+function void `THIS_CLASS::build_phase(uvm_phase phase);
   super.build_phase(phase);
   if(!uvm_config_db#(virtual cache_if)::get(this, "", "cac_if", m_vif)) uvm_report_fatal(m_msg_name, "Cannot get virtual cache interface");
   this.req_imp = new("req_imp", this);
@@ -51,7 +51,7 @@ function void `THISCLASS::build_phase(uvm_phase phase);
 endfunction: build_phase
 
 //-------------------------------------------------------------------
-task `THISCLASS::run_phase(uvm_phase phase);
+task `THIS_CLASS::run_phase(uvm_phase phase);
   fork
     begin
       reset_signals();
@@ -80,7 +80,7 @@ task `THISCLASS::run_phase(uvm_phase phase);
 endtask: run_phase
 
 //-------------------------------------------------------------------
-task `THISCLASS::get_and_drive();
+task `THIS_CLASS::get_and_drive();
   wait(reset_check == 1);
   forever begin
     if(put_flag == 1'b1) begin
@@ -107,7 +107,7 @@ task `THISCLASS::get_and_drive();
 endtask: get_and_drive
 
 //-------------------------------------------------------------------
-task `THISCLASS::drive_l1_transfer();
+task `THIS_CLASS::drive_l1_transfer();
   cache_txn_c t_req;
   cache_txn_c t_rsp;
 
@@ -197,7 +197,7 @@ task `THISCLASS::drive_l1_transfer();
 endtask: drive_l1_transfer
 
 //-------------------------------------------------------------------
-task `THISCLASS::drive_snp_transfer();
+task `THIS_CLASS::drive_snp_transfer();
   cache_txn_c t_req;
   cache_txn_c t_rsp;
 
@@ -328,7 +328,7 @@ endtask: drive_snp_transfer
     //send_reponse(t_rsp);
 
 //-------------------------------------------------------------------
-task `THISCLASS::reset_monitoring();
+task `THIS_CLASS::reset_monitoring();
   forever begin
     fork
       begin
@@ -349,7 +349,7 @@ task `THISCLASS::reset_monitoring();
 endtask: reset_monitoring
 
 //-------------------------------------------------------------------
-task `THISCLASS::reset_signals();
+task `THIS_CLASS::reset_signals();
   `M_VIF.cdreq_valid  <= 1'b0;
   `M_VIF.cdreq_op     <= '0;
   `M_VIF.cdreq_addr   <= '0;
@@ -377,7 +377,7 @@ task `THISCLASS::reset_signals();
 endtask: reset_signals
 
 //-------------------------------------------------------------------
-task `THISCLASS::put(cache_txn_c txn);
+task `THIS_CLASS::put(cache_txn_c txn);
   cache_txn_c loc_txn = new txn;
   if(loc_txn.Type == L1_REQ)  begin
     l1_req_q.push_back(loc_txn);
@@ -392,10 +392,10 @@ task `THISCLASS::put(cache_txn_c txn);
 endtask: put
 
 //-------------------------------------------------------------------
-task `THISCLASS::send_reponse(cache_txn_c t_rsp);
+task `THIS_CLASS::send_reponse(cache_txn_c t_rsp);
   void'(this.rsp_port.try_put(t_rsp));
 endtask: send_reponse
 
 `undef M_VIF
-`undef THISCLASS
+`undef THIS_CLASS
 `endif

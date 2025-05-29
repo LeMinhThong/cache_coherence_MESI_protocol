@@ -180,45 +180,6 @@ module cache_mem_tb_top;
   end
 
   //-------------------------------------------------------------------
-  // RTL tracker
-  //-------------------------------------------------------------------
-  parameter TAG_WIDTH = PADDR_WIDTH - $clog2(BLK_WIDTH/8) - $clog2(NUM_BLK);
-  localparam ST_WIDTH   = 3;
-  localparam IDX_WIDTH  = $clog2(NUM_BLK);
-  localparam RAM_WIDTH  = ST_WIDTH + TAG_WIDTH + BLK_WIDTH;
-
-  logic [2:0]           state_prev [0:NUM_BLK-1];
-  logic [BLK_WIDTH-1:0] data_prev  [0:NUM_BLK-1];
-  logic [TAG_WIDTH-1:0] tag_prev   [0:NUM_BLK-1];
-
-  always @(posedge clk or negedge rst_n) begin
-    if(!rst_n) begin
-      for(int i=0; i < NUM_BLK; i++) begin
-        state_prev[i] <= INVALID;
-        tag_prev[i]   <= {TAG_WIDTH{1'b0}};
-        data_prev[i]  <= {BLK_WIDTH{1'b0}};
-      end
-    end
-    else begin
-      #1ns;
-      for(int i=0; i < NUM_BLK; i++) begin
-        if(dut.mem[i][`ST] != state_prev[i]) begin
-          $display("%0tns: RTL_TRACKER [Set=0x%0h] state update: 0x%0h --> 0x%0h \n", $time, i, state_prev[i], dut.mem[i][`ST]);
-          state_prev[i] <= dut.mem[i][`ST];
-        end
-        if(dut.mem[i][`RAM_TAG] != tag_prev[i]) begin
-          $display("%0tns: RTL_TRACKER [Set=0x%0h] tag update: 0x%0h --> 0x%0h \n", $time, i, tag_prev[i], dut.mem[i][`RAM_TAG]);
-          tag_prev[i] <= dut.mem[i][`RAM_TAG];
-        end
-        if(dut.mem[i][`DAT] != data_prev[i]) begin
-          $display("%0tns: RTL_TRACKER [Set=0x%0h] data update: 0x%0h --> 0x%0h \n", $time, i, data_prev[i], dut.mem[i][`DAT]);
-          data_prev[i] <= dut.mem[i][`DAT];
-        end
-      end
-    end
-  end
-
-  //-------------------------------------------------------------------
   initial begin
     uvm_pkg::uvm_config_db#(virtual cache_if)::set(null, "*", "cac_if", cac_if);
   end

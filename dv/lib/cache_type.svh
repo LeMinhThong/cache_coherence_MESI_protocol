@@ -5,6 +5,8 @@ typedef reg [`VIP_SADDR_WIDTH-1:0] address_t;
 
 typedef reg [`VIP_BLK_WIDTH-1:0] data_t;
 
+typedef reg [`VIP_TAG_WIDTH-1:0] tag_t;
+
 typedef enum {
   L1_REQ  = 0,
   SNP_REQ = 1
@@ -26,6 +28,7 @@ typedef enum reg [2:0] {
   INVALID   = 3'b000,
   EXCLUSIVE = 3'b001,
   MODIFIED  = 3'b011,
+  MIGRATED  = 3'b111,
   SHARED    = 3'b101
 } st_e;
 
