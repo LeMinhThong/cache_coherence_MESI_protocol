@@ -15,6 +15,7 @@ package cache_vip_pkg;
   `include "cache_drv.svh"
   `include "cache_mon.svh"
   `include "cache_model.svh"
+  `include "cache_sb_base.svh"
   `include "cache_sb.svh"
   `include "cache_agt.svh"
   `include "cache_cov.svh"
