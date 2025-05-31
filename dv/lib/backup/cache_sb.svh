@@ -108,29 +108,29 @@ task `THIS_CLASS::check_cdreq();
             if( (cdreq_op_req_bf == CDREQ_RD) &&
                 !((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_RD) && (t.sdreq_addr == cdreq_addr_req_bf) && (t.sdreq_data == '0))
               )
-              `SB_ERROR("CDREQ", $sformatf("expect:[SDREQ_XFR]  sdreq_op=SDREQ_RD  sdreq_addr=0x%0h  sdreq_data=0x0--- actually:%s", cdreq_addr_req_bf, t.convert2string()))
+              `SB_ERROR("CDREQ", $sformatf("expected  [SDREQ_XFR]  sdreq_op=SDREQ_RD  sdreq_addr=0x%0h  sdreq_data=0x0--- actually:%s", cdreq_addr_req_bf, t.convert2string()))
             else if ( ((cdreq_op_req_bf == CDREQ_RFO) && (cdreq_st_prev == INVALID)) &&
                       !((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_RFO) && (t.sdreq_addr == cdreq_addr_req_bf) && (t.sdreq_data == '0))
                     )
-              `SB_ERROR("CDREQ", $sformatf("expect:[SDREQ_XFR]  sdreq_op=SDREQ_RFO  sdreq_addr=0x%0h  sdreq_data=0x0 --- actually:%s", cdreq_addr_req_bf, t.convert2string()))
+              `SB_ERROR("CDREQ", $sformatf("expected  [SDREQ_XFR]  sdreq_op=SDREQ_RFO  sdreq_addr=0x%0h  sdreq_data=0x0 --- actually:%s", cdreq_addr_req_bf, t.convert2string()))
             else if ( ((cdreq_op_req_bf == CDREQ_RFO) && (cdreq_st_prev == SHARED)) &&
                       !((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_INV) && (t.sdreq_addr == cdreq_addr_req_bf) && (t.sdreq_data == '0))
                     )
-              `SB_ERROR("CDREQ", $sformatf("expect:[SDREQ_XFR]  sdreq_op=SDREQ_INV  sdreq_addr=0x%0h  sdreq_data=0x0 --- actually:%s", cdreq_addr_req_bf, t.convert2string()))
+              `SB_ERROR("CDREQ", $sformatf("expected  [SDREQ_XFR]  sdreq_op=SDREQ_INV  sdreq_addr=0x%0h  sdreq_data=0x0 --- actually:%s", cdreq_addr_req_bf, t.convert2string()))
             else begin
               wait_nxt_l1_xfr(t);
               if( (cdreq_op_req_bf == CDREQ_RD) &&
                   !((t.Type_xfr == SURSP_XFR) && (t.sursp_rsp inside {SURSP_FETCH, SURSP_SNOOP}))
                 )
-                `SB_ERROR("CDREQ", $sformatf("expect:[SURSP_XFR]  sursp_rsp=(SURSP_FETCH || SURSP_SNOOP) --- actually:%s", t.convert2string()))
+                `SB_ERROR("CDREQ", $sformatf("expected  [SURSP_XFR]  sursp_rsp=(SURSP_FETCH || SURSP_SNOOP) --- actually:%s", t.convert2string()))
               else if ( ((cdreq_op_req_bf == CDREQ_RFO) && (cdreq_st_prev == INVALID)) &&
                         !((t.Type_xfr == SURSP_XFR) && (t.sursp_rsp == SURSP_OKAY))
                       )
-                `SB_ERROR("CDREQ", $sformatf("expect:[SURSP_XFR]  sursp_rsp=SURSP_OKAY --- actually:%s", t.convert2string()))
+                `SB_ERROR("CDREQ", $sformatf("expected  [SURSP_XFR]  sursp_rsp=SURSP_OKAY --- actually:%s", t.convert2string()))
               else if ( ((cdreq_op_req_bf == CDREQ_RFO) && (cdreq_st_prev == SHARED)) &&
                         !((t.Type_xfr == SURSP_XFR) && (t.sursp_rsp == SURSP_OKAY) && (t.sursp_data == '0))
                       )
-                `SB_ERROR("CDREQ", $sformatf("expect:[SURSP_XFR]  sursp_rsp=SURSP_OKAY  sursp_data=0x0 --- actually:%s", t.convert2string()))
+                `SB_ERROR("CDREQ", $sformatf("expected  [SURSP_XFR]  sursp_rsp=SURSP_OKAY  sursp_data=0x0 --- actually:%s", t.convert2string()))
               else begin
                 if(cdreq_op_req_bf == CDREQ_RD) begin
                   if(t.sursp_rsp == SURSP_FETCH)
@@ -152,7 +152,7 @@ task `THIS_CLASS::check_cdreq();
             m_cache.set_state(cdreq_addr_req_bf, MIGRATED);
           wait_nxt_l1_xfr(t);
           if(!((t.Type_xfr == CURSP_XFR) && (t.cursp_rsp == CURSP_OKAY) && (t.cursp_data == m_cache.get_data(cdreq_addr_req_bf))))
-            `SB_ERROR("CDREQ", $sformatf("expect:[CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x%0h --- actually:%s", m_cache.get_data(cdreq_addr_req_bf), t.convert2string()))
+            `SB_ERROR("CDREQ", $sformatf("expected  [CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x%0h --- actually:%s", m_cache.get_data(cdreq_addr_req_bf), t.convert2string()))
         end
         else if(cdreq_st_prev == MIGRATED)
           `SB_ERROR("CDREQ", $sformatf("[CORNER_CASE] cdreq_op=%s  cdreq_addr=0x%0h  blk_st=%s", cdreq_op_req_bf.name(), cdreq_addr_req_bf, cdreq_st_prev))
@@ -165,16 +165,16 @@ task `THIS_CLASS::check_cdreq();
           if(cdreq_st_prev == SHARED) begin
             wait_nxt_l1_xfr(t);
             if(!((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_INV) && (t.sdreq_addr == cdreq_addr_req_bf) && (t.sdreq_data == '0)))
-              `SB_ERROR("CDREQ", $sformatf("expect:[SDREQ_XFR]  sdreq_op=SDREQ_INV  sdreq_addr=0x%0h  sdreq_data=0x0 --- actually:%s", cdreq_addr_req_bf, t.convert2string()))
+              `SB_ERROR("CDREQ", $sformatf("expected  [SDREQ_XFR]  sdreq_op=SDREQ_INV  sdreq_addr=0x%0h  sdreq_data=0x0 --- actually:%s", cdreq_addr_req_bf, t.convert2string()))
             else begin
               wait_nxt_l1_xfr(t);
               if(!((t.Type_xfr == SURSP_XFR) && (t.sursp_rsp == SURSP_OKAY) && (t.sursp_data == '0)))
-                `SB_ERROR("CDREQ", $sformatf("expect:[SURSP_XFR]  sursp_rsp=SURSP_OKAY  sursp_data=0x0 --- actually:%s", t.convert2string()))
+                `SB_ERROR("CDREQ", $sformatf("expected  [SURSP_XFR]  sursp_rsp=SURSP_OKAY  sursp_data=0x0 --- actually:%s", t.convert2string()))
             end
           end
           wait_nxt_l1_xfr(t);
           if(!((t.Type_xfr == CURSP_XFR) && (t.cursp_rsp == CURSP_OKAY) && (t.cursp_data == '0)))
-            `SB_ERROR("CDREQ", $sformatf("expect:[CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x0 --- actually:%s", t.convert2string()))
+            `SB_ERROR("CDREQ", $sformatf("expected  [CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x0 --- actually:%s", t.convert2string()))
         end
         else if(cdreq_st_prev == INVALID) begin
           `SB_ERROR("CDREQ", $sformatf("[CORNER_CASE] cdreq_op=%s  cdreq_addr=0x%0h  blk_st=%s", cdreq_op_req_bf.name(), cdreq_addr_req_bf, cdreq_st_prev))
@@ -188,7 +188,7 @@ task `THIS_CLASS::check_cdreq();
           m_cache.set_data(cdreq_addr_req_bf, t.cdreq_data);
           wait_nxt_l1_xfr(t);
           if(!((t.Type_xfr == CURSP_XFR) && (t.cursp_rsp == CURSP_OKAY) && (t.cursp_data == '0)))
-            `SB_ERROR("CDREQ", $sformatf("expect:[CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x0 --- actually:%s", t.convert2string()))
+            `SB_ERROR("CDREQ", $sformatf("expected [CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x0 --- actually:%s", t.convert2string()))
         end
         else if(cdreq_st_prev inside {INVALID, EXCLUSIVE, SHARED, MODIFIED})
           `SB_ERROR("CDREQ", $sformatf("[CORNER_CASE] cdreq_op=%s  cdreq_addr=0x%0h  blk_st=%s", cdreq_op_req_bf.name(), cdreq_addr_req_bf, cdreq_st_prev))
@@ -267,18 +267,18 @@ task `THIS_CLASS::check_sureq();
         if(sureq_st_prev == INVALID) begin
           wait_nxt_snp_xfr(t);
           if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_INVALID) && (t.sdrsp_data == '0)))
-            `SB_ERROR("SUREQ", $sformatf("expect:[SDRSP_XFR]  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
+            `SB_ERROR("SUREQ", $sformatf("expected  [SDRSP_XFR]  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
         end
         else if(sureq_st_prev inside {EXCLUSIVE, SHARED, MODIFIED, MIGRATED}) begin
           // init CUREQ
           if((sureq_st_prev inside {EXCLUSIVE, SHARED, MODIFIED}) && (sureq_op_req_bf == SUREQ_RFO) && m_cache.is_blk_valid_in_l1(sureq_addr_req_bf)) begin
             wait_nxt_snp_xfr(t);
             if(!((t.Type_xfr == CUREQ_XFR) && (t.cureq_op == CUREQ_INV) && (t.cureq_addr == sureq_addr_req_bf)))
-              `SB_ERROR("SUREQ", $sformatf("expect:[CUREQ_XFR]  cureq_op=CUREQ_INV  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
+              `SB_ERROR("SUREQ", $sformatf("expected [CUREQ_XFR]  cureq_op=CUREQ_INV  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
             else begin
               wait_nxt_snp_xfr(t);
               if(!((t.Type_xfr == CDRSP_XFR) && (t.cdrsp_rsp == CDRSP_OKAY) && (t.cdrsp_data == '0)))
-                `SB_ERROR("SUREQ", $sformatf("expect:[CDRSP_XFR]  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x0 --- actually:%s", t.convert2string()))
+                `SB_ERROR("SUREQ", $sformatf("expected [CDRSP_XFR]  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x0 --- actually:%s", t.convert2string()))
             end
           end
           else if(sureq_st_prev == MIGRATED) begin
@@ -286,15 +286,15 @@ task `THIS_CLASS::check_sureq();
             if( (sureq_op_req_bf == SUREQ_RD) &&
                 !((t.Type_xfr == CUREQ_XFR) && (t.cureq_op == CUREQ_RD) && (t.cureq_addr == sureq_addr_req_bf))
               )
-              `SB_ERROR("SUREQ", $sformatf("expect:[CUREQ_XFR]  cureq_op=CUREQ_RD  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
+              `SB_ERROR("SUREQ", $sformatf("expected [CUREQ_XFR]  cureq_op=CUREQ_RD  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
             else if ( (sureq_op_req_bf == SUREQ_RFO) &&
                       !((t.Type_xfr == CUREQ_XFR) && (t.cureq_op == CUREQ_RFO) && (t.cureq_addr == sureq_addr_req_bf))
                     )
-              `SB_ERROR("SUREQ", $sformatf("expect:[CUREQ_XFR]  cureq_op=CUREQ_RFO  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
+              `SB_ERROR("SUREQ", $sformatf("expected [CUREQ_XFR]  cureq_op=CUREQ_RFO  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
             else begin
               wait_nxt_snp_xfr(t);
               if(!((t.Type_xfr == CDRSP_XFR) && (t.cdrsp_rsp == CDRSP_OKAY)))
-                `SB_ERROR("SUREQ", $sformatf("expect:[CDRSP_XFR]  cdrsp_rsp=CDRSP_OKAY --- actually:%s", t.convert2string()))
+                `SB_ERROR("SUREQ", $sformatf("expected [CDRSP_XFR]  cdrsp_rsp=CDRSP_OKAY --- actually:%s", t.convert2string()))
               else
                 m_cache.set_data(sureq_addr_req_bf, t.cdrsp_data);
             end
@@ -303,17 +303,17 @@ task `THIS_CLASS::check_sureq();
           if(sureq_st_prev inside {MODIFIED, MIGRATED}) begin
             wait_nxt_snp_xfr(t);
             if(!((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_WB) && (t.sdreq_addr == sureq_addr_req_bf) && (t.sdreq_data == m_cache.get_data(sureq_addr_req_bf))))
-              `SB_ERROR("SUREQ", $sformatf("expect:[SDREQ_XFR]  sdreq_op=SDREQ_WB  sdreq_addr=0x%0h  sdreq_data=0x%0h --- actually:%s", sureq_addr_req_bf, m_cache.get_data(sureq_addr_req_bf), t.convert2string()))
+              `SB_ERROR("SUREQ", $sformatf("expected [SDREQ_XFR]  sdreq_op=SDREQ_WB  sdreq_addr=0x%0h  sdreq_data=0x%0h --- actually:%s", sureq_addr_req_bf, m_cache.get_data(sureq_addr_req_bf), t.convert2string()))
             else begin
               wait_nxt_snp_xfr(t);
               if(!((t.Type_xfr == SURSP_XFR) && (t.sursp_rsp == SURSP_OKAY) && (t.sursp_data == '0)))
-                `SB_ERROR("SUREQ", $sformatf("expect:[SURSP_XFR]  sursp_rsp=SURSP_OKAY  sursp_data=0x0 --- actually:%s", t.convert2string()))
+                `SB_ERROR("SUREQ", $sformatf("expected [SURSP_XFR]  sursp_rsp=SURSP_OKAY  sursp_data=0x0 --- actually:%s", t.convert2string()))
             end
           end
           // send SDRSP to original SUREQ
           wait_nxt_snp_xfr(t);
           if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_OKAY) && (t.sdrsp_data == m_cache.get_data(sureq_addr_req_bf))))
-            `SB_ERROR("SUREQ", $sformatf("expect:[SDRSP_XFR]  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x%0h --- actually:%s", m_cache.get_data(sureq_addr_req_bf), t.convert2string))
+            `SB_ERROR("SUREQ", $sformatf("expected [SDRSP_XFR]  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x%0h --- actually:%s", m_cache.get_data(sureq_addr_req_bf), t.convert2string))
           else
             if(sureq_op_req_bf == SUREQ_RD)
               m_cache.set_state(sureq_addr_req_bf, SHARED);
@@ -327,25 +327,25 @@ task `THIS_CLASS::check_sureq();
         if(sureq_st_prev == INVALID) begin
           wait_nxt_snp_xfr(t);
           if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_INVALID) && (t.sdrsp_data == '0)))
-            `SB_ERROR("SUREQ", $sformatf("expect:[SDRSP_XFR]  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
+            `SB_ERROR("SUREQ", $sformatf("expected  [SDRSP_XFR]  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
         end
         else if(sureq_st_prev == SHARED) begin
           // init CUREQ
           if(m_cache.is_blk_valid_in_l1(sureq_addr_req_bf)) begin
             wait_nxt_snp_xfr(t);
             if(!((t.Type_xfr == CUREQ_XFR) && (t.cureq_op == CUREQ_INV) && (t.cureq_addr == sureq_addr_req_bf)))
-              `SB_ERROR("SUREQ", $sformatf("expect:[CUREQ_XFR]  cureq_op=CUREQ_INV  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
+              `SB_ERROR("SUREQ", $sformatf("expected  [CUREQ_XFR]  cureq_op=CUREQ_INV  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
             else begin
               wait_nxt_snp_xfr(t);
               if(!((t.Type_xfr == CDRSP_XFR) && (t.cdrsp_rsp == CDRSP_OKAY) && (t.cursp_data == '0)))
-                `SB_ERROR("SUREQ", $sformatf("expect:[CDRSP_XFR]  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x0 --- actually:%s", t.convert2string()))
+                `SB_ERROR("SUREQ", $sformatf("expected [CDRSP_XFR]  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x0 --- actually:%s", t.convert2string()))
             end
           end
           // send SDRSP to original SUREQ
           m_cache.set_state(sureq_addr_req_bf, INVALID);
           wait_nxt_snp_xfr(t);
           if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_OKAY) && (t.sdrsp_data == '0)))
-            `SB_ERROR("SUREQ", $sformatf("expect:[SDRSP_XFR]  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
+            `SB_ERROR("SUREQ", $sformatf("expected  [SDRSP_XFR]  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
         end
         else if(sureq_st_prev inside {EXCLUSIVE, MODIFIED, MIGRATED})
           `SB_ERROR("SUREQ", $sformatf("[CORNER_CASE] sureq_op=%s  sureq_addr=0x%0h  blk_st=%s", sureq_op_req_bf.name(), sureq_addr_req_bf, sureq_st_prev))
