@@ -84,8 +84,10 @@ task `THIS_CLASS::check_cdreq();
     if((t.Type_xfr == CDREQ_XFR) && (cdreq_ot == 1))
       `uvm_fatal("SB_FAIL", "receive new CDREQ_XFR while previous transaction is outstanding")
     else if((t.Type_xfr == CDREQ_XFR) && (cdreq_ot == 0)) begin
+
+      // allocate scenatio
       cdreq_ot          = 1;
-      cdreq_pass        = 0;
+      cdreq_error_count = 0;
       cdreq_op_req_bf   = t.cdreq_op;
       cdreq_addr_req_bf = t.cdreq_addr;
       cdreq_data_req_bf = t.cdreq_data;
@@ -98,54 +100,51 @@ task `THIS_CLASS::check_cdreq();
       `uvm_info(m_msg_name,   $sformatf("ST=%s  TAG=0x%0h  DAT=0x%0h", cdreq_st_prev, cdreq_tag_prev, cdreq_data_prev), UVM_LOW)
       `uvm_info(m_msg_name,   $sformatf("--------------------------------------------------"), UVM_LOW)
 
-      if(t.cdreq_op == CDREQ_RD) begin
-        if(cdreq_st_prev == INVALID) begin
-          wait_nxt_l1_xfr(t);
-          if(!((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_RD) && (t.sdreq_addr == cdreq_addr_req_bf)))
-            `uvm_error("SB_FAIL", $sformatf("expected  [SDREQ_XFR]  sdreq_op=SDREQ_RD  sdreq_addr=0x%0h --- actually:%s", cdreq_addr_req_bf, t.convert2string()))
-          else begin
+      // check flow
+      if(cdreq_op_req_bf == CDREQ_RD) begin
+        if(cdreq_st_prev inside {INVALID, EXCLUSIVE, SHARED, MODIFIED}) begin
+          if(cdreq_st_prev == INVALID) begin
             wait_nxt_l1_xfr(t);
-            if(!((t.Type_xfr == SURSP_XFR) && (t.sursp_rsp inside {SURSP_FETCH, SURSP_SNOOP})))
-              `uvm_error("SB_FAIL", $sformatf("expected  [SURSP_XFR]  sursp_rsp=(SURSP_FETCH || SURSP_SNOOP) --- actually:%s", t.convert2string()))
+            if(!((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_RD) && (t.sdreq_addr == cdreq_addr_req_bf)))
+              `SB_ERROR("CDREQ", $sformatf("expected  [SDREQ_XFR]  sdreq_op=SDREQ_RD  sdreq_addr=0x%0h --- actually:%s", cdreq_addr_req_bf, t.convert2string()))
             else begin
-              if(t.sursp_rsp == SURSP_FETCH)
-                m_cache.set_state(cdreq_addr_req_bf, EXCLUSIVE);
-              else if(t.sursp_rsp == SURSP_SNOOP)
-                m_cache.set_state(cdreq_addr_req_bf, SHARED);
-              else
-                `uvm_fatal(m_msg_name, $sformatf("expected SURSP_FETCH or SURSP_SNOOP --- actually %s", t.sursp_rsp.name()))
-              m_cache.set_tag(cdreq_addr_req_bf);
-              m_cache.set_data(cdreq_addr_req_bf, t.sursp_data);
               wait_nxt_l1_xfr(t);
-              if(!((t.Type_xfr == CURSP_XFR) && (t.cursp_rsp == CURSP_OKAY) && (t.cursp_data == m_cache.get_data(cdreq_addr_req_bf))))
-                `uvm_error("SB_FAIL", $sformatf("expected  [CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x%0h --- actually:%s", m_cache.get_data(cdreq_addr_req_bf), t.convert2string()))
+              if(!((t.Type_xfr == SURSP_XFR) && (t.sursp_rsp inside {SURSP_FETCH, SURSP_SNOOP})))
+                `SB_ERROR("CDREQ", $sformatf("expected  [SURSP_XFR]  sursp_rsp=(SURSP_FETCH || SURSP_SNOOP) --- actually:%s", t.convert2string()))
+              else begin
+                if(t.sursp_rsp == SURSP_FETCH)
+                  m_cache.set_state(cdreq_addr_req_bf, EXCLUSIVE);
+                else if(t.sursp_rsp == SURSP_SNOOP)
+                  m_cache.set_state(cdreq_addr_req_bf, SHARED);
+                m_cache.set_tag(cdreq_addr_req_bf);
+                m_cache.set_data(cdreq_addr_req_bf, t.sursp_data);
+              end
             end
           end
-        end
-        else if(cdreq_st_prev inside {EXCLUSIVE, SHARED, MODIFIED}) begin
           wait_nxt_l1_xfr(t);
-          if(!((t.Type_xfr == CURSP_XFR) && (t.cursp_rsp == CURSP_OKAY) && (t.cursp_data == cdreq_data_prev)))
-            `uvm_error("SB_FAIL", $sformatf("expected  [CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x%0h --- actually:%s", cdreq_data_prev, t.convert2string()))
+          if(!((t.Type_xfr == CURSP_XFR) && (t.cursp_rsp == CURSP_OKAY) && (t.cursp_data == m_cache.get_data(cdreq_addr_req_bf))))
+            `SB_ERROR("CDREQ", $sformatf("expected  [CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x%0h --- actually:%s", m_cache.get_data(cdreq_addr_req_bf), t.convert2string()))
         end
+        else if(cdreq_st_prev == MIGRATED)
+          `SB_ERROR("CDREQ", $sformatf("[CORNER_CASE] cdreq_op=%s  cdreq_addr=0x%0h  blk_st=%s", cdreq_op_req_bf.name(), cdreq_addr_req_bf, cdreq_st_prev))
         else
-          `uvm_error("CORNER_CASE", $sformatf("cdreq_op=%s  cdreq_addr=0x%0h  blk_st=%s", cdreq_op_req_bf.name(), cdreq_addr_req_bf, cdreq_st_prev))
+          `uvm_fatal(m_msg_name, $sformatf("can not identify current state of accessed block ST=%s", cdreq_st_prev.name()))
       end
-      else if(t.cdreq_op == CDREQ_RFO) begin
+      else if(cdreq_op_req_bf == CDREQ_RFO) begin
       end
-      else if(t.cdreq_op == CDREQ_WB) begin
+      else if(cdreq_op_req_bf == CDREQ_WB) begin
       end
-      else if(t.cdreq_op == CDREQ_MD) begin
+      else if(cdreq_op_req_bf == CDREQ_MD) begin
       end
-      else begin
-        `uvm_error("SB_FAIL", "cannot identify CDREQ opcode")
-      end
+      else
+        `uvm_fatal(m_msg_name, $sformatf("cannot identify SUREQ opcode ST=%s", cdreq_op_req_bf.name()))
 
       // print request report
       `uvm_info(m_msg_name, $sformatf("--------------------------------------------------"), UVM_LOW)
       `uvm_info(m_msg_name, $sformatf("OP=%s  ADDR=0x%0h  DAT=0x%0h", cdreq_op_req_bf, cdreq_addr_req_bf, cdreq_data_req_bf), UVM_LOW)
-      check_cache_sync();
-      if(cdreq_pass) begin
-        `uvm_info("CDREQ_PASS", $sformatf("request from CDREQ passed"), UVM_LOW)
+      comp_model_vs_rtl("CDREQ", cdreq_addr_req_bf);
+      if(cdreq_error_count == 0) begin
+        `uvm_info("PASS_CDREQ", $sformatf("request from CDREQ passed"), UVM_LOW)
         if(cdreq_st_prev == m_cache.get_state(cdreq_addr_req_bf))
           `uvm_info(m_msg_name, $sformatf("ST[NO_CHANGE]: %s", cdreq_st_prev), UVM_LOW)
         else
@@ -164,9 +163,9 @@ task `THIS_CLASS::check_cdreq();
       end
       `uvm_info(m_msg_name, $sformatf("--------------------------------------------------"), UVM_LOW)
 
-      // clean config
+      // clean scenario
       cdreq_ot          = 0;
-      cdreq_pass        = 0;
+      cdreq_error_count = 0;
       cdreq_op_req_bf   = CDREQ_RD;
       cdreq_addr_req_bf = '0;
       cdreq_data_req_bf = '0;
@@ -183,10 +182,119 @@ endtask: check_cdreq
 // ------------------------------------------------------------------
 task `THIS_CLASS::check_sureq();
   cache_txn_c t;
+
   forever begin
-    @`M_VIF;
-    while(snp_xfr_q.size() > 0) begin
-      t = snp_xfr_q.pop_front();
+    wait_nxt_snp_xfr(t);
+    if((t.Type_xfr == SUREQ_XFR) && (sureq_ot == 1))
+      `uvm_fatal("SB_FAIL", "receive new SUREQ_XFR while previous transaction is outstanding")
+    else if((t.Type_xfr == SUREQ_XFR) && (sureq_ot == 0)) begin
+
+      // allocate scenatio
+      sureq_ot          = 1;
+      sureq_error_count = 0;
+      sureq_op_req_bf   = t.sureq_op;
+      sureq_addr_req_bf = t.sureq_addr;
+      sureq_st_prev     = m_cache.get_state(sureq_addr_req_bf);
+      sureq_tag_prev    = m_cache.get_tag(sureq_addr_req_bf);
+      sureq_data_prev   = m_cache.get_data(sureq_addr_req_bf);
+      `uvm_info(m_msg_name,   $sformatf("--------------------------------------------------"), UVM_LOW)
+      `uvm_info("REC_SUREQ",  $sformatf("reiceves request from SUREQ"), UVM_LOW)
+      `uvm_info(m_msg_name,   $sformatf("OP=%s  ADDR=0x%0h", sureq_op_req_bf, sureq_addr_req_bf), UVM_LOW)
+      `uvm_info(m_msg_name,   $sformatf("ST=%s  TAG=0x%0h  DAT=0x%0h", sureq_st_prev, sureq_tag_prev, sureq_data_prev), UVM_LOW)
+      `uvm_info(m_msg_name,   $sformatf("--------------------------------------------------"), UVM_LOW)
+
+      // check flow
+      if(sureq_op_req_bf == SUREQ_RD) begin
+      end
+      else if(sureq_op_req_bf == SUREQ_RFO) begin
+        if(sureq_st_prev == INVALID) begin
+          wait_nxt_snp_xfr(t);
+          if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_INVALID) && (t.sdrsp_data == '0)))
+            `SB_ERROR("SUREQ", $sformatf("expected  [SDRSP_XFR]  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
+        end
+        else if(sureq_st_prev inside {EXCLUSIVE, SHARED, MODIFIED, MIGRATED}) begin
+          if((sureq_st_prev inside {EXCLUSIVE, SHARED, MODIFIED}) && m_cache.is_blk_valid_in_l1(sureq_addr_req_bf)) begin
+            wait_nxt_snp_xfr(t);
+            if(!((t.Type_xfr == CUREQ_XFR) && (t.cureq_op == CUREQ_INV) && (t.cureq_addr == sureq_addr_req_bf)))
+              `SB_ERROR("SUREQ", $sformatf("expected [CUREQ_XFR]  cureq_op=CUREQ_INV  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
+            else begin
+              wait_nxt_snp_xfr(t);
+              if(!((t.Type_xfr == CDRSP_XFR) && (t.cdrsp_rsp == CDRSP_OKAY) && (t.cdrsp_data == '0)))
+                `SB_ERROR("SUREQ", $sformatf("expected [CDRSP_XFR]  cdrsp_rsp=CDRSP_OKAY  cdrsp_data=0x0 --- actually:%s", t.convert2string()))
+            end
+          end
+          else if(sureq_st_prev == MIGRATED) begin
+            wait_nxt_snp_xfr(t);
+            if(!((t.Type_xfr == CUREQ_XFR) && (t.cureq_op == CUREQ_RFO) && (t.cureq_addr == sureq_addr_req_bf)))
+              `SB_ERROR("SUREQ", $sformatf("expected [CUREQ_XFR]  cureq_op=CUREQ_RFO  cureq_addr=0x%0h --- actually:%s", sureq_addr_req_bf, t.convert2string()))
+            else begin
+              wait_nxt_snp_xfr(t);
+              if(!((t.Type_xfr == CDRSP_XFR) && (t.cdrsp_rsp == CDRSP_OKAY)))
+                `SB_ERROR("SUREQ", $sformatf("expected [CDRSP_XFR]  cdrsp_rsp=CDRSP_OKAY --- actually:%s", t.convert2string()))
+              else
+                m_cache.set_data(sureq_addr_req_bf, t.cdrsp_data);
+            end
+          end
+          if(sureq_st_prev inside {MODIFIED, MIGRATED}) begin
+            wait_nxt_snp_xfr(t);
+            if(!((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_WB) && (t.sdreq_addr == sureq_addr_req_bf) && (t.sdreq_data == m_cache.get_data(sureq_addr_req_bf))))
+              `SB_ERROR("SUREQ", $sformatf("expected [SDREQ_XFR]  sdreq_op=SDREQ_WB  sdreq_addr=0x%0h  sdreq_data=0x%0h --- actually:%s", sureq_addr_req_bf, m_cache.get_data(sureq_addr_req_bf), t.convert2string()))
+            else begin
+              wait_nxt_snp_xfr(t);
+              if(!((t.Type_xfr == SURSP_XFR) && (t.sursp_rsp == SURSP_OKAY) && (t.sursp_data = '0)))
+                `SB_ERROR("SUREQ", $sformatf("expected [SURSP_XFR]  sursp_rsp=SURSP_OKAY  sursp_data=0x0 --- actually:%s", t.convert2string()))
+            end
+          end
+          wait_nxt_snp_xfr(t);
+          if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_OKAY) && (t.sdrsp_data == m_cache.get_data(sureq_addr_req_bf))))
+            `SB_ERROR("SUREQ", $sformatf("expected [SDRSP_XFR]  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x%0h --- actually:%s", m_cache.get_data(sureq_addr_req_bf), t.convert2string))
+          else
+            m_cache.set_state(sureq_addr_req_bf, INVALID);
+        end
+        else
+          `uvm_fatal(m_msg_name, $sformatf("can not identify current state of accessed block ST=%s", sureq_st_prev.name()))
+      end
+      else if(sureq_op_req_bf == SUREQ_INV) begin
+      end
+      else
+        `uvm_fatal(m_msg_name, $sformatf("cannot identify SUREQ opcode ST=%s", sureq_op_req_bf.name()))
+
+      // print request report
+      `uvm_info(m_msg_name, $sformatf("--------------------------------------------------"), UVM_LOW)
+      `uvm_info(m_msg_name, $sformatf("OP=%s  ADDR=0x%0h", sureq_op_req_bf, sureq_addr_req_bf), UVM_LOW)
+      @`M_VIF;
+      comp_model_vs_rtl("SUREQ", sureq_addr_req_bf);
+      if(sureq_error_count == 0) begin
+        `uvm_info("PASS_SUREQ", $sformatf("request from SUREQ passed"), UVM_LOW)
+        if(sureq_st_prev == m_cache.get_state(sureq_addr_req_bf))
+          `uvm_info(m_msg_name, $sformatf("ST[NO_CHANGE]: %s", sureq_st_prev), UVM_LOW)
+        else
+          `uvm_info(m_msg_name, $sformatf("ST: %s <-- %s", m_cache.get_state(sureq_addr_req_bf), sureq_st_prev), UVM_LOW)
+        if(sureq_tag_prev == m_cache.get_tag(sureq_addr_req_bf))
+          `uvm_info(m_msg_name, $sformatf("TAG[NO_CHANGE]: 0x%0h", sureq_tag_prev), UVM_LOW)
+        else
+          `uvm_info(m_msg_name, $sformatf("TAG: 0x%0h <-- 0x%0h", m_cache.get_tag(sureq_addr_req_bf), sureq_tag_prev), UVM_LOW)
+        if(sureq_data_prev == m_cache.get_data(sureq_addr_req_bf))
+          `uvm_info(m_msg_name, $sformatf("DATA[NO_CHANGE]: 0x%0h", sureq_data_prev), UVM_LOW)
+        else
+          `uvm_info(m_msg_name, $sformatf("DATA: 0x%0h <-- 0x%0h", m_cache.get_data(sureq_addr_req_bf), sureq_data_prev), UVM_LOW)
+      end
+      else begin
+        `uvm_info("SUREQ_FAIL", $sformatf("request from SUREQ failed"), UVM_LOW)
+      end
+      `uvm_info(m_msg_name, $sformatf("--------------------------------------------------"), UVM_LOW)
+
+      // clean scenario
+      sureq_ot          = 0;
+      sureq_error_count = 0;
+      sureq_op_req_bf   = SUREQ_RD;
+      sureq_addr_req_bf = '0;
+      sureq_st_prev     = INVALID;
+      sureq_tag_prev    = '0;
+      sureq_data_prev   = '0;
+    end
+    else begin
+      `uvm_fatal("SB_FAIL", "receives other sub-transfers before request transfer is opened")
     end
   end
 endtask: check_sureq

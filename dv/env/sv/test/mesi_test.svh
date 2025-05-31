@@ -24,8 +24,8 @@ task `THIS_CLASS::run_seq();
     begin
       send_l1_rd(addr, SURSP_FETCH);
       send_l1_rd(addr);
-      //send_snp_rfo(addr);
-      //send_l1_rd(addr, SURSP_FETCH);
+      send_snp_rfo(addr);
+      send_l1_rd(addr, SURSP_FETCH);
       //send_l1_rfo(addr);
       //send_l1_wb(addr);
       //send_l1_rd(addr);

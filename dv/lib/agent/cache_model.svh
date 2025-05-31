@@ -18,9 +18,12 @@ class `THIS_CLASS extends uvm_component;
   extern  virtual function  void    build_phase(uvm_phase phase);
 
   extern  virtual function  void    init_cache();
+  extern  virtual function  bit     is_blk_valid_in_l1(address_t addr);
+
   extern  virtual function  st_e    get_state (address_t addr);
   extern  virtual function  tag_t   get_tag   (address_t addr);
   extern  virtual function  data_t  get_data  (address_t addr);
+
   extern  virtual function  void    set_state (address_t addr, st_e state);
   extern  virtual function  void    set_tag   (address_t addr);
   extern  virtual function  void    set_data  (address_t addr, data_t data);
@@ -34,6 +37,11 @@ endclass: `THIS_CLASS
 function void `THIS_CLASS::build_phase(uvm_phase phase);
   super.build_phase(phase);
 endfunction: build_phase
+
+// ------------------------------------------------------------------
+function bit `THIS_CLASS::is_blk_valid_in_l1(address_t addr);
+  return 1;
+endfunction: is_blk_valid_in_l1
 
 // ------------------------------------------------------------------
 function void `THIS_CLASS::init_cache();

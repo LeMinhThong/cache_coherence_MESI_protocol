@@ -18,4 +18,12 @@
 `define RAM_TAG (`VIP_TAG_WIDTH + `VIP_BLK_WIDTH)-1:`VIP_BLK_WIDTH
 `define ST      `VIP_RAM_WIDTH-1:(`VIP_TAG_WIDTH + `VIP_BLK_WIDTH)
 
+`define SB_ERROR(type_req, message) \
+  begin \
+    `uvm_error($sformatf("%s_ERROR", type_req), message) \
+    if(type_req == "CDREQ")       cdreq_error_count++; \
+    else if(type_req == "SUREQ")  sureq_error_count++; \
+    else if(type_req == "ALL")    ; \
+    else                          `uvm_fatal(m_msg_name, $sformatf("can not identify request type:%s", type_req)) \
+  end
 `endif

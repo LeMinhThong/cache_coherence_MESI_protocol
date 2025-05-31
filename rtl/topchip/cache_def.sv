@@ -18,12 +18,12 @@
 // ------------------------------------------------------------------
 // print log
 // ------------------------------------------------------------------
-`define rtl_print(addr, message) \
-  $display("%0t ns: [0x%0h] %s", $time, addr, message);
-
-`define rtl_print_if_dff(var_1, var_2, addr, message) \
-  begin \
-    if(var_1 != var_2) \
-      $display("%0tns: RTL_INTER [Set=0x%0h] %s: 0x%0h --> 0x%0h", $time, addr, message, var_1, var_2); \
-  end
+//`define rtl_print(addr, message) \
+//  $display("%0t ns: [0x%0h] %s", $time, addr, message);
+//
+//`define rtl_print_if_dff(var_1, var_2, addr, message) \
+//  begin \
+//    if(var_1 != var_2) \
+//      $display("%0tns: RTL_INTER [Set=0x%0h] %s: 0x%0h --> 0x%0h", $time, addr, message, var_1, var_2); \
+//  end
 `endif
