@@ -341,23 +341,26 @@ module cache_mem #(
   // ----------------------------------------------------------------
   logic sureq_init_cureq;
   logic sureq_init_wb;
-  logic sureq_init_wb_after_inv;
+  logic sureq_init_wb_after_cureq;
 
-  assign sureq_init_cureq         = (sureq_init_cureq_inv ||
-                                     (snp_hit && (sureq_blk_curSt == MIGRATED)));
+  assign sureq_init_cureq           =   ( sureq_init_cureq_inv ||
+                                          (snp_hit && (sureq_blk_curSt == MIGRATED))
+                                        );
   
-  assign sureq_init_wb            = (snp_hit &&
-                                     (sureq_blk_curSt == MODIFIED));
+  assign sureq_init_wb              =   ( snp_hit &&
+                                          (sureq_blk_curSt == MODIFIED)
+                                        );
 
-  assign sureq_init_wb_after_inv  = (sureq_init_cureq_inv &&
-                                     (sureq_blk_curSt == MODIFIED));
+  assign sureq_init_wb_after_cureq  =   ( (sureq_blk_curSt == MODIFIED) ||
+                                          (sureq_blk_curSt == MIGRATED)
+                                        );
 
   always_comb begin
     case(sureq_req_curSt)
       SUREQ_IDLE:       sureq_req_nxtSt = (sureq_hs_en      ) ? SUREQ_ALLOCATE    : SUREQ_IDLE;
       SUREQ_ALLOCATE:   sureq_req_nxtSt = (sureq_init_cureq ) ? SUREQ_INIT_CUREQ  : (sureq_init_wb) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP;
       SUREQ_INIT_CUREQ: sureq_req_nxtSt = (cureq_hs_compack ) ? SUREQ_WAIT_CDRSP  : SUREQ_INIT_CUREQ;
-      SUREQ_WAIT_CDRSP: sureq_req_nxtSt = (cdrsp_hs_en      ) ? ((sureq_init_wb_after_inv) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP) : SUREQ_WAIT_CDRSP;
+      SUREQ_WAIT_CDRSP: sureq_req_nxtSt = (cdrsp_hs_en      ) ? ((sureq_init_wb_after_cureq) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP) : SUREQ_WAIT_CDRSP;
       SUREQ_INIT_SDREQ: sureq_req_nxtSt = (sdreq_hs_compack ) ? SUREQ_WAIT_SURSP  : SUREQ_INIT_SDREQ;
       SUREQ_WAIT_SURSP: sureq_req_nxtSt = (sursp_hs_en      ) ? SUREQ_SEND_RSP    : SUREQ_WAIT_SURSP;
       SUREQ_SEND_RSP:   sureq_req_nxtSt = (sdrsp_hs_compack ) ? SUREQ_IDLE        : SUREQ_SEND_RSP;
@@ -389,9 +392,9 @@ module cache_mem #(
   //-----------------------------------------------------------------
   // imp_blk: sureq init sdreq
   //-----------------------------------------------------------------
-  assign sureq_2_sdreq =  ((sureq_blk_curSt == MODIFIED) ||
-                           (sureq_blk_curSt == MIGRATED))
-                          ? SDREQ_WB : SDREQ_RD;
+  assign sureq_2_sdreq =  ( (sureq_blk_curSt == MODIFIED) ||
+                            (sureq_blk_curSt == MIGRATED)
+                          ) ? SDREQ_WB : SDREQ_RD;
 
   // ----------------------------------------------------------------
   // imp_blk: channel payload control
@@ -425,9 +428,9 @@ module cache_mem #(
   assign sdrsp_rsp  = (sureq_blk_curSt == INVALID)
                       ? SDRSP_INV : SDRSP_OKAY;
 
-  assign sdrsp_data = (snp_hit &&
-                       ((sureq_op_bf == SUREQ_RD) || (sureq_op_bf == SUREQ_RFO)))
-                      ? mem[sureq_addr_bf[`IDX]][`DAT] : {BLK_WIDTH{1'b0}};
+  assign sdrsp_data = ( snp_hit &&
+                        ((sureq_op_bf == SUREQ_RD) || (sureq_op_bf == SUREQ_RFO))
+                      ) ? mem[sureq_addr_bf[`IDX]][`DAT] : {BLK_WIDTH{1'b0}};
 
   //-----------------------------------------------------------------
   // imp_blk: CDREQ affects on cache state transition
@@ -517,13 +520,16 @@ module cache_mem #(
 
   assign asg_data_from_cdreq =  (cdreq_op_bf == CDREQ_WB);
 
-  assign asg_data_from_sursp =  (((cdreq_op_bf == CDREQ_RFO) || (cdreq_op_bf == CDREQ_RD)) &&
-                                 !cdreq_init_sdreq_inv &&
-                                 //(cdreq_req_curSt == CDREQ_SEND_RSP) &&
-                                 sursp_hs_en);
+  assign asg_data_from_sursp =  ( ((cdreq_op_bf == CDREQ_RFO) || (cdreq_op_bf == CDREQ_RD)) &&
+                                  !cdreq_init_sdreq_inv &&
+                                  !sureq_init_wb &&
+                                  !sureq_init_wb_after_cureq &&
+                                  sursp_hs_en
+                                );
 
-  assign asg_data_from_cdrsp =  ((sureq_blk_curSt == MIGRATED) &&
-                                 (cdrsp_hs_en));
+  assign asg_data_from_cdrsp =  ( (sureq_blk_curSt == MIGRATED) &&
+                                  (cdrsp_hs_en)
+                                );
 
   always_ff @(posedge clk or negedge rst_n) begin
     if(!rst_n) begin
