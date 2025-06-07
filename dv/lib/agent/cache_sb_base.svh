@@ -61,7 +61,10 @@ endfunction: build_phase
 // ------------------------------------------------------------------
 function void `THIS_CLASS::check_phase(uvm_phase phase);
   super.check_phase(phase);
+
+`ifdef HAS_SB
   comp_model_vs_rtl("ALL");
+`endif
 endfunction: check_phase
 
 // ------------------------------------------------------------------
@@ -124,6 +127,7 @@ endfunction: comp_model_vs_rtl
 
 // ------------------------------------------------------------------
 function void `THIS_CLASS::write(cache_txn_c t);
+`ifdef HAS_SB
   cache_txn_c t_loc = new t;
 
   if(t_loc.Type_xfr inside {CDREQ_XFR, CURSP_XFR}) begin
@@ -155,6 +159,7 @@ function void `THIS_CLASS::write(cache_txn_c t);
   end
   else
     `uvm_fatal("SB_FAIL", "can not define transfer type")
+`endif
 endfunction: write
 
 `undef THIS_CLASS

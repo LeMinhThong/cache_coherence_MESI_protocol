@@ -1,7 +1,8 @@
 TB_NAME 	?= cache_mem_tb_top
 TEST_NAME ?= cache_base_test_c
 SEED 			?= random
-CMD_OPT 	?=
+USR_CMD 	?=
+USR_DEF		?=
 
 #--------------------------------------------------------------------
 DV_INCDIR 	:=
@@ -76,11 +77,11 @@ vlog:
 	vlib work
 	vlib work.uvm_pkg
 	vlog -sv $(UVM_DIR) -work work.uvm_pkg $(UVM_PKG) $(VLOG_DEF)
-	vlog -sv -lint $(RTL_INCDIR) $(DV_INCDIR) $(RTL_SRC) $(DV_SRC) $(TB_SRC) $(VLOG_DEF) -l run_dir/$(TEST_NAME).log
+	vlog -sv -lint $(RTL_INCDIR) $(DV_INCDIR) $(RTL_SRC) $(DV_SRC) $(TB_SRC) $(VLOG_DEF) $(USR_DEF) -l run_dir/$(TEST_NAME).log
 
 #--------------------------------------------------------------------
 vsim:
-	vsim work.$(TB_NAME) +UVM_VERBOSITY=MEDIUM +UVM_TESTNAME=$(TEST_NAME) -nodpiexports -novopt -sv_seed $(SEED) $(CMD_OPT) -wlf wave_dir/$(TEST_NAME).wlf -do "$(VSIM_RUN)" | tee -a run_dir/$(TEST_NAME).log
+	vsim work.$(TB_NAME) +UVM_VERBOSITY=MEDIUM +UVM_TESTNAME=$(TEST_NAME) -nodpiexports -novopt -sv_seed $(SEED) $(USER_CMD) -wlf wave_dir/$(TEST_NAME).wlf -do "$(VSIM_RUN)" | tee -a run_dir/$(TEST_NAME).log
 	sed 's/^#//' run_dir/$(TEST_NAME).log > tmp.log && mv tmp.log run_dir/$(TEST_NAME).log
 	sed -i '/  log -r \/\\*/d' run_dir/$(TEST_NAME).log
 	rm -rf rtl_tracker/$(TEST_NAME).log
