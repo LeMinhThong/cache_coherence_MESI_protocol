@@ -42,7 +42,7 @@ task `THIS_CLASS::run_phase(uvm_phase phase);
           begin
             check_sureq();
           end
-`endif
+`endif // HAS_SB
         join_any
         `uvm_info(m_msg_name, "RST_DEBUG: out-of-fork", UVM_INFO)
         disable fork;

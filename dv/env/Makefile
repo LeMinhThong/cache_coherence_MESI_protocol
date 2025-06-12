@@ -3,6 +3,7 @@ TEST_NAME ?= cache_base_test_c
 SEED 			?= random
 USR_CMD 	?=
 USR_DEF		?=
+RTL_ORG		?= ASSOC
 
 #--------------------------------------------------------------------
 DV_INCDIR 	:=
@@ -22,11 +23,6 @@ TEST_DIR 	:= ./sv
 TB_DIR 		:= ./tb
 
 #--------------------------------------------------------------------
-RTL_INCDIR += +incdir+$(RTL_DIR)
-RTL_INCDIR += +incdir+$(RTL_DIR)/topchip
-RTL_INCDIR += +incdir+$(RTL_DIR)/subsystem
-
-#--------------------------------------------------------------------
 DV_INCDIR += +incdir+$(VIP_DIR)
 DV_INCDIR += +incdir+$(VIP_DIR)/agent
 DV_INCDIR += +incdir+$(VIP_DIR)/interface
@@ -37,16 +33,30 @@ DV_INCDIR += +incdir+$(TEST_DIR)/seq
 DV_INCDIR += +incdir+$(TB_DIR)
 
 #--------------------------------------------------------------------
-RTL_SRC += $(RTL_DIR)/topchip/cache_def.sv
-RTL_SRC += $(RTL_DIR)/topchip/cache_pkg.sv
-RTL_SRC += $(RTL_DIR)/topchip/cache_mem.sv
-#RTL_SRC += $(RTL_DIR)/subsystem/fsm_l1_req_ctrl.sv
-#RTL_SRC += $(RTL_DIR)/subsystem/fsm_snp_req_ctrl.sv
-
-#--------------------------------------------------------------------
 DV_SRC += $(VIP_DIR)/cache_vip_pkg.sv
 DV_SRC += $(VIP_DIR)/if/cache_if.sv
 DV_SRC += $(TEST_DIR)/cache_test_pkg.sv
+
+#--------------------------------------------------------------------
+RTL_INCDIR += +incdir+$(RTL_DIR)
+RTL_INCDIR += +incdir+$(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)
+
+RTL_SRC += $(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)/cache_def.sv
+RTL_SRC += $(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)/cache_pkg.sv
+RTL_SRC += $(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)/cache_mem.sv
+
+
+#ifeq($(RTL_ORG), DM)
+#	RTL_INCDIR += +incdir+$(RTL_DIR)/direct_mapped
+#	RTL_SRC += $(RTL_DIR)/direct_mapped/cache_def.sv
+#	RTL_SRC += $(RTL_DIR)/direct_mapped/cache_pkg.sv
+#	RTL_SRC += $(RTL_DIR)/direct_mapped/cache_mem.sv
+#else
+#	RTL_INCDIR += +incdir+$(RTL_DIR)/set_associative
+#	RTL_SRC += $(RTL_DIR)/set_associative/cache_def.sv
+#	RTL_SRC += $(RTL_DIR)/set_associative/cache_pkg.sv
+#	RTL_SRC += $(RTL_DIR)/set_associative/cache_mem.sv
+#endif
 
 #--------------------------------------------------------------------
 TB_SRC := $(TB_DIR)/cache_mem_tb_top.sv

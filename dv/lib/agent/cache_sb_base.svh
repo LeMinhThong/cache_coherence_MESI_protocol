@@ -159,7 +159,7 @@ function void `THIS_CLASS::write(cache_txn_c t);
   end
   else
     `uvm_fatal("SB_FAIL", "can not define transfer type")
-`endif
+`endif // HAS_SB
 endfunction: write
 
 `undef THIS_CLASS

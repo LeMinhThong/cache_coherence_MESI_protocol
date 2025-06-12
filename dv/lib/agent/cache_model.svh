@@ -11,7 +11,7 @@ typedef struct packed {
 class `THIS_CLASS extends uvm_component;
   `uvm_component_utils(`THIS_CLASS)
 
-  block_s m_cache[`VIP_NUM_BLK];
+  block_s m_cache[(`VIP_NUM_BLK/`VIP_NUM_WAY)][`VIP_NUM_WAY];
   
   string  m_msg_name = "CACHE";
 
@@ -47,17 +47,23 @@ endfunction: is_blk_valid_in_l1
 function void `THIS_CLASS::init_cache();
   `uvm_info(m_msg_name, "init cache occurred", UVM_LOW)
   foreach(m_cache[i]) begin
-    m_cache[i] = '{default: 0};
+    foreach(m_cache[i][ii]) begin
+      m_cache[i][ii] = '{default: 0};
+    end
   end
 endfunction: init_cache
 
 // ------------------------------------------------------------------
 function st_e `THIS_CLASS::get_state(address_t addr);
-  return m_cache[addr[`IDX]].state;
+  foreach(m_cache[addr[`IDX]][i]) begin
+    if(m_cache[addr[`IDX]][i].tag == addr[`ADDR_TAG])
+      return m_cache[addr[`IDX]][i].state;
+  end
+  return INVALID;
 endfunction: get_state
 
 function tag_t `THIS_CLASS::get_tag(address_t addr);
-  return m_cache[addr[`IDX]].tag;
+  //return m_cache[addr[`IDX]].tag;
 endfunction: get_tag
 
 function data_t `THIS_CLASS::get_data(address_t addr);

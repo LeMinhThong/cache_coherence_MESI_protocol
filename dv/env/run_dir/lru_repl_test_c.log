@@ -1,0 +1,32 @@
+QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
+Start time: 23:01:02 on Jun 09,2025
+vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/set_associative" "+incdir+../lib" "+incdir+../lib/agent" "+incdir+../lib/interface" "+incdir+./sv/test" "+incdir+./sv/seq" "+incdir+./tb" ../../rtl/set_associative/cache_def.sv ../../rtl/set_associative/cache_pkg.sv ../../rtl/set_associative/cache_mem.sv ../lib/cache_vip_pkg.sv ../lib/if/cache_if.sv ./sv/cache_test_pkg.sv ./tb/cache_mem_tb_top.sv -l run_dir/lru_repl_test_c.log 
+-- Compiling package cache_pkg
+-- Compiling package cache_mem_sv_unit
+-- Importing package cache_pkg
+-- Compiling module cache_mem
+-- Compiling package cache_vip_pkg
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+** Note: (vlog-2286) ../lib/cache_vip_pkg.sv(6): Using implicit +incdir+E:/questaSim/main/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
+** Warning: ** while parsing file included at ../lib/cache_vip_pkg.sv(17)
+** at ../lib/agent/cache_model.svh(50): (vlog-2897) Using non-standard foreach loop variable list syntax.
+** Warning: ** while parsing file included at ../lib/cache_vip_pkg.sv(17)
+** at ../lib/agent/cache_model.svh(58): (vlog-2897) Using non-standard foreach loop variable list syntax.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(66): Field/method name (tag) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(70): Field/method name (data) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(75): Field/method name (state) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(79): Field/method name (tag) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(83): Field/method name (data) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(102): Field/method name (state) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(103): Field/method name (state) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(106): Field/method name (tag) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(107): Field/method name (tag) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(110): Field/method name (data) not in 'm_cache'.
+** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(111): Field/method name (data) not in 'm_cache'.
+-- Compiling interface cache_if
+-- Compiling package cache_test_pkg
+-- Importing package cache_vip_pkg
+-- Compiling module cache_mem_tb_top
+-- Importing package cache_test_pkg
+End time: 23:01:03 on Jun 09,2025, Elapsed time: 0:00:01
+Errors: 11, Warnings: 2

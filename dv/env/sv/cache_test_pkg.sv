@@ -16,6 +16,7 @@ package cache_test_pkg;
   `include "cache_base_test.sv"
   `include "rd_wr_test.svh"
   `include "mesi_test.svh"
+  `include "lru_repl_test.svh"
 endpackage
 
 `endif
