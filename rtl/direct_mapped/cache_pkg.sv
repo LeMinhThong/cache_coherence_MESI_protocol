@@ -3,7 +3,14 @@
 
 package cache_pkg;
   // ----------------------------------------------------------------
-  // MESI cache states
+  // cache RAM structure
+  // ----------------------------------------------------------------
+  // 2:SHARED | 1:EXCLUSIVE/MODIFIED | 0: VALID
+  parameter ST_WIDTH  = 3;
+  parameter NUM_WAY   = 4;
+
+  // ----------------------------------------------------------------
+  // cache states
   // ----------------------------------------------------------------
   // 2:SHARED | 1:EXCLUSIVE/MODIFIED | 0: VALID
   parameter INVALID   = 3'b000;
@@ -98,6 +105,14 @@ package cache_pkg;
   parameter SDRSP_OKAY  = 2'b00;
   parameter SDRSP_INV   = 2'b01;
   parameter SDRSP_ERROR = 2'b10;
+
+  // ----------------------------------------------------------------
+  // handshake state 
+  // ----------------------------------------------------------------
+  parameter HS_IDLE      = 2'b00;
+  parameter HS_ASSERT    = 2'b01;
+  parameter HS_DEASSERT  = 2'b10;
+
 endpackage: cache_pkg
 
 `endif

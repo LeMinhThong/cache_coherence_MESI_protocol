@@ -59,27 +59,23 @@ module cache_mem #(
 );
 
   // ----------------------------------------------------------------
-  // def_blk: cache memory structure
+  // def_blk: cache RAM structure
   // ----------------------------------------------------------------
   // |          --  Cache RAM width --
   // |State   |Tag                |Data          |
   // |3bits   |TAG_WIDTH          |BLK_WIDTH    0|
   // ----------------------------------------------------------------
-
-  localparam ST_WIDTH   = 3;
   localparam IDX_WIDTH  = $clog2(NUM_BLK);
+  //localparam IDX_WIDTH  = $clog2(NUM_BLK) - $clog2(NUM_WAY);
   localparam TAG_WIDTH  = SADDR_WIDTH - IDX_WIDTH;
   localparam RAM_WIDTH  = ST_WIDTH + TAG_WIDTH + BLK_WIDTH;
 
   logic [RAM_WIDTH-1:0] mem [0:NUM_BLK-1];
+  //logic [RAM_WIDTH-1:0] mem [0:(NUM_BLK/NUM_WAY)-1][0:NUM_WAY-1];
 
   // ----------------------------------------------------------------
   // def_blk: handshake control
   // ----------------------------------------------------------------
-  localparam HS_IDLE      = 2'b00;
-  localparam HS_ASSERT    = 2'b01;
-  localparam HS_DEASSERT  = 2'b10;
-
   logic                   cdreq_hs_en;
   logic                   cdrsp_hs_en;
   logic                   sureq_hs_en;
@@ -113,16 +109,18 @@ module cache_mem #(
   logic [ST_WIDTH-1:0]    cdreq_blk_curSt, cdreq_blk_nxtSt;
   logic [ST_WIDTH-1:0]    sureq_blk_curSt, sureq_blk_nxtSt;
 
+  logic [IDX_WIDTH-1:0]   cdreq_idx;
+  logic [IDX_WIDTH-1:0]   sureq_idx;
+
   logic                   cac_wr;
   logic                   cac_rd;
   logic                   cac_hit;
-
   logic                   wr_hit;
   logic                   rd_hit;
   logic                   wr_miss;
   logic                   rd_miss;
-
   logic [3:0]             cache_lookup;
+
   logic                   snp_hit;
 
   // ----------------------------------------------------------------
@@ -270,33 +268,36 @@ module cache_mem #(
   // ----------------------------------------------------------------
   // imp_blk: cache lookup
   // ----------------------------------------------------------------
-  assign cdreq_blk_curSt  = mem[cdreq_addr_bf[`IDX]][`ST];
-  assign sureq_blk_curSt  = mem[sureq_addr_bf[`IDX]][`ST];
+  assign cdreq_idx        = cdreq_addr_bf[`IDX];
+  assign sureq_idx        = sureq_addr_bf[`IDX];
 
-  assign cac_wr   = ( cdreq_ot &&
-                      ((cdreq_op_bf == CDREQ_MD) || (cdreq_op_bf == CDREQ_WB) || (cdreq_op_bf == CDREQ_RFO))
-                    );
+  assign cdreq_blk_curSt  = mem[cdreq_idx][`ST];
+  assign sureq_blk_curSt  = mem[sureq_idx][`ST];
 
-  assign cac_rd   = ( cdreq_ot &&
-                      (cdreq_op_bf == CDREQ_RD)
-                    );
+  assign cac_wr           = ( cdreq_ot &&
+                              ((cdreq_op_bf == CDREQ_MD) || (cdreq_op_bf == CDREQ_WB) || (cdreq_op_bf == CDREQ_RFO))
+                            );
 
-  assign cac_hit  = ( cdreq_ot &&
-                      mem[cdreq_addr_bf[`IDX]][`VALID] &&
-                      (cdreq_addr_bf[`ADDR_TAG] == mem[cdreq_addr_bf[`IDX]][`RAM_TAG])
-                    );
+  assign cac_rd           = ( cdreq_ot &&
+                              (cdreq_op_bf == CDREQ_RD)
+                            );
 
-  assign snp_hit  = ( sureq_ot &&
-                      mem[sureq_addr_bf[`IDX]][`VALID] &&
-                      (sureq_addr_bf[`ADDR_TAG] == mem[sureq_addr_bf[`IDX]][`RAM_TAG])
-                    );
+  assign cac_hit          = ( cdreq_ot &&
+                              mem[cdreq_idx][`VALID] &&
+                              (cdreq_addr_bf[`ADDR_TAG] == mem[cdreq_idx][`RAM_TAG])
+                            );
 
-  assign wr_hit   = cac_wr && cac_hit;
-  assign rd_hit   = cac_rd && cac_hit;
-  assign wr_miss  = cac_wr && !cac_hit;
-  assign rd_miss  = cac_rd && !cac_hit;
+  assign snp_hit          = ( sureq_ot &&
+                              mem[sureq_idx][`VALID] &&
+                              (sureq_addr_bf[`ADDR_TAG] == mem[sureq_idx][`RAM_TAG])
+                            );
 
-  assign cache_lookup = {wr_miss, rd_miss, wr_hit, rd_hit};
+  assign wr_hit           = cac_wr && cac_hit;
+  assign rd_hit           = cac_rd && cac_hit;
+  assign wr_miss          = cac_wr && !cac_hit;
+  assign rd_miss          = cac_rd && !cac_hit;
+
+  assign cache_lookup     = {wr_miss, rd_miss, wr_hit, rd_hit};
 
   // ----------------------------------------------------------------
   // imp_blk: common CDERQ SUREQ state controller
@@ -308,7 +309,8 @@ module cache_mem #(
                                   (cdreq_blk_curSt == SHARED)
                                 );
 
-  assign sureq_init_cureq_inv = ( (((sureq_op_bf == SUREQ_RFO) || (sureq_op_bf == SUREQ_INV)) && (sureq_blk_curSt != MIGRATED)) &&
+  assign sureq_init_cureq_inv = ( ((sureq_op_bf == SUREQ_RFO) || (sureq_op_bf == SUREQ_INV)) &&
+                                  (sureq_blk_curSt != MIGRATED) &&
                                   snp_hit &&
                                   blk_valid_in_l1
                                 );
@@ -413,7 +415,7 @@ module cache_mem #(
 
   assign cursp_data = ( (cdreq_op_bf == CDREQ_RD) ||
                         (cdreq_op_bf == CDREQ_RFO)
-                      ) ? mem[cdreq_addr_bf[`IDX]][`DAT] : {BLK_WIDTH{1'b0}};
+                      ) ? mem[cdreq_idx][`DAT] : {BLK_WIDTH{1'b0}};
 
   // SDREQ channel control
   assign sdreq_op   = (cdreq_req_curSt == CDREQ_INIT_SDREQ) ? cdreq_2_sdreq :
@@ -422,14 +424,14 @@ module cache_mem #(
   assign sdreq_addr = (cdreq_req_curSt == CDREQ_INIT_SDREQ) ? cdreq_addr_bf :
                       (sureq_req_curSt == SUREQ_INIT_SDREQ) ? sureq_addr_bf : {SADDR_WIDTH{1'b0}};
 
-  assign sdreq_data = (sdreq_op == SDREQ_WB) ? mem[sureq_addr_bf[`IDX]][`DAT] : {BLK_WIDTH{1'b0}};
+  assign sdreq_data = (sdreq_op == SDREQ_WB) ? mem[sureq_idx][`DAT] : {BLK_WIDTH{1'b0}};
 
   // SDRSP channel control
   assign sdrsp_rsp  = (sureq_blk_curSt == INVALID) ? SDRSP_INV : SDRSP_OKAY;
 
   assign sdrsp_data = ( snp_hit &&
                         ((sureq_op_bf == SUREQ_RD) || (sureq_op_bf == SUREQ_RFO))
-                      ) ? mem[sureq_addr_bf[`IDX]][`DAT] : {BLK_WIDTH{1'b0}};
+                      ) ? mem[sureq_idx][`DAT] : {BLK_WIDTH{1'b0}};
 
   //-----------------------------------------------------------------
   // imp_blk: CDREQ affects on cache state transition
@@ -482,10 +484,10 @@ module cache_mem #(
     end
     else begin
       if(cdreq_req_curSt == CDREQ_SEND_RSP) begin
-        mem[cdreq_addr_bf[`IDX]][`ST] <= cdreq_blk_nxtSt;
+        mem[cdreq_idx][`ST] <= cdreq_blk_nxtSt;
       end
       else if(sdrsp_hs_compack) begin // avoid assign blk <-- INVALID while RFO (sdrsp_data <-- 0x0)
-        mem[sureq_addr_bf[`IDX]][`ST] <= sureq_blk_nxtSt;
+        mem[sureq_idx][`ST] <= sureq_blk_nxtSt;
       end
     end
   end
@@ -505,7 +507,7 @@ module cache_mem #(
       end
     end else begin
       if(asg_tag_trigger) begin
-        mem[cdreq_addr_bf[`IDX]][`RAM_TAG] <= cdreq_addr_bf[`ADDR_TAG];
+        mem[cdreq_idx][`RAM_TAG] <= cdreq_addr_bf[`ADDR_TAG];
       end
     end
   end
@@ -527,7 +529,7 @@ module cache_mem #(
                                 );
 
   assign asg_data_from_cdrsp =  ( (sureq_blk_curSt == MIGRATED) &&
-                                  (cdrsp_hs_en)
+                                  cdrsp_hs_en
                                 );
 
   always_ff @(posedge clk or negedge rst_n) begin
@@ -536,9 +538,9 @@ module cache_mem #(
         mem[i][`DAT] <= {BLK_WIDTH{1'b0}};
       end
     end else begin
-      if      (asg_data_from_cdreq)   mem[cdreq_addr_bf[`IDX]][`DAT] <= cdreq_data_bf;
-      else if (asg_data_from_sursp)   mem[cdreq_addr_bf[`IDX]][`DAT] <= sursp_data;
-      else if (asg_data_from_cdrsp)   mem[cdreq_addr_bf[`IDX]][`DAT] <= cdrsp_data;
+      if      (asg_data_from_cdreq)   mem[cdreq_idx][`DAT] <= cdreq_data_bf;
+      else if (asg_data_from_sursp)   mem[cdreq_idx][`DAT] <= sursp_data;
+      else if (asg_data_from_cdrsp)   mem[cdreq_idx][`DAT] <= cdrsp_data;
     end
   end
 endmodule // cache_mem
