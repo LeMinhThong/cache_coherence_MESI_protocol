@@ -1,11 +1,11 @@
 `ifndef CACHE_TYPE_SVH
 `define CACHE_TYPE_SVH
 
-typedef reg [`VIP_SADDR_WIDTH-1:0]  address_t;
-typedef reg [`VIP_BLK_WIDTH-1:0]    data_t;
-typedef reg [`VIP_TAG_WIDTH-1:0]    tag_t;
-typedef reg [`VIP_IDX_WIDTH-1:0]    idx_t;
-typedef reg [`VIP_WAY_WIDTH-1:0]    way_t;
+typedef reg [`VIP_SADDR_WIDTH-1:0] address_t;
+
+typedef reg [`VIP_BLK_WIDTH-1:0] data_t;
+
+typedef reg [`VIP_TAG_WIDTH-1:0] tag_t;
 
 typedef enum {
   L1_REQ  = 0,

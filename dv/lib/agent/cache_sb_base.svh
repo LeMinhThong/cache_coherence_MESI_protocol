@@ -11,37 +11,44 @@ class `THIS_CLASS extends uvm_scoreboard;
   virtual cache_if      m_vif;
           cache_model_c m_cache;
 
-  string                    m_msg_name  = "SB";
-  string                    sdreq_owner = "NONE";
-  string                    hdl_path;
+  string    m_msg_name  = "SB";
+  string    sdreq_owner = "NONE";
+  string    hdl_path;
 
-  bit                       cdreq_ot;
-  int                       cdreq_error_count;
-  cdreq_e                   cdreq_op_req_bf;
-  address_t                 cdreq_addr_req_bf;
-  data_t                    cdreq_data_req_bf;
-  st_e                      cdreq_st_prev;
-  tag_t                     cdreq_tag_prev;
-  data_t                    cdreq_data_prev;
+  bit       cdreq_ot;
+  int       cdreq_error_count;
+  cdreq_e   cdreq_op_req_bf;
+  address_t cdreq_addr_req_bf;
+  data_t    cdreq_data_req_bf;
+  idx_t     cdreq_idx_bf;
+  way_t     cdreq_way_bf;
+  st_e      cdreq_st_prev;
+  tag_t     cdreq_tag_prev;
+  data_t    cdreq_data_prev;
+  way_t     cdreq_evict_way_prev;
 
-  bit                       sureq_ot;
-  int                       sureq_error_count;
-  sureq_e                   sureq_op_req_bf;
-  address_t                 sureq_addr_req_bf;
-  st_e                      sureq_st_prev;
-  tag_t                     sureq_tag_prev;
-  data_t                    sureq_data_prev;
+  bit       sureq_ot;
+  int       sureq_error_count;
+  bit       sureq_hit;
+  sureq_e   sureq_op_req_bf;
+  address_t sureq_addr_req_bf;
+  idx_t     sureq_idx_bf;
+  way_t     sureq_way_bf;
+  st_e      sureq_st_prev;
+  tag_t     sureq_tag_prev;
+  data_t    sureq_data_prev;
+  way_t     sureq_evict_way_prev;
 
-  bit                       reset_check;
-  cache_txn_c               l1_xfr_q[$];
-  cache_txn_c               snp_xfr_q[$];
+  bit         reset_check;
+  cache_txn_c l1_xfr_q[$];
+  cache_txn_c snp_xfr_q[$];
 
   extern  virtual function  void  build_phase(uvm_phase phase);
   extern  virtual function  void  check_phase(uvm_phase phase);
 
   extern  virtual task            wait_nxt_l1_xfr(ref cache_txn_c t);
   extern  virtual task            wait_nxt_snp_xfr(ref cache_txn_c t);
-  extern  virtual function  void  comp_model_vs_rtl(string type_req="ALL", address_t addr=0);
+  extern  virtual function  void  comp_model_vs_rtl(string type_req="ALL", idx_t idx=0, way_t way=0);
   extern  virtual function  void  write(cache_txn_c t);
 
   function new(string name="`THIS_CLASS", uvm_component parent);
@@ -73,56 +80,71 @@ task `THIS_CLASS::wait_nxt_l1_xfr(ref cache_txn_c t);
     @`M_VIF;
   end
   t = l1_xfr_q.pop_front();
-  `uvm_info(m_msg_name, $sformatf("send xfr:%s", t.convert2string()), UVM_MEDIUM)
+  if(t.Type_xfr != CDREQ_XFR)
+    `uvm_info(m_msg_name, $sformatf("%s", t.convert2string()), UVM_MEDIUM)
 endtask: wait_nxt_l1_xfr
 
 // ------------------------------------------------------------------
 task `THIS_CLASS::wait_nxt_snp_xfr(ref cache_txn_c t);
+  string tag;
   while(snp_xfr_q.size() == 0) begin
     @`M_VIF;
   end
   t = snp_xfr_q.pop_front();
-  `uvm_info(m_msg_name, $sformatf("send xfr:%s", t.convert2string()), UVM_MEDIUM)
+  if(t.Type_xfr != SUREQ_XFR)
+    `uvm_info(m_msg_name, $sformatf("%s", t.convert2string()), UVM_MEDIUM)
 endtask: wait_nxt_snp_xfr
 
 // ------------------------------------------------------------------
-function void `THIS_CLASS::comp_model_vs_rtl(string type_req="ALL", address_t addr=0);
+function void `THIS_CLASS::comp_model_vs_rtl(string type_req="ALL", idx_t idx=0, way_t way=0);
   int                       error_count;
   bit [`VIP_RAM_WIDTH-1:0]  read_rtl_blk;
 
   if(!(type_req inside {"ALL", "CDREQ", "SUREQ"}))
     `uvm_fatal(m_msg_name, $sformatf("can not identify type of request:%s", type_req))
   else begin
-    for(int i = 0; i < `VIP_NUM_BLK; i++) begin
-      hdl_path = $sformatf("cache_mem_tb_top.dut.mem[%0d]", i);
-      if(!uvm_hdl_read(hdl_path, read_rtl_blk))
-        `uvm_fatal(m_msg_name, "uvm_hdl_read fail")
-      else begin
-        if((type_req == "ALL") || ((type_req inside {"CDREQ", "SUREQ"}) && (i == addr[`IDX]))) begin
-          if(st_e'(read_rtl_blk[`ST]) != m_cache.m_cache[i].state) begin
-            `SB_ERROR(type_req, $sformatf("[block=%0d] state mismatch rtl_mem=0x%0h  model_mem=0x%s", i, st_e'(read_rtl_blk[`ST]), m_cache.m_cache[i].state))
+    for(int i = 0; i < (`VIP_NUM_BLK/`VIP_NUM_WAY); i++) begin
+      // check mem
+      for(int ii = 0; ii < `VIP_NUM_WAY; ii++) begin
+        hdl_path = $sformatf("cache_mem_tb_top.dut.mem[%0d][%0d]", i, ii);
+        if(!uvm_hdl_read(hdl_path, read_rtl_blk))
+          `uvm_fatal(m_msg_name, $sformatf("read hdl path fail, hdl_path=%s", hdl_path))
+        if((type_req == "ALL") || ((type_req inside {"CDREQ", "SUREQ"}) && (i == idx) && (ii == way))) begin
+          if(st_e'(read_rtl_blk[`ST]) != m_cache.mem[i][ii].state) begin
+            `SB_ERROR(type_req, $sformatf("state mismatch: IDX=%0d  WAY=%0d  RTL=0x%0s  MODEL=0x%s", i, ii, st_e'(read_rtl_blk[`ST]), m_cache.mem[i][ii].state))
             error_count++;
           end
-          if(read_rtl_blk[`RAM_TAG] != m_cache.m_cache[i].tag) begin
-            `SB_ERROR(type_req, $sformatf("[block=%0d] tag mismatch rtl_mem=0x%0h  model_mem=0x%0h", i, read_rtl_blk[`RAM_TAG], m_cache.m_cache[i].tag))
+          if(read_rtl_blk[`RAM_TAG] != m_cache.mem[i][ii].tag) begin
+            `SB_ERROR(type_req, $sformatf("tag mismatch: IDX=%0d  WAY=%0d  RTL=0x%0h  MODEL=0x%0h", i, ii, read_rtl_blk[`RAM_TAG], m_cache.mem[i][ii].tag))
             error_count++;
           end
-          if(read_rtl_blk[`DAT] != m_cache.m_cache[i].data) begin
-            `SB_ERROR(type_req, $sformatf("[block=%0d] data mismatch rtl_mem=0x%0h  model_mem=0x%0h", i, read_rtl_blk[`DAT], m_cache.m_cache[i].data))
+          if(read_rtl_blk[`DAT] != m_cache.mem[i][ii].data) begin
+            `SB_ERROR(type_req, $sformatf("data mismatch: IDX=%0d  WAY=%0d  RTL=0x%0h  MODEL=0x%0h", i, ii, read_rtl_blk[`DAT], m_cache.mem[i][ii].data))
             error_count++;
           end
         end
       end
+      // check replacement
+      hdl_path = $sformatf("cache_mem_tb_top.dut.plru_tree[%0d]", i);
+      if(!uvm_hdl_read(hdl_path, read_rtl_blk))
+        `uvm_fatal(m_msg_name, $sformatf("read hdl path fail, hdl_path=%s", hdl_path))
+      if((type_req == "ALL") || ((type_req inside {"CDREQ", "SUREQ"}) && (i == idx))) begin
+        if(read_rtl_blk[2:0] != m_cache.plru_tree_bit[i]) begin
+          error_count++;
+          `SB_ERROR(type_req, $sformatf("replacement bit mismatch: IDX=%0d  RTL=0x%0h  MODEL=0x%0h", i, read_rtl_blk[2:0], m_cache.plru_tree_bit[i]))
+        end
+      end
     end
-    if(error_count == 0) begin
-      if(type_req inside {"CDREQ", "SUREQ"})
-        `uvm_info(m_msg_name, $sformatf("no mismatch between RTL and MODEL at: block[%0h]", addr[`IDX]), UVM_LOW)
-      else
-        `uvm_info(m_msg_name, $sformatf("no mismatch between RTL and MODEL at all blocks"), UVM_LOW)
-    end
-    else
-      `uvm_error(m_msg_name, $sformatf("has %0d mismatch between RTL and MODEL", error_count))
   end
+
+  if(error_count == 0) begin
+    if(type_req inside {"CDREQ", "SUREQ"})
+      `uvm_info(m_msg_name, $sformatf("no mismatch between RTL and MODEL at: IDX=%0d  WAY=%0d", idx, way), UVM_LOW)
+    else
+      `uvm_info(m_msg_name, $sformatf("no mismatch between RTL and MODEL at all blocks"), UVM_LOW)
+  end
+  else
+    `uvm_error(m_msg_name, $sformatf("there are %0d mismatch between RTL and MODEL", error_count))
 endfunction: comp_model_vs_rtl
 
 // ------------------------------------------------------------------

@@ -65,6 +65,7 @@ module cache_mem #(
   // |State   |Tag                |Data          |
   // |3bits   |TAG_WIDTH          |BLK_WIDTH    0|
   // ----------------------------------------------------------------
+  localparam WAY_WIDTH  = $clog2(NUM_WAY);
   localparam IDX_WIDTH  = $clog2(NUM_BLK/NUM_WAY);
   localparam TAG_WIDTH  = SADDR_WIDTH - IDX_WIDTH;
   localparam RAM_WIDTH  = ST_WIDTH + TAG_WIDTH + BLK_WIDTH;
@@ -120,16 +121,12 @@ module cache_mem #(
   logic [IDX_WIDTH-1:0]   cdreq_idx;
   logic [IDX_WIDTH-1:0]   sureq_idx;
 
-  logic [1:0]             cdreq_hit_way;
-  logic [1:0]             cdreq_inv_way;
-  logic [1:0]             cdreq_way;
-
-  logic [1:0]             sureq_way;
+  logic [WAY_WIDTH-1:0]   cdreq_way;
+  logic [WAY_WIDTH-1:0]   sureq_way;
 
   logic                   cac_wr;
   logic                   cac_rd;
   logic                   cac_hit;
-  logic                   fill_inv_blk;
   logic                   wr_hit;
   logic                   rd_hit;
   logic                   wr_miss;
@@ -288,71 +285,36 @@ module cache_mem #(
   assign cdreq_way_2_hit  = ((mem[cdreq_idx][2][`VALID]) && (mem[cdreq_idx][2][`RAM_TAG] == cdreq_addr_bf[`ADDR_TAG]));
   assign cdreq_way_3_hit  = ((mem[cdreq_idx][3][`VALID]) && (mem[cdreq_idx][3][`RAM_TAG] == cdreq_addr_bf[`ADDR_TAG]));
 
-  assign sureq_way_0_hit  = ((mem[sureq_idx][0][`VALID]) && (mem[sureq_idx][0][`RAM_TAG] == sureq_addr_bf[`ADDR_TAG]));
-  assign sureq_way_1_hit  = ((mem[sureq_idx][1][`VALID]) && (mem[sureq_idx][1][`RAM_TAG] == sureq_addr_bf[`ADDR_TAG]));
-  assign sureq_way_2_hit  = ((mem[sureq_idx][2][`VALID]) && (mem[sureq_idx][2][`RAM_TAG] == sureq_addr_bf[`ADDR_TAG]));
-  assign sureq_way_3_hit  = ((mem[sureq_idx][3][`VALID]) && (mem[sureq_idx][3][`RAM_TAG] == sureq_addr_bf[`ADDR_TAG]));
-
   // ----------------------------------------------------------------
   // imp_blk: replacement policy
   // ----------------------------------------------------------------
-  logic [2:0] plru_tree [0:(NUM_BLK/NUM_WAY)-1];
-  logic [2:0]           tree_bit;
-  logic [1:0]           evict_way;
-  logic                 promote_ack;
-  logic [IDX_WIDTH-1:0] promote_idx;
-  logic [1:0]           promote_way;
+  logic [WAY_WIDTH-1:0] lru_age [0:(NUM_BLK/NUM_WAY)-1][0:NUM_WAY-1];
+  logic [WAY_WIDTH-1:0] old_order;
+  logic [WAY_WIDTH-1:0] lru_way;
 
-  assign tree_bit         = plru_tree[cdreq_idx];
-  assign evict_way[1]     = tree_bit[2];
-  assign evict_way[0]     = tree_bit[2] ? tree_bit[0] : tree_bit[1];
+  assign lru_way    =  (lru_age[cdreq_idx][0] == 0) ? 2'b00 :
+                       (lru_age[cdreq_idx][1] == 0) ? 2'b01 :
+                       (lru_age[cdreq_idx][2] == 0) ? 2'b10 : 2'b11;
 
-  always_comb begin
-    if(cac_hit && cursp_hs_compack) begin
-      promote_ack = 1'b1;
-      promote_idx = cdreq_idx;
-      promote_way = cdreq_way;
-    end
-    else if(snp_hit && sdrsp_hs_compack && (sureq_op_bf == SUREQ_RD)) begin
-      promote_ack = 1'b1;
-      promote_idx = sureq_idx;
-      promote_way = sureq_way;
-    end
-    else begin
-      promote_ack = 1'b0;
-      promote_idx = {IDX_WIDTH{1'b0}};
-      promote_way = 2'b00;
-    end
-  end
+  assign old_order  = (!rst_n) ? {WAY_WIDTH{1'b0}} : lru_age[cdreq_idx][cdreq_way];
 
   always_ff @(posedge clk or negedge rst_n) begin
-    if(!rst_n)
-      for(int i=0; i < (NUM_BLK/NUM_WAY); i++) begin
-        plru_tree[i] <= 3'b000;
+    if(!rst_n) begin
+      for(int i = 0; i < (NUM_BLK/NUM_WAY); i++) begin
+        for(int ii = 0; ii < NUM_WAY; ii++) begin
+          lru_age[i][ii] <= ii;
+        end
       end
-    else if(promote_ack) begin
-      unique case(promote_way)
-        2'b00:
-              begin
-                plru_tree[promote_idx][2] <= 1'b1;
-                plru_tree[promote_idx][1] <= 1'b1;
-              end
-        2'b01:
-              begin
-                plru_tree[promote_idx][2] <= 1'b1;
-                plru_tree[promote_idx][1] <= 1'b0;
-              end
-        2'b10:
-              begin
-                plru_tree[promote_idx][2] <= 1'b0;
-                plru_tree[promote_idx][0] <= 1'b1;
-              end
-        2'b11:
-              begin
-                plru_tree[cdreq_idx][2] <= 1'b0;
-                plru_tree[cdreq_idx][0] <= 1'b0;
-              end
-      endcase
+    end
+    else begin
+      if((cdreq_req_curSt == CDREQ_SEND_RSP) && cursp_hs_compack) begin
+        for(int i = 0; i < NUM_WAY; i++) begin
+          if(lru_age[cdreq_idx][i] > old_order)
+            lru_age[cdreq_idx][i] <= lru_age[cdreq_idx][i] - 1'b1;
+          else if(lru_age[cdreq_idx][i] == old_order)
+            lru_age[cdreq_idx][i] <= NUM_WAY - 1'b1;
+        end
+      end
     end
   end
 
@@ -362,38 +324,12 @@ module cache_mem #(
   assign cdreq_idx        = cdreq_addr_bf[`IDX];
   assign sureq_idx        = sureq_addr_bf[`IDX];
 
-  assign cac_hit          = (cdreq_ot && (cdreq_way_3_hit || cdreq_way_2_hit || cdreq_way_1_hit || cdreq_way_0_hit));
-  assign snp_hit          = (sureq_ot && (sureq_way_3_hit || sureq_way_2_hit || sureq_way_1_hit || sureq_way_0_hit));
+  assign sureq_way        = 2'b00;
 
-  always_comb begin
-    unique case({sureq_way_3_hit, sureq_way_2_hit, sureq_way_1_hit, sureq_way_0_hit})
-      4'b0001: sureq_way = 2'b00;
-      4'b0010: sureq_way = 2'b01;
-      4'b0100: sureq_way = 2'b10;
-      4'b1000: sureq_way = 2'b11;
-      4'b0000: sureq_way = 2'b00;
-    endcase
-  end
-
-  always_comb begin
-    unique case({cdreq_way_3_hit, cdreq_way_2_hit, cdreq_way_1_hit, cdreq_way_0_hit})
-      4'b0001: cdreq_hit_way = 2'b00;
-      4'b0010: cdreq_hit_way = 2'b01;
-      4'b0100: cdreq_hit_way = 2'b10;
-      4'b1000: cdreq_hit_way = 2'b11;
-      4'b0000: cdreq_hit_way = 2'b00;
-    endcase
-  end
-
-  assign fill_inv_blk     = !(mem[cdreq_idx][3][`VALID] && mem[cdreq_idx][2][`VALID] && mem[cdreq_idx][1][`VALID] && mem[cdreq_idx][0][`VALID]);
-  
-  assign cdreq_inv_way    = (!mem[cdreq_idx][0][`VALID]) ? 2'b00 :
-                            (!mem[cdreq_idx][1][`VALID]) ? 2'b01 :
-                            (!mem[cdreq_idx][2][`VALID]) ? 2'b10 :
-                            (!mem[cdreq_idx][3][`VALID]) ? 2'b11 : 2'b00;
-
-  assign cdreq_way        = (cac_hit)       ? cdreq_hit_way :
-                            (fill_inv_blk)  ? cdreq_inv_way : evict_way;
+  assign cdreq_way        = cdreq_way_0_hit ? 2'b00 :
+                            cdreq_way_1_hit ? 2'b01 :
+                            cdreq_way_2_hit ? 2'b10 :
+                            cdreq_way_3_hit ? 2'b11 : lru_way;
 
   assign cdreq_blk_curSt  = mem[cdreq_idx][cdreq_way][`ST];
   assign sureq_blk_curSt  = mem[sureq_idx][sureq_way][`ST];
@@ -404,6 +340,15 @@ module cache_mem #(
 
   assign cac_rd           = ( cdreq_ot &&
                               (cdreq_op_bf == CDREQ_RD)
+                            );
+
+  assign cac_hit          = ( cdreq_ot &&
+                              ({cdreq_way_3_hit, cdreq_way_2_hit, cdreq_way_1_hit, cdreq_way_0_hit} != 4'b0000)
+                            );
+
+  assign snp_hit          = ( sureq_ot &&
+                              mem[sureq_idx][sureq_way][`VALID] &&
+                              (sureq_addr_bf[`ADDR_TAG] == mem[sureq_idx][sureq_way][`RAM_TAG])
                             );
 
   assign wr_hit           = cac_wr && cac_hit;
@@ -437,18 +382,14 @@ module cache_mem #(
   assign cdreq_no_init_sdreq = (cac_hit && !cdreq_init_sdreq_inv);
 
   always_comb begin
-    if(!rst_n)
-      cdreq_req_nxtSt = CDREQ_IDLE;
-    else begin
-      case(cdreq_req_curSt)
-        CDREQ_IDLE:       cdreq_req_nxtSt = (cdreq_hs_en        ) ? CDREQ_ALLOCATE    : CDREQ_IDLE;
-        CDREQ_ALLOCATE:   cdreq_req_nxtSt = (cdreq_no_init_sdreq) ? CDREQ_SEND_RSP    : CDREQ_INIT_SDREQ;
-        CDREQ_INIT_SDREQ: cdreq_req_nxtSt = (sdreq_hs_compack   ) ? CDREQ_WAIT_SURSP  : CDREQ_INIT_SDREQ;
-        CDREQ_WAIT_SURSP: cdreq_req_nxtSt = (sursp_hs_en        ) ? CDREQ_SEND_RSP    : CDREQ_WAIT_SURSP;
-        CDREQ_SEND_RSP:   cdreq_req_nxtSt = (cursp_hs_compack   ) ? CDREQ_IDLE        : CDREQ_SEND_RSP;
-        default:          cdreq_req_nxtSt = CDREQ_IDLE;
-      endcase // cdreq_req_curSt
-    end
+    case(cdreq_req_curSt)
+      CDREQ_IDLE:       cdreq_req_nxtSt = (cdreq_hs_en        ) ? CDREQ_ALLOCATE    : CDREQ_IDLE;
+      CDREQ_ALLOCATE:   cdreq_req_nxtSt = (cdreq_no_init_sdreq) ? CDREQ_SEND_RSP    : CDREQ_INIT_SDREQ;
+      CDREQ_INIT_SDREQ: cdreq_req_nxtSt = (sdreq_hs_compack   ) ? CDREQ_WAIT_SURSP  : CDREQ_INIT_SDREQ;
+      CDREQ_WAIT_SURSP: cdreq_req_nxtSt = (sursp_hs_en        ) ? CDREQ_SEND_RSP    : CDREQ_WAIT_SURSP;
+      CDREQ_SEND_RSP:   cdreq_req_nxtSt = (cursp_hs_compack   ) ? CDREQ_IDLE        : CDREQ_SEND_RSP;
+      default:          cdreq_req_nxtSt = CDREQ_IDLE;
+    endcase // cdreq_req_curSt
   end
 
   always_ff @(posedge clk or negedge rst_n) begin
@@ -478,20 +419,16 @@ module cache_mem #(
                                         );
 
   always_comb begin
-    if(!rst_n)
-      sureq_req_nxtSt = SUREQ_IDLE;
-    else begin
-      case(sureq_req_curSt)
-        SUREQ_IDLE:       sureq_req_nxtSt = (sureq_hs_en      ) ? SUREQ_ALLOCATE    : SUREQ_IDLE;
-        SUREQ_ALLOCATE:   sureq_req_nxtSt = (sureq_init_cureq ) ? SUREQ_INIT_CUREQ  : (sureq_init_wb) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP;
-        SUREQ_INIT_CUREQ: sureq_req_nxtSt = (cureq_hs_compack ) ? SUREQ_WAIT_CDRSP  : SUREQ_INIT_CUREQ;
-        SUREQ_WAIT_CDRSP: sureq_req_nxtSt = (cdrsp_hs_en      ) ? ((sureq_init_wb_after_cureq) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP) : SUREQ_WAIT_CDRSP;
-        SUREQ_INIT_SDREQ: sureq_req_nxtSt = (sdreq_hs_compack ) ? SUREQ_WAIT_SURSP  : SUREQ_INIT_SDREQ;
-        SUREQ_WAIT_SURSP: sureq_req_nxtSt = (sursp_hs_en      ) ? SUREQ_SEND_RSP    : SUREQ_WAIT_SURSP;
-        SUREQ_SEND_RSP:   sureq_req_nxtSt = (sdrsp_hs_compack ) ? SUREQ_IDLE        : SUREQ_SEND_RSP;
-        default:          sureq_req_nxtSt = SUREQ_IDLE;
-      endcase // sureq_req_curSt
-    end
+    case(sureq_req_curSt)
+      SUREQ_IDLE:       sureq_req_nxtSt = (sureq_hs_en      ) ? SUREQ_ALLOCATE    : SUREQ_IDLE;
+      SUREQ_ALLOCATE:   sureq_req_nxtSt = (sureq_init_cureq ) ? SUREQ_INIT_CUREQ  : (sureq_init_wb) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP;
+      SUREQ_INIT_CUREQ: sureq_req_nxtSt = (cureq_hs_compack ) ? SUREQ_WAIT_CDRSP  : SUREQ_INIT_CUREQ;
+      SUREQ_WAIT_CDRSP: sureq_req_nxtSt = (cdrsp_hs_en      ) ? ((sureq_init_wb_after_cureq) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP) : SUREQ_WAIT_CDRSP;
+      SUREQ_INIT_SDREQ: sureq_req_nxtSt = (sdreq_hs_compack ) ? SUREQ_WAIT_SURSP  : SUREQ_INIT_SDREQ;
+      SUREQ_WAIT_SURSP: sureq_req_nxtSt = (sursp_hs_en      ) ? SUREQ_SEND_RSP    : SUREQ_WAIT_SURSP;
+      SUREQ_SEND_RSP:   sureq_req_nxtSt = (sdrsp_hs_compack ) ? SUREQ_IDLE        : SUREQ_SEND_RSP;
+      default:          sureq_req_nxtSt = SUREQ_IDLE;
+    endcase // sureq_req_curSt
   end
 
   always_ff @(posedge clk or negedge rst_n) begin
@@ -607,12 +544,12 @@ module cache_mem #(
       end
     end
     else begin
-      if(cdreq_req_curSt == CDREQ_SEND_RSP)
+      if(cdreq_req_curSt == CDREQ_SEND_RSP) begin
         mem[cdreq_idx][cdreq_way][`ST] <= cdreq_blk_nxtSt;
-      else if(sdrsp_hs_compack)
-        // avoid assign state <-- INVALID while wait sursp_ready asserted (in SUREQ_RFO)
-        // if state <-- INVALID then sdrsp_data <-- 0x0)
+      end
+      else if(sdrsp_hs_compack) begin // avoid assign blk <-- INVALID while RFO (sdrsp_data <-- 0x0)
         mem[sureq_idx][sureq_way][`ST] <= sureq_blk_nxtSt;
+      end
     end
   end
 
@@ -641,26 +578,20 @@ module cache_mem #(
   // ----------------------------------------------------------------
   // imp_blk: update data
   // ----------------------------------------------------------------
-  logic asgData_in_cdreq_ack;
-  logic asgData_in_sursp_ack;
-  logic asgData_in_cdrsp_ack;
+  logic asg_data_from_cdreq;
+  logic asg_data_from_sursp;
+  logic asg_data_from_cdrsp;
 
-  logic asgData_in_surspCh_idx;
-  logic asgData_in_surspCh_way;
+  assign asg_data_from_cdreq =  (cdreq_op_bf == CDREQ_WB);
 
-  //assign asgData_in_cdreq =  (cdreq_op_bf == CDREQ_WB);
-  assign asgData_in_cdreq_ack = ( (cdreq_op_bf == CDREQ_WB) &&
-                                  cdreq_hs_en
-                                );
-
-  assign asgData_in_sursp_ack = ( ((cdreq_op_bf == CDREQ_RFO) || (cdreq_op_bf == CDREQ_RD)) &&
+  assign asg_data_from_sursp =  ( ((cdreq_op_bf == CDREQ_RFO) || (cdreq_op_bf == CDREQ_RD)) &&
                                   !cdreq_init_sdreq_inv &&
                                   !sureq_init_wb &&
                                   !sureq_init_wb_after_cureq &&
                                   sursp_hs_en
                                 );
 
-  assign asgData_in_cdrsp_ack = ( (sureq_blk_curSt == MIGRATED) &&
+  assign asg_data_from_cdrsp =  ( (sureq_blk_curSt == MIGRATED) &&
                                   cdrsp_hs_en
                                 );
 
@@ -672,9 +603,9 @@ module cache_mem #(
         end
       end
     end else begin
-      if      (asgData_in_cdreq_ack)   mem[cdreq_idx][cdreq_way][`DAT] <= cdreq_data_bf;
-      else if (asgData_in_sursp_ack)   mem[cdreq_idx][cdreq_way][`DAT] <= sursp_data;
-      else if (asgData_in_cdrsp_ack)   mem[sureq_idx][sureq_way][`DAT] <= cdrsp_data;
+      if      (asg_data_from_cdreq)   mem[cdreq_idx][cdreq_way][`DAT] <= cdreq_data_bf;
+      else if (asg_data_from_sursp)   mem[cdreq_idx][cdreq_way][`DAT] <= sursp_data;
+      else if (asg_data_from_cdrsp)   mem[cdreq_idx][cdreq_way][`DAT] <= cdrsp_data;
     end
   end
 endmodule // cache_mem

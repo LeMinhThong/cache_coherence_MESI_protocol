@@ -86,9 +86,9 @@ function string `THIS_CLASS::convert2string();
   string str;
   string tmp_str;
 
-  //str = {str, $sformatf("TxnId=%0d  ",        TxnId             )};
+  str = {str, $sformatf("TxnId=%0d  ",        TxnId             )};
   str = {str, $sformatf("Type_xfr=%s  ",      Type_xfr.name()   )};
-  //str = {str, $sformatf("Type=%s  ",          Type.name()       )};
+  str = {str, $sformatf("Type=%s  ",          Type.name()       )};
   if((Type_xfr == CDREQ_XFR) || (Type_xfr == ALL_CH)) begin
     str = {str, $sformatf("cdreq_op=%s  ",      cdreq_op.name()   )};
     str = {str, $sformatf("cdreq_addr=0x%0h  ", cdreq_addr        )};

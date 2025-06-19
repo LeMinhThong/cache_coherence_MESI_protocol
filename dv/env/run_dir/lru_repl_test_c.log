@@ -1,6 +1,6 @@
 QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
-Start time: 23:01:02 on Jun 09,2025
-vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/set_associative" "+incdir+../lib" "+incdir+../lib/agent" "+incdir+../lib/interface" "+incdir+./sv/test" "+incdir+./sv/seq" "+incdir+./tb" ../../rtl/set_associative/cache_def.sv ../../rtl/set_associative/cache_pkg.sv ../../rtl/set_associative/cache_mem.sv ../lib/cache_vip_pkg.sv ../lib/if/cache_if.sv ./sv/cache_test_pkg.sv ./tb/cache_mem_tb_top.sv -l run_dir/lru_repl_test_c.log 
+Start time: 04:41:01 on Jun 18,2025
+vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/set_associative" "+incdir+../lib" "+incdir+../lib/agent" "+incdir+../lib/interface" "+incdir+./sv/test" "+incdir+./sv/seq" "+incdir+./tb" ../../rtl/set_associative/cache_def.sv ../../rtl/set_associative/cache_pkg.sv ../../rtl/set_associative/cache_mem.sv ../lib/cache_vip_pkg.sv ../lib/if/cache_if.sv ./sv/cache_test_pkg.sv ./tb/cache_mem_tb_top.sv "+define+HAS_SB" -l run_dir/lru_repl_test_c.log 
 -- Compiling package cache_pkg
 -- Compiling package cache_mem_sv_unit
 -- Importing package cache_pkg
@@ -8,25 +8,510 @@ vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/set_associative" "+incdir+
 -- Compiling package cache_vip_pkg
 -- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
 ** Note: (vlog-2286) ../lib/cache_vip_pkg.sv(6): Using implicit +incdir+E:/questaSim/main/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
-** Warning: ** while parsing file included at ../lib/cache_vip_pkg.sv(17)
-** at ../lib/agent/cache_model.svh(50): (vlog-2897) Using non-standard foreach loop variable list syntax.
-** Warning: ** while parsing file included at ../lib/cache_vip_pkg.sv(17)
-** at ../lib/agent/cache_model.svh(58): (vlog-2897) Using non-standard foreach loop variable list syntax.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(66): Field/method name (tag) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(70): Field/method name (data) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(75): Field/method name (state) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(79): Field/method name (tag) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_model.svh(83): Field/method name (data) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(102): Field/method name (state) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(103): Field/method name (state) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(106): Field/method name (tag) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(107): Field/method name (tag) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(110): Field/method name (data) not in 'm_cache'.
-** Error (suppressible): (vlog-13276) ../lib/agent/cache_sb_base.svh(111): Field/method name (data) not in 'm_cache'.
 -- Compiling interface cache_if
 -- Compiling package cache_test_pkg
 -- Importing package cache_vip_pkg
 -- Compiling module cache_mem_tb_top
 -- Importing package cache_test_pkg
-End time: 23:01:03 on Jun 09,2025, Elapsed time: 0:00:01
-Errors: 11, Warnings: 2
+
+Top level modules:
+	cache_mem_tb_top
+End time: 04:41:02 on Jun 18,2025, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0
+Reading E:/questaSim/main/tcl/vsim/pref.tcl
+
+ 10.6c
+
+ vsim work.cache_mem_tb_top "+UVM_VERBOSITY=MEDIUM" "+UVM_TESTNAME=lru_repl_test_c" -nodpiexports -novopt -sv_seed random -wlf wave_dir/lru_repl_test_c.wlf -do " log -r /*; run -all; quit -f;" 
+ Start time: 04:41:03 on Jun 18,2025
+ ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+ //  Questa Sim-64
+ //  Version 10.6c win64 Jul 26 2017
+ //
+ //  Copyright 1991-2017 Mentor Graphics Corporation
+ //  All Rights Reserved.
+ //
+ //  QuestaSim and its associated documentation contain trade
+ //  secrets and commercial or financial information that are the property of
+ //  Mentor Graphics Corporation and are privileged, confidential,
+ //  and exempt from disclosure under the Freedom of Information Act,
+ //  5 U.S.C. Section 552. Furthermore, this information
+ //  is prohibited from disclosure under the Trade Secrets Act,
+ //  18 U.S.C. Section 1905.
+ //
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem_tb_top
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_pkg
+ Loading sv_std.std
+ Loading work.cache_pkg
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_if
+ Loading work.cache_if
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_test_pkg
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_vip_pkg
+ Loading mtiUvm.uvm_pkg
+ Loading work.cache_vip_pkg
+ Loading work.cache_test_pkg
+ Loading work.cache_mem_tb_top
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem_sv_unit
+ Loading work.cache_mem_sv_unit
+ Loading work.cache_mem
+ Loading mtiUvm.questa_uvm_pkg
+ Loading E:/questaSim/main/uvm-1.1d\win64\uvm_dpi.dll
+ Sv_Seed = 1490832446
+  run -all
+ ----------------------------------------------------------------
+ UVM-1.1d
+ (C) 2007-2013 Mentor Graphics Corporation
+ (C) 2007-2013 Cadence Design Systems, Inc.
+ (C) 2006-2013 Synopsys, Inc.
+ (C) 2011-2013 Cypress Semiconductor Corp.
+ ----------------------------------------------------------------
+ 
+   ***********       IMPORTANT RELEASE NOTES         ************
+ 
+   You are using a version of the UVM library that has been compiled
+   with `UVM_NO_DEPRECATED undefined.
+   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+ 
+   You are using a version of the UVM library that has been compiled
+   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+ 
+       (Specify +UVM_NO_RELNOTES to turn off this notice)
+ 
+ UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
+ UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(288): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(288): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(293): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(293): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(305): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(376): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(376): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(376): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(376): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(378): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(379): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(380): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(381): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(386): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(387): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(528): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(537): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(544): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ hello from cache_mem_tb
+ UVM_INFO @ 0: reporter [RNTST] Running test lru_repl_test_c...
+ ** Warning: (vsim-8315) ../../rtl/set_associative/cache_mem.sv(367): No condition is true in the unique/priority if/case statement.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8315) ../../rtl/set_associative/cache_mem.sv(357): No condition is true in the unique/priority if/case statement.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(537): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
+ UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
+ ----------------------------------------------------------------
+ Name                       Type                      Size  Value
+ ----------------------------------------------------------------
+ uvm_test_top               lru_repl_test_c           -     @471 
+   cov                      cache_cov_c               -     @485 
+   env                      cache_env_c               -     @478 
+     agt                    cache_agt_c               -     @493 
+       drv                  cache_drv_c               -     @618 
+         req_port           uvm_blocking_put_port     -     @656 
+         rsp_imp            uvm_nonblocking_put_imp   -     @664 
+         rsp_port           uvm_analysis_port         -     @633 
+         seq_item_port      uvm_seq_item_pull_port    -     @625 
+       drv_bfm              cache_drv_bfm_c           -     @641 
+         req_imp            uvm_blocking_put_imp      -     @673 
+         rsp_port           uvm_nonblocking_put_port  -     @681 
+       mon                  cache_mon_c               -     @648 
+         default_ap         uvm_analysis_port         -     @689 
+       sqr                  cache_seqr_c              -     @509 
+         rsp_export         uvm_analysis_export       -     @516 
+         seq_item_export    uvm_seq_item_pull_imp     -     @610 
+         arbitration_queue  array                     0     -    
+         lock_queue         array                     0     -    
+         num_last_reqs      integral                  32    'd1  
+         num_last_rsps      integral                  32    'd1  
+     sb                     cache_sb_c                -     @500 
+       cache                cache_model_c             -     @711 
+       default_a_imp        uvm_analysis_imp          -     @703 
+ ----------------------------------------------------------------
+ 
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(376): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(376): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(376): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(376): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(378): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(379): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(380): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(381): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(386): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(387): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(537): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(293): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(293): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(288): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(288): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ UVM_INFO ./sv/test/cache_base_test.sv(59) @ 0: uvm_test_top [lru_repl_test_c] Start test
+ UVM_INFO ../lib/agent/cache_sb.svh(60) @ 10: uvm_test_top.env.sb [SB] Reset is handling
+ UVM_INFO ../lib/agent/cache_model.svh(54) @ 10: uvm_test_top.env.sb.cache [CACHE] init cache occurred
+ UVM_INFO ../lib/agent/cache_sb.svh(72) @ 30: uvm_test_top.env.sb [SB] Reset has completed
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 70: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 70: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 70: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 70: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x400  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 70: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x0  ST=INVALID  TAG=0x0  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 70: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 110: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x400  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 140: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 210: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 210: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 210: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x400  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 210: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 210: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(220) @ 210: uvm_test_top.env.sb [SB] ST: EXCLUSIVE <-- INVALID
+ UVM_INFO ../lib/agent/cache_sb.svh(224) @ 210: uvm_test_top.env.sb [SB] TAG: 0x4 <-- 0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(228) @ 210: uvm_test_top.env.sb [SB] DATA: 0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5 <-- 0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 210: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 240: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x800  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 240: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 240: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 240: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x800  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 240: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x1  ST=INVALID  TAG=0x0  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 240: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 290: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x800  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 320: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 370: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 370: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 370: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x800  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 370: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 370: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x1
+ UVM_INFO ../lib/agent/cache_sb.svh(220) @ 370: uvm_test_top.env.sb [SB] ST: EXCLUSIVE <-- INVALID
+ UVM_INFO ../lib/agent/cache_sb.svh(224) @ 370: uvm_test_top.env.sb [SB] TAG: 0x8 <-- 0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(228) @ 370: uvm_test_top.env.sb [SB] DATA: 0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008 <-- 0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 370: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 400: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0xa00  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 400: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 400: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 400: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xa00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 400: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x2  ST=INVALID  TAG=0x0  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 400: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 450: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0xa00  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 530: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 590: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 590: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 590: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xa00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 590: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 590: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x2
+ UVM_INFO ../lib/agent/cache_sb.svh(220) @ 590: uvm_test_top.env.sb [SB] ST: EXCLUSIVE <-- INVALID
+ UVM_INFO ../lib/agent/cache_sb.svh(224) @ 590: uvm_test_top.env.sb [SB] TAG: 0xa <-- 0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(228) @ 590: uvm_test_top.env.sb [SB] DATA: 0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9 <-- 0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 590: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 620: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0xc00  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 620: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 620: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 620: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xc00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 620: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x3  ST=INVALID  TAG=0x0  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 620: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 690: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0xc00  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 770: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 800: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 800: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 800: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xc00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 800: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 800: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x3
+ UVM_INFO ../lib/agent/cache_sb.svh(220) @ 800: uvm_test_top.env.sb [SB] ST: EXCLUSIVE <-- INVALID
+ UVM_INFO ../lib/agent/cache_sb.svh(224) @ 800: uvm_test_top.env.sb [SB] TAG: 0xc <-- 0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(228) @ 800: uvm_test_top.env.sb [SB] DATA: 0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2 <-- 0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 800: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 830: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 830: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 830: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 830: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x400  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 830: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x0  ST=EXCLUSIVE  TAG=0x4  DAT=0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 830: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 850: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 850: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 850: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x400  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 850: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 850: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 850: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(222) @ 850: uvm_test_top.env.sb [SB] TAG[NO_CHANGE]: 0x4
+ UVM_INFO ../lib/agent/cache_sb.svh(226) @ 850: uvm_test_top.env.sb [SB] DATA[NO_CHANGE]: 0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 850: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 880: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x800  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 880: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 880: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 880: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x800  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 880: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x1  ST=EXCLUSIVE  TAG=0x8  DAT=0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 880: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 950: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 950: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 950: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x800  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 950: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 950: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x1
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 950: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(222) @ 950: uvm_test_top.env.sb [SB] TAG[NO_CHANGE]: 0x8
+ UVM_INFO ../lib/agent/cache_sb.svh(226) @ 950: uvm_test_top.env.sb [SB] DATA[NO_CHANGE]: 0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 950: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 980: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0xa00  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 980: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 980: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 980: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xa00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 980: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x2  ST=EXCLUSIVE  TAG=0xa  DAT=0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 980: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1020: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 1020: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 1020: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xa00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 1020: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 1020: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x2
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 1020: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(222) @ 1020: uvm_test_top.env.sb [SB] TAG[NO_CHANGE]: 0xa
+ UVM_INFO ../lib/agent/cache_sb.svh(226) @ 1020: uvm_test_top.env.sb [SB] DATA[NO_CHANGE]: 0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 1020: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1050: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0xc00  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 1050: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 1050: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 1050: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xc00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 1050: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x3  ST=EXCLUSIVE  TAG=0xc  DAT=0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 1050: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1110: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 1110: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 1110: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xc00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 1110: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 1110: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x3
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 1110: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(222) @ 1110: uvm_test_top.env.sb [SB] TAG[NO_CHANGE]: 0xc
+ UVM_INFO ../lib/agent/cache_sb.svh(226) @ 1110: uvm_test_top.env.sb [SB] DATA[NO_CHANGE]: 0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 1110: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1140: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0xc00  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 1140: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 1140: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 1140: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xc00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 1140: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x3  ST=EXCLUSIVE  TAG=0xc  DAT=0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 1140: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1180: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 1180: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 1180: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xc00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 1180: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 1180: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x3
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 1180: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(222) @ 1180: uvm_test_top.env.sb [SB] TAG[NO_CHANGE]: 0xc
+ UVM_INFO ../lib/agent/cache_sb.svh(226) @ 1180: uvm_test_top.env.sb [SB] DATA[NO_CHANGE]: 0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 1180: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1210: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0xa00  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 1210: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 1210: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 1210: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xa00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 1210: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x2  ST=EXCLUSIVE  TAG=0xa  DAT=0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 1210: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1280: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 1280: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 1280: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0xa00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 1280: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 1280: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x2
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 1280: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(222) @ 1280: uvm_test_top.env.sb [SB] TAG[NO_CHANGE]: 0xa
+ UVM_INFO ../lib/agent/cache_sb.svh(226) @ 1280: uvm_test_top.env.sb [SB] DATA[NO_CHANGE]: 0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 1280: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1310: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x800  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 1310: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 1310: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 1310: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x800  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 1310: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x1  ST=EXCLUSIVE  TAG=0x8  DAT=0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 1310: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1330: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 1330: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 1330: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x800  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 1330: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 1330: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x1
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 1330: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(222) @ 1330: uvm_test_top.env.sb [SB] TAG[NO_CHANGE]: 0x8
+ UVM_INFO ../lib/agent/cache_sb.svh(226) @ 1330: uvm_test_top.env.sb [SB] DATA[NO_CHANGE]: 0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 1330: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1360: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 1360: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 1360: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 1360: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x400  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 1360: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x0  ST=EXCLUSIVE  TAG=0x4  DAT=0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 1360: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1430: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 1430: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 1430: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x400  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 1430: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 1430: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 1430: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(222) @ 1430: uvm_test_top.env.sb [SB] TAG[NO_CHANGE]: 0x4
+ UVM_INFO ../lib/agent/cache_sb.svh(226) @ 1430: uvm_test_top.env.sb [SB] DATA[NO_CHANGE]: 0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 1430: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1460: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x1400  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 1460: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 1460: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 1460: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x1400  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 1460: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x3  ST=EXCLUSIVE  TAG=0xc  DAT=0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 1460: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1500: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x1400  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1550: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0xab20bd3e112d8e74472e19d3fddf3c88baf5968d87550cc88b9ff985b44f6a5769d204d35f41c9bfc93b61500b7568fdd168e45284ed0a5b9eda8b3ab5a29d7d  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1620: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xab20bd3e112d8e74472e19d3fddf3c88baf5968d87550cc88b9ff985b44f6a5769d204d35f41c9bfc93b61500b7568fdd168e45284ed0a5b9eda8b3ab5a29d7d  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 1620: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 1620: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x1400  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 1620: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 1620: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x3
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 1620: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(224) @ 1620: uvm_test_top.env.sb [SB] TAG: 0x14 <-- 0xc
+ UVM_INFO ../lib/agent/cache_sb.svh(228) @ 1620: uvm_test_top.env.sb [SB] DATA: 0xab20bd3e112d8e74472e19d3fddf3c88baf5968d87550cc88b9ff985b44f6a5769d204d35f41c9bfc93b61500b7568fdd168e45284ed0a5b9eda8b3ab5a29d7d <-- 0x391cff8b9d661257b13ba7ef535253cb7546210bc3787716eba50f2804514054b3df8491e758dc7205db6e5d99058210b4af05e90128b20bda7748a66cc84dd2
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 1620: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1650: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x1800  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 1650: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 1650: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 1650: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x1800  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 1650: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x1  ST=EXCLUSIVE  TAG=0x8  DAT=0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 1650: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1710: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x1800  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1760: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0xd98d5c4ae51b47af2018a95f5d7e76e065682c17d90fa853e5fe77386d3ecbc560adaf73dc17362b59bbd198a9fce43c06800832df1759e0eefd2beb5175638d  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1790: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0xd98d5c4ae51b47af2018a95f5d7e76e065682c17d90fa853e5fe77386d3ecbc560adaf73dc17362b59bbd198a9fce43c06800832df1759e0eefd2beb5175638d  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 1790: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 1790: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x1800  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 1790: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 1790: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x1
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 1790: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(224) @ 1790: uvm_test_top.env.sb [SB] TAG: 0x18 <-- 0x8
+ UVM_INFO ../lib/agent/cache_sb.svh(228) @ 1790: uvm_test_top.env.sb [SB] DATA: 0xd98d5c4ae51b47af2018a95f5d7e76e065682c17d90fa853e5fe77386d3ecbc560adaf73dc17362b59bbd198a9fce43c06800832df1759e0eefd2beb5175638d <-- 0x30b0153a78105bd6ab8154afd881516a85412488300f5dcf66fb352ad98a461742f2f2d2e084e20873daaf1e0342f9963bea8df83f8d8a49bc07b0686164e008
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 1790: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1820: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x1a00  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 1820: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 1820: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 1820: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x1a00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 1820: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x2  ST=EXCLUSIVE  TAG=0xa  DAT=0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 1820: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1890: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x1a00  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1940: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0x7413afe5a265de73463425cb4bee8613374ea9d678a6fcf802e50de3711150ce1674a3ebe2a55b58b3847fb7d0d66b5b20f81a2a641a31ecadfcb0c8e6b0caf8  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 1990: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x7413afe5a265de73463425cb4bee8613374ea9d678a6fcf802e50de3711150ce1674a3ebe2a55b58b3847fb7d0d66b5b20f81a2a641a31ecadfcb0c8e6b0caf8  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 1990: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 1990: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x1a00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 1990: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 1990: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x2
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 1990: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(224) @ 1990: uvm_test_top.env.sb [SB] TAG: 0x1a <-- 0xa
+ UVM_INFO ../lib/agent/cache_sb.svh(228) @ 1990: uvm_test_top.env.sb [SB] DATA: 0x7413afe5a265de73463425cb4bee8613374ea9d678a6fcf802e50de3711150ce1674a3ebe2a55b58b3847fb7d0d66b5b20f81a2a641a31ecadfcb0c8e6b0caf8 <-- 0xc80ec5423cb9d31ecf3eb4570594f57b14328575ba0296417350282708e663e05d9b7bf0049e0c694a3d3749bf15fffc3b0e86060a203410cc026d174bb746b9
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 1990: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 2020: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CDREQ_XFR  Type=L1_REQ  cdreq_op=CDREQ_RD  cdreq_addr=0x1c00  cdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb.svh(101) @ 2020: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(102) @ 2020: uvm_test_top.env.sb [REC_CDREQ] reiceves request from CDREQ
+ UVM_INFO ../lib/agent/cache_sb.svh(103) @ 2020: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x1c00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(104) @ 2020: uvm_test_top.env.sb [SB] IDX=0x0  WAY=0x0  ST=EXCLUSIVE  TAG=0x4  DAT=0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5
+ UVM_INFO ../lib/agent/cache_sb.svh(105) @ 2020: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 2050: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SDREQ_XFR  Type=L1_REQ  sdreq_op=SDREQ_RD  sdreq_addr=0x1c00  sdreq_data=0x0  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 2080: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=SURSP_XFR  Type=L1_REQ  sursp_rsp=SURSP_FETCH  sursp_data=0x5db98d248ecec2b4891a799ff60f06ac9ae6515dd7246ddff6ad69f75492ea47567d800ebd6118319a8365fd3c837489e0733d780357c2016461ccd2cd11c674  
+ UVM_INFO ../lib/agent/cache_sb_base.svh(80) @ 2130: uvm_test_top.env.sb [SB] send xfr:TxnId=-1  Type_xfr=CURSP_XFR  Type=L1_REQ  cursp_rsp=CURSP_OKAY  cursp_data=0x5db98d248ecec2b4891a799ff60f06ac9ae6515dd7246ddff6ad69f75492ea47567d800ebd6118319a8365fd3c837489e0733d780357c2016461ccd2cd11c674  
+ UVM_INFO ../lib/agent/cache_sb.svh(211) @ 2130: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/agent/cache_sb.svh(212) @ 2130: uvm_test_top.env.sb [SB] OP=CDREQ_RD  ADDR=0x1c00  DAT=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(215) @ 2130: uvm_test_top.env.sb [PASS_CDREQ] request from CDREQ passed
+ UVM_INFO ../lib/agent/cache_sb.svh(216) @ 2130: uvm_test_top.env.sb [SB] access to IDX=0x0  WAY=0x0
+ UVM_INFO ../lib/agent/cache_sb.svh(218) @ 2130: uvm_test_top.env.sb [SB] ST[NO_CHANGE]: EXCLUSIVE
+ UVM_INFO ../lib/agent/cache_sb.svh(224) @ 2130: uvm_test_top.env.sb [SB] TAG: 0x1c <-- 0x4
+ UVM_INFO ../lib/agent/cache_sb.svh(228) @ 2130: uvm_test_top.env.sb [SB] DATA: 0x5db98d248ecec2b4891a799ff60f06ac9ae6515dd7246ddff6ad69f75492ea47567d800ebd6118319a8365fd3c837489e0733d780357c2016461ccd2cd11c674 <-- 0xf17345a08f95f10eca8bffd7e3f7408d71edde26923e1b30f9dd3e87ad3fada8d4a645d946f2de9332672195ac1c8e73b5d28c3251e142d6f19c1a70c22202b5
+ UVM_INFO ../lib/agent/cache_sb.svh(233) @ 2130: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ./sv/test/cache_base_test.sv(74) @ 2185: uvm_test_top [lru_repl_test_c] Complete test
+ 
+ --- UVM Report Summary ---
+ 
+ ** Report counts by severity
+ UVM_INFO :  265
+ UVM_WARNING :    0
+ UVM_ERROR :    0
+ UVM_FATAL :    0
+ ** Report counts by id
+ [CACHE]     1
+ [PASS_CDREQ]    16
+ [Questa UVM]     2
+ [REC_CDREQ]    16
+ [RNTST]     1
+ [SB]   226
+ [UVMTOP]     1
+ [lru_repl_test_c]     2
+ ** Note: $finish    : E:/questaSim/main/win64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+    Time: 2185 ns  Iteration: 97  Instance: /cache_mem_tb_top
+ End time: 04:41:07 on Jun 18,2025, Elapsed time: 0:00:04
+ Errors: 0, Warnings: 61

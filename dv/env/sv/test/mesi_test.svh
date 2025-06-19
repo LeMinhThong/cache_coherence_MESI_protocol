@@ -14,7 +14,7 @@ endclass: `THIS_CLASS
 
 // ------------------------------------------------------------------
 task `THIS_CLASS::run_seq();
-  address_t addr = 64'h400;
+  address_t addr = 64'h401;
 
   fork
     begin

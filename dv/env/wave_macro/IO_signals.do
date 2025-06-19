@@ -19,6 +19,7 @@ add wave -noupdate -group CDRSP /cache_mem_tb_top/dut/cdrsp_valid
 add wave -noupdate -group CDRSP /cache_mem_tb_top/dut/cdrsp_rsp
 add wave -noupdate -group CDRSP /cache_mem_tb_top/dut/cdrsp_data
 add wave -noupdate -group CDRSP /cache_mem_tb_top/dut/cdrsp_ready
+add wave -noupdate /cache_mem_tb_top/dut/clk
 add wave -noupdate -group SDREQ /cache_mem_tb_top/dut/sdreq_valid
 add wave -noupdate -group SDREQ /cache_mem_tb_top/dut/sdreq_op
 add wave -noupdate -group SDREQ /cache_mem_tb_top/dut/sdreq_addr
