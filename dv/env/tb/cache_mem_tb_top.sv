@@ -6,7 +6,7 @@ module cache_mem_tb_top;
   import uvm_pkg::*;
   `include "uvm_macros.svh";
 
-  import cache_test_pkg::*;
+  import cache_tests_pkg::*;
   import cache_pkg::*;
   `include "cache_def.sv"
 

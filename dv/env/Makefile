@@ -18,24 +18,23 @@ UVM_DIR := +incdir+../../ext/uvm-core-2020.3.1/src
 UVM_PKG := ../../ext/uvm-core-2020.3.1/src/uvm_pkg.sv
 
 RTL_DIR 	:= ../../rtl
-VIP_DIR 	:= ../lib
-TEST_DIR 	:= ./sv
-TB_DIR 		:= ./tb
+LIB_DIR 	:= ../lib
+ENV_DIR		:= ./
 
 #--------------------------------------------------------------------
-DV_INCDIR += +incdir+$(VIP_DIR)
-DV_INCDIR += +incdir+$(VIP_DIR)/agent
-DV_INCDIR += +incdir+$(VIP_DIR)/interface
+DV_INCDIR += +incdir+$(LIB_DIR)
+DV_INCDIR += +incdir+$(LIB_DIR)/agents
+DV_INCDIR += +incdir+$(LIB_DIR)/if
+DV_INCDIR += +incdir+$(LIB_DIR)/seqs
+DV_INCDIR += +incdir+$(LIB_DIR)/units
 
-DV_INCDIR += +incdir+$(TEST_DIR)/test
-DV_INCDIR += +incdir+$(TEST_DIR)/seq
-
-DV_INCDIR += +incdir+$(TB_DIR)
+DV_INCDIR += +incdir+$(ENV_LIB)/tests
+DV_INCDIR += +incdir+$(ENV_DIR)/tb
 
 #--------------------------------------------------------------------
-DV_SRC += $(VIP_DIR)/cache_vip_pkg.sv
-DV_SRC += $(VIP_DIR)/if/cache_if.sv
-DV_SRC += $(TEST_DIR)/cache_test_pkg.sv
+DV_SRC += $(LIB_DIR)/cache_units_pkg.sv
+DV_SRC += $(LIB_DIR)/if/cache_if.sv
+DV_SRC += $(ENV_DIR)/tests/cache_tests_pkg.sv
 
 #--------------------------------------------------------------------
 RTL_INCDIR += +incdir+$(RTL_DIR)
@@ -45,21 +44,8 @@ RTL_SRC += $(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associativ
 RTL_SRC += $(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)/cache_pkg.sv
 RTL_SRC += $(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)/cache_mem.sv
 
-
-#ifeq($(RTL_ORG), DM)
-#	RTL_INCDIR += +incdir+$(RTL_DIR)/direct_mapped
-#	RTL_SRC += $(RTL_DIR)/direct_mapped/cache_def.sv
-#	RTL_SRC += $(RTL_DIR)/direct_mapped/cache_pkg.sv
-#	RTL_SRC += $(RTL_DIR)/direct_mapped/cache_mem.sv
-#else
-#	RTL_INCDIR += +incdir+$(RTL_DIR)/set_associative
-#	RTL_SRC += $(RTL_DIR)/set_associative/cache_def.sv
-#	RTL_SRC += $(RTL_DIR)/set_associative/cache_pkg.sv
-#	RTL_SRC += $(RTL_DIR)/set_associative/cache_mem.sv
-#endif
-
 #--------------------------------------------------------------------
-TB_SRC := $(TB_DIR)/cache_mem_tb_top.sv
+TB_SRC := $(ENV_DIR)/tb/cache_mem_tb_top.sv
 
 #--------------------------------------------------------------------
 #VLOG_DEF += +define+UVM_HDL_NO_DPI
@@ -83,7 +69,7 @@ clean:
 
 #--------------------------------------------------------------------
 vlog:
-	mkdir -p run_dir wave_dir rtl_tracker
+	mkdir -p run_dir wave_dir
 	vlib work
 	vlib work.uvm_pkg
 	vlog -sv $(UVM_DIR) -work work.uvm_pkg $(UVM_PKG) $(VLOG_DEF)
@@ -94,7 +80,6 @@ vsim:
 	vsim work.$(TB_NAME) +UVM_VERBOSITY=MEDIUM +UVM_TESTNAME=$(TEST_NAME) -nodpiexports -novopt -sv_seed $(SEED) $(USER_CMD) -wlf wave_dir/$(TEST_NAME).wlf -do "$(VSIM_RUN)" | tee -a run_dir/$(TEST_NAME).log
 	sed 's/^#//' run_dir/$(TEST_NAME).log > tmp.log && mv tmp.log run_dir/$(TEST_NAME).log
 	sed -i '/  log -r \/\\*/d' run_dir/$(TEST_NAME).log
-	rm -rf rtl_tracker/$(TEST_NAME).log
 
 #--------------------------------------------------------------------
 vlog_rtl:

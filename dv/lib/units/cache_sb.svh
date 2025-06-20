@@ -100,7 +100,7 @@ task `THIS_CLASS::check_cdreq();
       cdreq_data_prev       = m_cache.get_data(cdreq_idx_bf, cdreq_way_bf);
       cdreq_evict_way_prev  = m_cache.get_evict_way(cdreq_idx_bf);
 
-      `uvm_info(m_msg_name,   $sformatf("--------------------  START ----------------------"), UVM_LOW)
+      `uvm_info(m_msg_name,   $sformatf("--------------------  CDREQ ----------------------"), UVM_LOW)
       `uvm_info("REC_CDREQ",  $sformatf("Request: OP=%s  ADDR=0x%0h  DAT=0x%0h  Lookup=%s  Access to: IDX=0x%0h  WAY=0x%0h  ST=%s  TAG=0x%0h  DAT=0x%0h", cdreq_op_req_bf, cdreq_addr_req_bf, cdreq_data_req_bf, str, cdreq_idx_bf, cdreq_way_bf, cdreq_st_prev, cdreq_tag_prev, cdreq_data_prev), UVM_LOW)
 
       // check flow
@@ -285,7 +285,7 @@ task `THIS_CLASS::check_sureq();
         end
       end
 
-      `uvm_info(m_msg_name,   $sformatf("--------------------  START ----------------------"), UVM_LOW)
+      `uvm_info(m_msg_name,   $sformatf("--------------------  SUREQ ----------------------"), UVM_LOW)
       `uvm_info("REC_SUREQ",  $sformatf("Request: OP=%s  ADDR=0x%0h  Access to IDX=0x%0h  WAY=0x%0h  ST=%s  TAG=0x%0h  DAT=0x%0h", sureq_op_req_bf, sureq_addr_req_bf, sureq_idx_bf, sureq_way_bf, sureq_st_prev, sureq_tag_prev, sureq_data_prev), UVM_LOW)
 
       // check flow
