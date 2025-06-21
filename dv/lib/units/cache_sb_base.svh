@@ -53,7 +53,6 @@ class `THIS_CLASS extends uvm_scoreboard;
 
   function new(string name="`THIS_CLASS", uvm_component parent);
     super.new(name, parent);
-    if(!uvm_config_db#(virtual cache_if)::get(this, "", "cac_if", m_vif)) uvm_report_fatal(m_msg_name, "Cannot get virtual cache interface");
   endfunction: new
 
 endclass: `THIS_CLASS
@@ -61,6 +60,7 @@ endclass: `THIS_CLASS
 // ------------------------------------------------------------------
 function void `THIS_CLASS::build_phase(uvm_phase phase);
   super.build_phase(phase);
+  if(!uvm_config_db#(virtual cache_if)::get(this, "", "cac_if", m_vif)) uvm_report_fatal(m_msg_name, "Cannot get virtual cache interface");
   default_a_imp = new("default_a_imp", this);
   m_cache       = cache_model_c::type_id::create("cache", this);
 endfunction: build_phase
@@ -184,5 +184,6 @@ function void `THIS_CLASS::write(cache_txn_c t);
 `endif // HAS_SB
 endfunction: write
 
+`undef M_VIF
 `undef THIS_CLASS
 `endif

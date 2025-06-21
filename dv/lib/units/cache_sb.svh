@@ -1,6 +1,7 @@
 `ifndef CACHE_SB_SVH
 `define CACHE_SB_SVH
 `define THIS_CLASS cache_sb_c
+`define M_VIF m_vif.mon_cb
 
 class `THIS_CLASS extends cache_sb_base_c;
   `uvm_component_utils(`THIS_CLASS)
@@ -427,5 +428,6 @@ task `THIS_CLASS::check_sureq();
   end
 endtask: check_sureq
 
+`undef M_VIF
 `undef THIS_CLASS
 `endif

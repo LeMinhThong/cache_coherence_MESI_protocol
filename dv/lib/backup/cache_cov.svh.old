@@ -1,0 +1,52 @@
+`ifndef CACHE_COV_SVH
+`define CACHE_COV_SVH
+`define THIS_CLASS cache_cov_c
+`define M_VIF m_vif.mon_cb
+
+import cache_cg_pkg::*;
+
+class `THIS_CLASS extends uvm_subscriber#(cache_txn_c);
+  `uvm_component_utils(`THIS_CLASS);
+
+  virtual cache_if  m_vif;
+
+  string      m_msg_name = "COV";
+  cache_txn_c trans;
+  cdreq_op_cg cdreq_op_inst;
+
+  extern  virtual function  void  build_phase(uvm_phase phase);
+  extern  virtual function  void  report_phase(uvm_phase phase);
+
+  extern  virtual function  void  write(cache_txn_c t);
+
+  function new(string name="`THIS_CLASS", uvm_component component);
+    super.new(name, component);
+  endfunction: new
+
+endclass: `THIS_CLASS
+
+//-------------------------------------------------------------------
+function void `THIS_CLASS::build_phase(uvm_phase phase);
+  super.build_phase(phase);
+  if(!uvm_config_db#(virtual cache_if)::get(this, "", "cac_if", m_vif)) uvm_report_fatal(m_msg_name, "Cannot get virtual cache interface");
+
+  cdreq_op_inst = new("cdreq_op_cg");
+endfunction: build_phase
+
+//-------------------------------------------------------------------
+function void `THIS_CLASS::write(cache_txn_c t);
+  `uvm_info(m_msg_name, $sformatf("hello from write"), UVM_LOW)
+  trans = t;
+  cdreq_op_inst.op_val = trans.cdreq_op;
+  cdreq_op_inst.sample();
+endfunction: write
+
+//-------------------------------------------------------------------
+function void `THIS_CLASS::report_phase(uvm_phase phase);
+  super.report_phase(phase);
+  cdreq_op_inst.print();
+endfunction: report_phase
+
+`undef M_VIF
+`undef THIS_CLASS
+`endif

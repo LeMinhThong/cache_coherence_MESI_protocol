@@ -1,0 +1,22 @@
+`ifndef CACHE_CG_PKG_SV
+`define CACHE_CG_PKG_SV
+
+package cache_cg_pkg;
+  import uvm_pkg::*;
+  `include "uvm_macros.svh"
+
+  //import cache_agents_pkg::*;
+  `include "cache_vip_def.svh"
+  `include "cache_type.svh"
+
+  covergroup cdreq_op_cg (input cdreq_e op_val);
+    option.per_instance = 1;
+  
+    op_cp: coverpoint op_val {
+      bins op = {CDREQ_RD, CDREQ_RFO, CDREQ_MD, CDREQ_WB};
+    }
+  endgroup: cdreq_op_cg
+
+endpackage
+
+`endif

@@ -28,4 +28,5 @@
     else if(type_req == "ALL")    ; \
     else                          `uvm_fatal(m_msg_name, $sformatf("can not identify request type:%s", type_req)) \
   end
+
 `endif

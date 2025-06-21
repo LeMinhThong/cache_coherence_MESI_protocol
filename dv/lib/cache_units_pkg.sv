@@ -1,11 +1,11 @@
-`ifndef CACHE_VIP_PKG_SV
-`define CACHE_VIP_PKG_SV
+`ifndef CACHE_UNITS_PKG_SV
+`define CACHE_UNITS_PKG_SV
 
 package cache_units_pkg;
   import uvm_pkg::*;
   `include "uvm_macros.svh"
 
-  // agent
+  // agents
   `include "cache_vip_def.svh"
   `include "cache_type.svh"
   `include "cache_txn.svh"
@@ -15,10 +15,12 @@ package cache_units_pkg;
   `include "cache_mon.svh"
   `include "cache_agt.svh"
 
-  // unit
+  // units
   `include "cache_model.svh"
   `include "cache_sb_base.svh"
   `include "cache_sb.svh"
+  `include "cache_cov_cdreq.svh"
+  `include "cache_cov_sureq.svh"
   `include "cache_cov.svh"
   `include "cache_env.svh"
 
@@ -27,6 +29,6 @@ package cache_units_pkg;
   `include "l1_req_seq.svh"
   `include "snp_req_seq.svh"
 
-endpackage
+endpackage: cache_units_pkg
 
 `endif

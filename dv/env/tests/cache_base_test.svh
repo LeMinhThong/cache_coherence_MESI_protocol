@@ -11,7 +11,6 @@ class `THIS_CLASS extends uvm_test;
   virtual cache_if m_vif;
 
   cache_env_c m_env;
-  cache_cov_c m_cov;
 
   time m_timeout = 100us;
 
@@ -38,7 +37,6 @@ endclass: `THIS_CLASS
 function void `THIS_CLASS::build_phase(uvm_phase phase);
   super.build_phase(phase);
   m_env = cache_env_c::type_id::create("env", this);
-  m_cov = cache_cov_c::type_id::create("cov", this);
   if(!uvm_config_db#(virtual cache_if)::get(this, "", "cac_if", m_vif)) uvm_report_fatal(get_type_name(), "Cannot get virtual cache interface");
 endfunction: build_phase
 
