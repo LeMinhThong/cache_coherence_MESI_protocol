@@ -296,16 +296,10 @@ module cache_mem #(
   // ----------------------------------------------------------------
   // imp_blk: replacement policy
   // ----------------------------------------------------------------
-  logic [2:0] plru_tree [0:(NUM_BLK/NUM_WAY)-1];
-  logic [2:0]           tree_bit;
-  logic [1:0]           evict_way;
   logic                 promote_ack;
   logic [IDX_WIDTH-1:0] promote_idx;
   logic [1:0]           promote_way;
-
-  assign tree_bit         = plru_tree[cdreq_idx];
-  assign evict_way[1]     = tree_bit[2];
-  assign evict_way[0]     = tree_bit[2] ? tree_bit[0] : tree_bit[1];
+  logic [1:0]           evict_way;
 
   always_comb begin
     if(cac_hit && cursp_hs_compack) begin
@@ -324,6 +318,14 @@ module cache_mem #(
       promote_way = 2'b00;
     end
   end
+
+`ifdef PLRU_REPL
+  logic [2:0] plru_tree [0:(NUM_BLK/NUM_WAY)-1];
+  logic [2:0] tree_bit;
+
+  assign tree_bit         = plru_tree[cdreq_idx];
+  assign evict_way[1]     = tree_bit[2];
+  assign evict_way[0]     = tree_bit[2] ? tree_bit[0] : tree_bit[1];
 
   always_ff @(posedge clk or negedge rst_n) begin
     if(!rst_n)
@@ -355,6 +357,12 @@ module cache_mem #(
       endcase
     end
   end
+
+`elsif THESIS_REPL
+  assign evict_way = 2'b00;
+`else
+  $fatal("can not identify replacement policy")
+`endif
 
   // ----------------------------------------------------------------
   // imp_blk: cache lookup

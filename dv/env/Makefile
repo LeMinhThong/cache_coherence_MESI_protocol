@@ -2,6 +2,7 @@ TB_NAME 	?= cache_mem_tb_top
 TEST_NAME ?= cache_base_test_c
 SEED 			?= random
 USER_CMD 	?=
+REPL			?= PLRU
 USER_DEF	?=
 RTL_ORG		?= ASSOC
 
@@ -38,16 +39,17 @@ DV_SRC += $(ENV_DIR)/tests/cache_tests_pkg.sv
 
 #--------------------------------------------------------------------
 RTL_INCDIR += +incdir+$(RTL_DIR)
-RTL_INCDIR += +incdir+$(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)
+RTL_INCDIR += +incdir+$(RTL_DIR)/topchip
 
-RTL_SRC += $(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)/cache_def.sv
-RTL_SRC += $(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)/cache_pkg.sv
-RTL_SRC += $(RTL_DIR)/$(if $(filter DM, $(RTL_ORG)),direct_mapped,set_associative)/cache_mem.sv
+RTL_SRC += $(RTL_DIR)/topchip/cache_def.sv
+RTL_SRC += $(RTL_DIR)/topchip/cache_pkg.sv
+RTL_SRC += $(RTL_DIR)/topchip/cache_mem.sv
 
 #--------------------------------------------------------------------
 TB_SRC := $(ENV_DIR)/tb/cache_mem_tb_top.sv
 
 #--------------------------------------------------------------------
+VLOG_DEF += +define+$(if $(filter PLRU, $(REPL)),PLRU_REPL,THESIS_REPL)
 #VLOG_DEF += +define+UVM_HDL_NO_DPI
 #VLOG_DEF += +define+UVM_NO_DPI
 #VLOG_DEF += +define+UVM_CMDLINE_NO_DPI

@@ -12,7 +12,12 @@ class `THIS_CLASS extends uvm_component;
   `uvm_component_utils(`THIS_CLASS)
 
   block_s     mem[(`VIP_NUM_BLK/`VIP_NUM_WAY)][`VIP_NUM_WAY];
+`ifdef PLRU_REPL
   logic [2:0] plru_tree_bit [(`VIP_NUM_BLK/`VIP_NUM_WAY)];
+`elsif THESIS_REPL
+`else
+  `uvm_fatal(m_msg_name, "can not identify replacement policy")
+`endif
   
   string      m_msg_name = "CACHE";
 
@@ -53,13 +58,19 @@ function void `THIS_CLASS::init_cache();
   `uvm_info(m_msg_name, "init cache occurred", UVM_LOW)
   foreach(mem[i, ii]) begin
     mem[i][ii]          = '{default: 0};
+`ifdef PLRU_REPL
     plru_tree_bit[i]    = 0;
+`elsif THESIS_REPL
+`else
+  `uvm_fatal(m_msg_name, "can not identify replacement policy")
+`endif
   end
 endfunction: init_cache
 
 // ------------------------------------------------------------------
 
 function void `THIS_CLASS::update_repl_age(idx_t idx, way_t access_way);
+`ifdef PLRU_REPL
   unique case(access_way)
     2'b00:
           begin
@@ -82,6 +93,10 @@ function void `THIS_CLASS::update_repl_age(idx_t idx, way_t access_way);
             plru_tree_bit[idx][0] = 1'b0;
           end
   endcase
+`elsif THESIS_REPL
+`else
+  `uvm_fatal(m_msg_name, "can not identify replacement policy")
+`endif
 endfunction: update_repl_age
 
 // ------------------------------------------------------------------
@@ -104,10 +119,8 @@ function way_t `THIS_CLASS::get_way(address_t addr, idx_t idx, output lookup_e l
       return i;
     end
   end
-  evict_way[1] = plru_tree_bit[idx][2];
-  evict_way[0] = (plru_tree_bit[idx][2]) ? plru_tree_bit[idx][0] : plru_tree_bit[idx][1];
   lookup = EVICT_BLK;
-  return evict_way;
+  return get_evict_way(idx);
 endfunction: get_way
 
 function st_e `THIS_CLASS::get_state(idx_t idx, way_t way);
@@ -124,8 +137,14 @@ endfunction: get_data
 
 function way_t `THIS_CLASS::get_evict_way(idx_t idx);
   way_t evict_way;
+`ifdef PLRU_REPL
   evict_way[1] = plru_tree_bit[idx][2];
   evict_way[0] = (plru_tree_bit[idx][2]) ? plru_tree_bit[idx][0] : plru_tree_bit[idx][1];
+`elsif THESIS_REPL
+  evict_way = 2'b00;
+`else
+  `uvm_fatal(m_msg_name, "can not identify replacement policy")
+`endif
   return evict_way;
 endfunction: get_evict_way
 // ------------------------------------------------------------------

@@ -1,7 +1,8 @@
 QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
-Start time: 11:00:07 on Jun 22,2025
+Start time: 19:30:22 on Jun 22,2025
 vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/set_associative" "+incdir+../lib" "+incdir+../lib/agents" "+incdir+../lib/if" "+incdir+../lib/seqs" "+incdir+../lib/units" "+incdir+/tests" "+incdir+.//tb" ../../rtl/set_associative/cache_def.sv ../../rtl/set_associative/cache_pkg.sv ../../rtl/set_associative/cache_mem.sv ../lib/if/cache_if.sv ../lib/cache_units_pkg.sv .//tests/cache_tests_pkg.sv .//tb/cache_mem_tb_top.sv -l run_dir/cache_base_test_c.log 
 -- Compiling package cache_pkg
+** Warning: ../../rtl/set_associative/cache_mem.sv(5): (vlog-13233) Design unit "cache_mem_sv_unit" already exists and will be overwritten. Design unit compiled with different set of options.
 -- Compiling package cache_mem_sv_unit
 -- Importing package cache_pkg
 -- Compiling module cache_mem
@@ -16,14 +17,14 @@ vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/set_associative" "+incdir+
 
 Top level modules:
 	cache_mem_tb_top
-End time: 11:00:08 on Jun 22,2025, Elapsed time: 0:00:01
-Errors: 0, Warnings: 0
+End time: 19:30:23 on Jun 22,2025, Elapsed time: 0:00:01
+Errors: 0, Warnings: 1
 Reading E:/questaSim/main/tcl/vsim/pref.tcl
 
  10.6c
 
  vsim work.cache_mem_tb_top "+UVM_VERBOSITY=MEDIUM" "+UVM_TESTNAME=cache_base_test_c" -sv_seed random -coverage -nodpiexports -novopt -wlf wave_dir/cache_base_test_c.wlf -do " log -r /*; coverage save -onexit cov_metrics/cache_base_test_c.ucdb; run -all; quit -f;" 
- Start time: 11:00:13 on Jun 22,2025
+ Start time: 19:30:28 on Jun 22,2025
  ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
  //  Questa Sim-64
  //  Version 10.6c win64 Jul 26 2017
@@ -58,7 +59,7 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  Loading mtiUvm.questa_uvm_pkg
  Loading E:/questaSim/main/uvm-1.1d\win64\uvm_dpi.dll
  ** Warning: (vsim-8634) Code was not compiled with coverage options.
- Sv_Seed = 1739585262
+ Sv_Seed = 1038021866
   coverage save -onexit cov_metrics/cache_base_test_c.ucdb
   run -all
  ----------------------------------------------------------------
@@ -271,5 +272,5 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  ** Note: $finish    : E:/questaSim/main/win64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
     Time: 150 ns  Iteration: 97  Instance: /cache_mem_tb_top
  Saving coverage database on exit...
- End time: 11:00:24 on Jun 22,2025, Elapsed time: 0:00:11
+ End time: 19:30:36 on Jun 22,2025, Elapsed time: 0:00:08
  Errors: 0, Warnings: 62

@@ -129,6 +129,7 @@ function void `THIS_CLASS::comp_model_vs_rtl(string type_req="ALL", idx_t idx=0,
         end
       end
       // check replacement
+`ifdef PLRU_REPL
       hdl_path = $sformatf("cache_mem_tb_top.dut.plru_tree[%0d]", i);
       if(!uvm_hdl_read(hdl_path, read_rtl_blk))
         `uvm_fatal(m_msg_name, $sformatf("read hdl path fail, hdl_path=%s", hdl_path))
@@ -138,6 +139,10 @@ function void `THIS_CLASS::comp_model_vs_rtl(string type_req="ALL", idx_t idx=0,
           `SB_ERROR(type_req, $sformatf("replacement bit mismatch: IDX=%0d  RTL=0x%0h  MODEL=0x%0h", i, read_rtl_blk[2:0], m_cache.plru_tree_bit[i]))
         end
       end
+`elsif THESIS_REPL
+`else
+  `uvm_fatal(m_msg_name, "can not identify replacement policy")
+`endif // PLRU_REPL
     end
   end
 
