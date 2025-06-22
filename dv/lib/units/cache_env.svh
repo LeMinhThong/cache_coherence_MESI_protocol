@@ -28,8 +28,9 @@ endfunction: build_phase
 //-------------------------------------------------------------------
 function void `THIS_CLASS::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
-  m_agt.m_mon.default_ap.connect(m_sb.default_a_imp);
-  m_agt.m_mon.default_ap.connect(m_cov.m_a_imp);
+  m_agt.m_mon.m_xfr_ap.connect(m_sb.m_xfr_a_imp);
+  m_agt.m_mon.m_txn_ap.connect(m_cov.m_txn_a_imp);
+  m_sb.m_lookup_ap.connect(m_agt.m_mon.m_lookup_a_imp);
 endfunction: connect_phase
 
 `undef THIS_CLASS

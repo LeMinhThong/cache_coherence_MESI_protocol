@@ -349,8 +349,8 @@ module cache_mem #(
               end
         2'b11:
               begin
-                plru_tree[cdreq_idx][2] <= 1'b0;
-                plru_tree[cdreq_idx][0] <= 1'b0;
+                plru_tree[promote_idx][2] <= 1'b0;
+                plru_tree[promote_idx][0] <= 1'b0;
               end
       endcase
     end
@@ -549,7 +549,7 @@ module cache_mem #(
   assign sdreq_data = (sdreq_op == SDREQ_WB) ? mem[sureq_idx][sureq_way][`DAT] : {BLK_WIDTH{1'b0}};
 
   // SDRSP channel control
-  assign sdrsp_rsp  = (sureq_blk_curSt == INVALID) ? SDRSP_INV : SDRSP_OKAY;
+  assign sdrsp_rsp  = (snp_hit) ? SDRSP_OKAY : SDRSP_INV;
 
   assign sdrsp_data = ( snp_hit &&
                         ((sureq_op_bf == SUREQ_RD) || (sureq_op_bf == SUREQ_RFO))
@@ -584,7 +584,8 @@ module cache_mem #(
   // imp_blk: SUREQ affects on cache state transition
   //-----------------------------------------------------------------
   always_comb begin
-    if(sureq_blk_curSt != INVALID) begin
+    //if(sureq_blk_curSt != INVALID) begin
+    if(snp_hit) begin
       case(sureq_op_bf)
         SUREQ_RD:   sureq_blk_nxtSt = SHARED;
         SUREQ_RFO:  sureq_blk_nxtSt = INVALID;

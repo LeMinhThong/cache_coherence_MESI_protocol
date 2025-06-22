@@ -23,7 +23,7 @@ class `THIS_CLASS extends uvm_component;
   extern  virtual function  bit     is_blk_valid_in_l1(address_t addr);
 
   extern  virtual function  idx_t   get_idx       (address_t addr);
-  extern  virtual function  way_t   get_way       (address_t addr, idx_t idx, output string lookup);
+  extern  virtual function  way_t   get_way       (address_t addr, idx_t idx, output lookup_e lookup);
   extern  virtual function  st_e    get_state     (idx_t idx, way_t way);
   extern  virtual function  tag_t   get_tag       (idx_t idx, way_t way);
   extern  virtual function  data_t  get_data      (idx_t idx, way_t way);
@@ -89,24 +89,24 @@ function idx_t `THIS_CLASS::get_idx(address_t addr);
   return addr[`IDX];
 endfunction: get_idx
 
-function way_t `THIS_CLASS::get_way(address_t addr, idx_t idx, output string lookup);
+function way_t `THIS_CLASS::get_way(address_t addr, idx_t idx, output lookup_e lookup);
   bit [1:0] evict_way;
 
   for(int i=0; i < `VIP_NUM_WAY; i++) begin
     if((mem[idx][i].state != INVALID) && (mem[idx][i].tag == addr[`ADDR_TAG])) begin
-      lookup = "HIT";
+      lookup = HIT;
       return i;
     end
   end
   for(int i=0; i < `VIP_NUM_WAY; i++) begin
     if(mem[idx][i].state == INVALID) begin
-      lookup = "FILL_INV_BLK";
+      lookup = FILL_INV_BLK;
       return i;
     end
   end
   evict_way[1] = plru_tree_bit[idx][2];
   evict_way[0] = (plru_tree_bit[idx][2]) ? plru_tree_bit[idx][0] : plru_tree_bit[idx][1];
-  lookup = "EVICT_BLK";
+  lookup = EVICT_BLK;
   return evict_way;
 endfunction: get_way
 

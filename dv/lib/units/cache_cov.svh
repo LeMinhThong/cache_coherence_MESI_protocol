@@ -5,8 +5,8 @@
 class `THIS_CLASS extends uvm_component;
   `uvm_component_utils(`THIS_CLASS)
 
-  uvm_analysis_imp  #(cache_txn_c, `THIS_CLASS) m_a_imp;
-  uvm_analysis_port #(cache_txn_c)              m_ap;
+  uvm_analysis_imp  #(cache_txn_c, `THIS_CLASS) m_txn_a_imp;
+  uvm_analysis_port #(cache_txn_c)              m_txn_ap;
 
   string            m_msg_name = "COV";
   cache_cov_cdreq_c m_cov_cdreq;
@@ -18,8 +18,8 @@ class `THIS_CLASS extends uvm_component;
 
   function new(string name="`THIS_CLASS", uvm_component parent);
     super.new(name, parent);
-    m_a_imp = new("a_imp", this);
-    m_ap    = new("ap", this);
+    m_txn_a_imp = new("txn_a_imp", this);
+    m_txn_ap    = new("txn_ap", this);
   endfunction: new
 endclass: `THIS_CLASS
 
@@ -33,14 +33,14 @@ endfunction: build_phase
 //-------------------------------------------------------------------
 function void `THIS_CLASS::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
-  this.m_ap.connect(m_cov_cdreq.m_a_imp);
-  this.m_ap.connect(m_cov_sureq.m_a_imp);
+  this.m_txn_ap.connect(m_cov_cdreq.m_txn_a_imp);
+  this.m_txn_ap.connect(m_cov_sureq.m_txn_a_imp);
 endfunction: connect_phase
 
 //-------------------------------------------------------------------
 function void `THIS_CLASS::write(cache_txn_c t);
   cache_txn_c t_loc = new t;
-  m_ap.write(t_loc);
+  m_txn_ap.write(t_loc);
 endfunction: write
 
 `undef THIS_CLASS

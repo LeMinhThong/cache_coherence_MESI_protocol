@@ -13,16 +13,26 @@ typedef enum {
 } type_e;
 
 typedef enum {
-  CDREQ_XFR = 0,
-  CURSP_XFR = 1,
-  CUREQ_XFR = 2,
-  CDRSP_XFR = 3,
-  SDREQ_XFR = 4,
-  SURSP_XFR = 5,
-  SUREQ_XFR = 6,
-  SDRSP_XFR = 7,
-  ALL_CH    = 8
+  CDREQ_XFR   = 0,
+  CURSP_XFR   = 1,
+  CUREQ_XFR   = 2,
+  CDRSP_XFR   = 3,
+  SDREQ_XFR   = 4,
+  SURSP_XFR   = 5,
+  SUREQ_XFR   = 6,
+  SDRSP_XFR   = 7,
+  LOOKUP_XFR  = 8,
+  L1_TXN      = 9,
+  SNP_TXN     = 10,
+  ALL_CH      = 11
 } xfr_e;
+
+typedef enum {
+  FILL_INV_BLK  = 0,
+  SNP_MISS      = 1,
+  HIT           = 2,
+  EVICT_BLK     = 3
+} lookup_e;
 
 typedef enum reg [2:0] {
   INVALID   = 3'b000,

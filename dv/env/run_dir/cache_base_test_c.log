@@ -1,5 +1,5 @@
 QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
-Start time: 14:23:13 on Jun 21,2025
+Start time: 11:00:07 on Jun 22,2025
 vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/set_associative" "+incdir+../lib" "+incdir+../lib/agents" "+incdir+../lib/if" "+incdir+../lib/seqs" "+incdir+../lib/units" "+incdir+/tests" "+incdir+.//tb" ../../rtl/set_associative/cache_def.sv ../../rtl/set_associative/cache_pkg.sv ../../rtl/set_associative/cache_mem.sv ../lib/if/cache_if.sv ../lib/cache_units_pkg.sv .//tests/cache_tests_pkg.sv .//tb/cache_mem_tb_top.sv -l run_dir/cache_base_test_c.log 
 -- Compiling package cache_pkg
 -- Compiling package cache_mem_sv_unit
@@ -16,15 +16,15 @@ vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/set_associative" "+incdir+
 
 Top level modules:
 	cache_mem_tb_top
-End time: 14:23:14 on Jun 21,2025, Elapsed time: 0:00:01
+End time: 11:00:08 on Jun 22,2025, Elapsed time: 0:00:01
 Errors: 0, Warnings: 0
 Reading E:/questaSim/main/tcl/vsim/pref.tcl
 
  10.6c
 
- vsim work.cache_mem_tb_top "+UVM_VERBOSITY=MEDIUM" "+UVM_TESTNAME=cache_base_test_c" -sv_seed random -coverage -wlf wave_dir/cache_base_test_c.wlf -do " log -r /*; run -all; coverage save -onexit ./cov_metrics/cache_base_test_c.ucdb; quit -f;" 
- Start time: 14:23:16 on Jun 21,2025
- ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+ vsim work.cache_mem_tb_top "+UVM_VERBOSITY=MEDIUM" "+UVM_TESTNAME=cache_base_test_c" -sv_seed random -coverage -nodpiexports -novopt -wlf wave_dir/cache_base_test_c.wlf -do " log -r /*; coverage save -onexit cov_metrics/cache_base_test_c.ucdb; run -all; quit -f;" 
+ Start time: 11:00:13 on Jun 22,2025
+ ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
  //  Questa Sim-64
  //  Version 10.6c win64 Jul 26 2017
  //
@@ -39,18 +39,27 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  //  is prohibited from disclosure under the Trade Secrets Act,
  //  18 U.S.C. Section 1905.
  //
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem_tb_top
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_pkg
  Loading sv_std.std
- Loading work.cache_pkg(fast)
- Loading work.cache_mem_sv_unit(fast)
- Loading work.cache_if(fast)
+ Loading work.cache_pkg
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_if
+ Loading work.cache_if
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_tests_pkg
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_units_pkg
  Loading mtiUvm.uvm_pkg
- Loading work.cache_units_pkg(fast)
- Loading work.cache_tests_pkg(fast)
- Loading work.cache_mem_tb_top(fast)
- Loading mtiUvm.questa_uvm_pkg(fast)
+ Loading work.cache_units_pkg
+ Loading work.cache_tests_pkg
+ Loading work.cache_mem_tb_top
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem
+ Refreshing F:/mobaxterm/home/hcmus/thesis/dv/env/work.cache_mem_sv_unit
+ Loading work.cache_mem_sv_unit
+ Loading work.cache_mem
+ Loading mtiUvm.questa_uvm_pkg
  Loading E:/questaSim/main/uvm-1.1d\win64\uvm_dpi.dll
  ** Warning: (vsim-8634) Code was not compiled with coverage options.
- Sv_Seed = 353080858
+ Sv_Seed = 1739585262
+  coverage save -onexit cov_metrics/cache_base_test_c.ucdb
   run -all
  ----------------------------------------------------------------
  UVM-1.1d
@@ -74,12 +83,74 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
- ** Warning: (vsim-8315) ../../rtl/set_associative/cache_mem.sv(369): No condition is true in the unique/priority if/case statement.
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8315) ../../rtl/set_associative/cache_mem.sv(379): No condition is true in the unique/priority if/case statement.
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(288): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(288): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(293): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(293): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(306): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(388): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(388): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(388): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(388): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(390): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(391): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(392): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(393): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(398): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(399): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(540): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(549): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(556): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  hello from cache_mem_tb
  UVM_INFO @ 0: reporter [RNTST] Running test cache_base_test_c...
+ ** Warning: (vsim-8315) ../../rtl/set_associative/cache_mem.sv(379): No condition is true in the unique/priority if/case statement.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8315) ../../rtl/set_associative/cache_mem.sv(369): No condition is true in the unique/priority if/case statement.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(549): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
  UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
  ----------------------------------------------------------------
  Name                       Type                      Size  Value
@@ -96,7 +167,9 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
          req_imp            uvm_blocking_put_imp      -     @688 
          rsp_port           uvm_nonblocking_put_port  -     @696 
        mon                  cache_mon_c               -     @663 
-         default_ap         uvm_analysis_port         -     @704 
+         lookup_a_imp       uvm_analysis_imp          -     @721 
+         txn_ap             uvm_analysis_port         -     @713 
+         xfr_ap             uvm_analysis_port         -     @705 
        sqr                  cache_seqr_c              -     @524 
          rsp_export         uvm_analysis_export       -     @531 
          seq_item_export    uvm_seq_item_pull_imp     -     @625 
@@ -105,25 +178,80 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
          num_last_reqs      integral                  32    'd1  
          num_last_rsps      integral                  32    'd1  
      cov                    cache_cov_c               -     @500 
-       a_imp                uvm_analysis_imp          -     @507 
-       ap                   uvm_analysis_port         -     @515 
-       cov_cdreq            cache_cov_cdreq_c         -     @718 
-         a_imp              uvm_analysis_imp          -     @725 
-       cov_sureq            cache_cov_sureq_c         -     @733 
-         a_imp              uvm_analysis_imp          -     @740 
+       cov_cdreq            cache_cov_cdreq_c         -     @734 
+         txn_a_imp          uvm_analysis_imp          -     @748 
+       cov_sureq            cache_cov_sureq_c         -     @741 
+         txn_a_imp          uvm_analysis_imp          -     @756 
+       txn_a_imp            uvm_analysis_imp          -     @507 
+       txn_ap               uvm_analysis_port         -     @515 
      sb                     cache_sb_c                -     @493 
-       cache                cache_model_c             -     @757 
-       default_a_imp        uvm_analysis_imp          -     @749 
+       cache                cache_model_c             -     @781 
+       m_lookup_ap          uvm_analysis_port         -     @773 
+       m_xfr_a_imp          uvm_analysis_imp          -     @765 
  ----------------------------------------------------------------
  
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(388): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(388): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(388): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(388): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(390): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(391): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(392): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(393): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(398): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(399): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(549): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(293): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(293): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(288): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(288): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/set_associative/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
  UVM_INFO .\\tests\cache_base_test.svh(57) @ 0: uvm_test_top [cache_base_test_c] Start test
  UVM_INFO ../lib/units/cache_sb.svh(61) @ 10: uvm_test_top.env.sb [SB] Reset is handling
  UVM_INFO ../lib/units/cache_model.svh(53) @ 10: uvm_test_top.env.sb.cache [CACHE] init cache occurred
  UVM_INFO ../lib/units/cache_sb.svh(73) @ 30: uvm_test_top.env.sb [SB] Reset has completed
  UVM_INFO .\\tests\cache_base_test.svh(78) @ 50: uvm_test_top [cache_base_test_c] hello from base run_seq
  UVM_INFO .\\tests\cache_base_test.svh(72) @ 150: uvm_test_top [cache_base_test_c] Complete test
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(64) @ 150: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] CG_CDREQ_OP_COV=0.000000
- UVM_INFO ../lib/units/cache_cov_sureq.svh(63) @ 150: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] CG_SUREQ_OP_COV=0.000000
+ UVM_INFO ../lib/units/cache_cov_cdreq.svh(78) @ 150: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] CG_CDREQ_OP_COV=0.000000
+ UVM_INFO ../lib/units/cache_cov_sureq.svh(64) @ 150: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] CG_SUREQ_OP_COV=0.000000
  
  --- UVM Report Summary ---
  
@@ -142,5 +270,6 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  [cache_base_test_c]     3
  ** Note: $finish    : E:/questaSim/main/win64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
     Time: 150 ns  Iteration: 97  Instance: /cache_mem_tb_top
- End time: 14:23:21 on Jun 21,2025, Elapsed time: 0:00:05
- Errors: 0, Warnings: 3
+ Saving coverage database on exit...
+ End time: 11:00:24 on Jun 22,2025, Elapsed time: 0:00:11
+ Errors: 0, Warnings: 62

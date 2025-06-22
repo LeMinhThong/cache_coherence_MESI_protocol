@@ -6,7 +6,8 @@
 class `THIS_CLASS extends uvm_scoreboard;
   `uvm_component_utils(`THIS_CLASS)
 
-  uvm_analysis_imp #(cache_txn_c, `THIS_CLASS) default_a_imp;
+  uvm_analysis_imp  #(cache_txn_c, `THIS_CLASS) m_xfr_a_imp;
+  uvm_analysis_port #(cache_txn_c)              m_lookup_ap;
 
   virtual cache_if      m_vif;
           cache_model_c m_cache;
@@ -20,6 +21,7 @@ class `THIS_CLASS extends uvm_scoreboard;
   cdreq_e   cdreq_op_req_bf;
   address_t cdreq_addr_req_bf;
   data_t    cdreq_data_req_bf;
+  lookup_e  cdreq_lookup;
   idx_t     cdreq_idx_bf;
   way_t     cdreq_way_bf;
   st_e      cdreq_st_prev;
@@ -32,6 +34,7 @@ class `THIS_CLASS extends uvm_scoreboard;
   bit       sureq_hit;
   sureq_e   sureq_op_req_bf;
   address_t sureq_addr_req_bf;
+  lookup_e  sureq_lookup;
   idx_t     sureq_idx_bf;
   way_t     sureq_way_bf;
   st_e      sureq_st_prev;
@@ -61,8 +64,9 @@ endclass: `THIS_CLASS
 function void `THIS_CLASS::build_phase(uvm_phase phase);
   super.build_phase(phase);
   if(!uvm_config_db#(virtual cache_if)::get(this, "", "cac_if", m_vif)) uvm_report_fatal(m_msg_name, "Cannot get virtual cache interface");
-  default_a_imp = new("default_a_imp", this);
-  m_cache       = cache_model_c::type_id::create("cache", this);
+  m_xfr_a_imp = new("m_xfr_a_imp", this);
+  m_lookup_ap = new("m_lookup_ap", this);
+  m_cache     = cache_model_c::type_id::create("cache", this);
 endfunction: build_phase
 
 // ------------------------------------------------------------------
@@ -171,12 +175,9 @@ function void `THIS_CLASS::write(cache_txn_c t);
       `uvm_fatal("SB_FAIL", $sformatf("sdreq_addr=0x%0h is not coresponding to any access, CDREQ=0x%0h or SUREQ=0x%0h", t_loc.sdreq_addr, cdreq_addr_req_bf, sureq_addr_req_bf))
   end
   else if(t_loc.Type_xfr == SURSP_XFR) begin
-    if(sdreq_owner == "CDREQ")
-      l1_xfr_q.push_back(t_loc);
-    else if(sdreq_owner == "SUREQ")
-      snp_xfr_q.push_back(t_loc);
-    else
-      `uvm_fatal("SB_FAIL", "receives SURSP although SDREQ has not sent yet")
+    if(sdreq_owner == "CDREQ")      l1_xfr_q.push_back(t_loc);
+    else if(sdreq_owner == "SUREQ") snp_xfr_q.push_back(t_loc);
+    else                            `uvm_fatal("SB_FAIL", "receives SURSP although SDREQ has not sent yet")
     sdreq_owner = "NONE";
   end
   else

@@ -55,8 +55,8 @@ TB_SRC := $(ENV_DIR)/tb/cache_mem_tb_top.sv
 
 #--------------------------------------------------------------------
 VSIM_RUN += log -r /*;
+VSIM_RUN += coverage save -onexit cov_metrics/$(TEST_NAME).ucdb;
 VSIM_RUN += run -all;
-VSIM_RUN += coverage save -onexit ./cov_metrics/$(TEST_NAME).ucdb;
 VSIM_RUN += quit -f;
 
 #--------------------------------------------------------------------

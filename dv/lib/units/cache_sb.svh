@@ -81,6 +81,7 @@ endtask: reset_monitoring
 // ------------------------------------------------------------------
 task `THIS_CLASS::check_cdreq();
   cache_txn_c t;
+  cache_txn_c lookup;
   string      str;
 
   forever begin
@@ -95,14 +96,25 @@ task `THIS_CLASS::check_cdreq();
       cdreq_addr_req_bf     = t.cdreq_addr;
       cdreq_data_req_bf     = t.cdreq_data;
       cdreq_idx_bf          = m_cache.get_idx(cdreq_addr_req_bf);
-      cdreq_way_bf          = m_cache.get_way(cdreq_addr_req_bf, cdreq_idx_bf, str);
+      cdreq_way_bf          = m_cache.get_way(cdreq_addr_req_bf, cdreq_idx_bf, cdreq_lookup);
       cdreq_st_prev         = m_cache.get_state(cdreq_idx_bf, cdreq_way_bf);
       cdreq_tag_prev        = m_cache.get_tag(cdreq_idx_bf, cdreq_way_bf);
       cdreq_data_prev       = m_cache.get_data(cdreq_idx_bf, cdreq_way_bf);
       cdreq_evict_way_prev  = m_cache.get_evict_way(cdreq_idx_bf);
 
+      // send lookup package to monitor
+      lookup = new();
+      lookup.Type       = L1_REQ;
+      lookup.Type_xfr   = LOOKUP_XFR;
+      lookup.Lookup     = cdreq_lookup;
+      lookup.State      = cdreq_st_prev;
+      lookup.Idx        = cdreq_idx_bf;
+      lookup.Way        = cdreq_way_bf;
+      lookup.Evict_way  = cdreq_evict_way_prev;
+      m_lookup_ap.write(lookup);
+
       `uvm_info(m_msg_name,   $sformatf("--------------------  CDREQ ----------------------"), UVM_LOW)
-      `uvm_info("REC_CDREQ",  $sformatf("Request: OP=%s  ADDR=0x%0h  DAT=0x%0h  Lookup=%s  Access to: IDX=0x%0h  WAY=0x%0h  ST=%s  TAG=0x%0h  DAT=0x%0h", cdreq_op_req_bf, cdreq_addr_req_bf, cdreq_data_req_bf, str, cdreq_idx_bf, cdreq_way_bf, cdreq_st_prev, cdreq_tag_prev, cdreq_data_prev), UVM_LOW)
+      `uvm_info("REC_CDREQ",  $sformatf("Request: OP=%s  ADDR=0x%0h  DAT=0x%0h  Lookup=%s  Access to: IDX=0x%0h  WAY=0x%0h  ST=%s  TAG=0x%0h  DAT=0x%0h", cdreq_op_req_bf, cdreq_addr_req_bf, cdreq_data_req_bf, cdreq_lookup.name(), cdreq_idx_bf, cdreq_way_bf, cdreq_st_prev, cdreq_tag_prev, cdreq_data_prev), UVM_LOW)
 
       // check flow
       if(cdreq_op_req_bf inside {CDREQ_RD, CDREQ_RFO}) begin // valid senarios
@@ -239,6 +251,7 @@ task `THIS_CLASS::check_cdreq();
       cdreq_op_req_bf       = CDREQ_RD;
       cdreq_addr_req_bf     = 0;
       cdreq_data_req_bf     = 0;
+      cdreq_lookup          = FILL_INV_BLK;
       cdreq_idx_bf          = 0;
       cdreq_way_bf          = 0;
       cdreq_st_prev         = INVALID;
@@ -255,7 +268,7 @@ endtask: check_cdreq
 // ------------------------------------------------------------------
 task `THIS_CLASS::check_sureq();
   cache_txn_c t;
-  bit         sureq_hit;
+  cache_txn_c lookup;
   string      str;
 
   forever begin
@@ -271,13 +284,11 @@ task `THIS_CLASS::check_sureq();
       sureq_idx_bf          = m_cache.get_idx(sureq_addr_req_bf);
       sureq_evict_way_prev  = m_cache.get_evict_way(sureq_idx_bf);
       
-      // assign default
-      sureq_hit = 1'b0;
-      str       = "MISS";
+      // lookup
+      sureq_lookup  = SNP_MISS;
       for(int i=0; i < `VIP_NUM_WAY; i++) begin
         if((m_cache.mem[sureq_idx_bf][i].state != INVALID) && (m_cache.mem[sureq_idx_bf][i].tag == sureq_addr_req_bf[`ADDR_TAG])) begin
-          sureq_hit       = 1;
-          str             = "HIT";
+          sureq_lookup    = HIT;
           sureq_way_bf    = i;
           sureq_st_prev   = m_cache.get_state(sureq_idx_bf, sureq_way_bf);
           sureq_tag_prev  = m_cache.get_tag(sureq_idx_bf, sureq_way_bf);
@@ -286,12 +297,23 @@ task `THIS_CLASS::check_sureq();
         end
       end
 
+      // send lookup package to monitor
+      lookup = new();
+      lookup.Type       = SNP_REQ;
+      lookup.Type_xfr   = LOOKUP_XFR;
+      lookup.Lookup     = sureq_lookup;
+      lookup.State      = sureq_st_prev;
+      lookup.Idx        = sureq_idx_bf;
+      lookup.Way        = sureq_way_bf;
+      lookup.Evict_way  = sureq_evict_way_prev;
+      m_lookup_ap.write(lookup);
+
       `uvm_info(m_msg_name,   $sformatf("--------------------  SUREQ ----------------------"), UVM_LOW)
-      `uvm_info("REC_SUREQ",  $sformatf("Request: OP=%s  ADDR=0x%0h  Access to IDX=0x%0h  WAY=0x%0h  ST=%s  TAG=0x%0h  DAT=0x%0h", sureq_op_req_bf, sureq_addr_req_bf, sureq_idx_bf, sureq_way_bf, sureq_st_prev, sureq_tag_prev, sureq_data_prev), UVM_LOW)
+      `uvm_info("REC_SUREQ",  $sformatf("Request: OP=%s  ADDR=0x%0h  LOOKUP=%s  Access to IDX=0x%0h  WAY=0x%0h  ST=%s  TAG=0x%0h  DAT=0x%0h", sureq_op_req_bf, sureq_addr_req_bf, sureq_lookup.name(), sureq_idx_bf, sureq_way_bf, sureq_st_prev, sureq_tag_prev, sureq_data_prev), UVM_LOW)
 
       // check flow
       if(sureq_op_req_bf inside {SUREQ_RD, SUREQ_RFO}) begin
-        if(!sureq_hit) begin
+        if(sureq_lookup == SNP_MISS) begin
           wait_nxt_snp_xfr(t);
           if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_INVALID) && (t.sdrsp_data == '0)))
             `SB_ERROR("SUREQ", $sformatf("expect:[SDRSP_XFR]  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
@@ -351,7 +373,7 @@ task `THIS_CLASS::check_sureq();
         end
       end
       else if(sureq_op_req_bf == SUREQ_INV) begin
-        if(!sureq_hit) begin
+        if(sureq_lookup == SNP_MISS) begin
           wait_nxt_snp_xfr(t);
           if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_INVALID) && (t.sdrsp_data == '0)))
             `SB_ERROR("SUREQ", $sformatf("expect:[SDRSP_XFR]  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
@@ -383,25 +405,28 @@ task `THIS_CLASS::check_sureq();
         `uvm_fatal(m_msg_name, $sformatf("cannot identify SUREQ opcode ST=%s", sureq_op_req_bf.name()))
 
       // promote replacement
-      if(sureq_hit && (sureq_op_req_bf == SUREQ_RD)) begin
+      if((sureq_lookup == HIT) && (sureq_op_req_bf == SUREQ_RD)) begin
         m_cache.update_repl_age(sureq_idx_bf, sureq_way_bf);
       end
-      // print request report
-      `uvm_info(m_msg_name, $sformatf("OP=%s  ADDR=0x%0h", sureq_op_req_bf, sureq_addr_req_bf), UVM_LOW)
+      // print report
       @`M_VIF;
       comp_model_vs_rtl("SUREQ", sureq_idx_bf, sureq_way_bf);
       if(sureq_error_count == 0) begin
         str = "Report: ";
-        if(sureq_hit) begin
+        if(sureq_lookup == HIT) begin
           if(sureq_st_prev == m_cache.get_state(sureq_idx_bf, sureq_way_bf))  str = {str, $sformatf("ST: %s(remain)  ", sureq_st_prev)};
           else                                                                str = {str, $sformatf("ST: %s <-- %s  ", m_cache.get_state(sureq_idx_bf, sureq_way_bf), sureq_st_prev)};
           if(sureq_tag_prev == m_cache.get_tag(sureq_idx_bf, sureq_way_bf))   str = {str, $sformatf("TAG: 0x%0h(remain)  ", sureq_tag_prev)};
           else                                                                str = {str, $sformatf("TAG: 0x%0h <-- 0x%0h  ", m_cache.get_tag(sureq_idx_bf, sureq_way_bf), sureq_tag_prev)};
           if(sureq_data_prev == m_cache.get_data(sureq_idx_bf, sureq_way_bf)) str = {str, $sformatf("DATA: 0x%0h(remain)  ", sureq_data_prev)};
           else                                                                str = {str, $sformatf("DATA: 0x%0h <-- 0x%0h  ", m_cache.get_data(sureq_idx_bf, sureq_way_bf), sureq_data_prev)};
+          if(sureq_evict_way_prev == m_cache.get_evict_way(sureq_idx_bf))     str = {str, $sformatf("EVICT_WAY=0x%0h(remain)  ", sureq_evict_way_prev)};
+          else                                                                str = {str, $sformatf("EVICT_WAY=0x%0h <-- 0x%0h  ", m_cache.get_evict_way(sureq_idx_bf), sureq_evict_way_prev)};
         end
-        if(sureq_evict_way_prev == m_cache.get_evict_way(sureq_idx_bf))     str = {str, $sformatf("EVICT_WAY=0x%0h(remain)  ", sureq_evict_way_prev)};
-        else                                                                str = {str, $sformatf("EVICT_WAY=0x%0h <-- 0x%0h  ", m_cache.get_evict_way(sureq_idx_bf), sureq_evict_way_prev)};
+        else if(sureq_lookup == SNP_MISS) begin
+          str = {str, $sformatf("memory remain, no change")};
+        end
+        else `uvm_fatal(m_msg_name, $sformatf("can not identify lookup: %s", sureq_lookup.name()))
         `uvm_info("PASS_SUREQ", str, UVM_LOW)
       end
       else begin
@@ -414,8 +439,8 @@ task `THIS_CLASS::check_sureq();
       sureq_error_count     = 0;
       sureq_op_req_bf       = SUREQ_RD;
       sureq_addr_req_bf     = 0;
+      sureq_lookup          = FILL_INV_BLK;
       sureq_idx_bf          = 0;
-      sureq_hit             = 0;
       sureq_way_bf          = 0;
       sureq_st_prev         = INVALID;
       sureq_tag_prev        = 0;

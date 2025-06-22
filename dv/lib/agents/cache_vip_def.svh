@@ -6,6 +6,7 @@
 `define VIP_NUM_BLK       1024
 `define VIP_ST_WIDTH      3
 `define VIP_NUM_WAY       4
+`define VIP_NUM_IDX       (`VIP_NUM_BLK/`VIP_NUM_WAY)
 
 `define VIP_SADDR_WIDTH   `VIP_PADDR_WIDTH-$clog2(`VIP_BLK_WIDTH/8)
 `define VIP_IDX_WIDTH     $clog2(`VIP_NUM_BLK/`VIP_NUM_WAY)
