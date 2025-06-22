@@ -65,6 +65,7 @@ module cache_mem #(
   // |State   |Tag                |Data          |
   // |3bits   |TAG_WIDTH          |BLK_WIDTH    0|
   // ----------------------------------------------------------------
+  localparam NUM_IDX    = NUM_BLK/NUM_WAY;
   localparam IDX_WIDTH  = $clog2(NUM_BLK/NUM_WAY);
   localparam TAG_WIDTH  = SADDR_WIDTH - IDX_WIDTH;
   localparam RAM_WIDTH  = ST_WIDTH + TAG_WIDTH + BLK_WIDTH;
@@ -320,48 +321,102 @@ module cache_mem #(
   end
 
 `ifdef PLRU_REPL
-  logic [2:0] plru_tree [0:(NUM_BLK/NUM_WAY)-1];
+  logic [2:0] repl_tree [0:NUM_IDX-1];
   logic [2:0] tree_bit;
 
-  assign tree_bit         = plru_tree[cdreq_idx];
+  assign tree_bit         = repl_tree[cdreq_idx];
+  // evict only occures in cdreq --> only cdreq_idx is considered to determine evict_way
+  // FIXME
+  //assign tree_bit         = repl_tree[promote_idx];
+
   assign evict_way[1]     = tree_bit[2];
   assign evict_way[0]     = tree_bit[2] ? tree_bit[0] : tree_bit[1];
 
   always_ff @(posedge clk or negedge rst_n) begin
-    if(!rst_n)
-      for(int i=0; i < (NUM_BLK/NUM_WAY); i++) begin
-        plru_tree[i] <= 3'b000;
+    if(!rst_n) begin
+      for(int i=0; i < NUM_IDX; i++) begin
+        repl_tree[i] <= 3'b000;
       end
+    end
     else if(promote_ack) begin
       unique case(promote_way)
         2'b00:
               begin
-                plru_tree[promote_idx][2] <= 1'b1;
-                plru_tree[promote_idx][1] <= 1'b1;
+                repl_tree[promote_idx][2] <= 1'b1;
+                repl_tree[promote_idx][1] <= 1'b1;
               end
         2'b01:
               begin
-                plru_tree[promote_idx][2] <= 1'b1;
-                plru_tree[promote_idx][1] <= 1'b0;
+                repl_tree[promote_idx][2] <= 1'b1;
+                repl_tree[promote_idx][1] <= 1'b0;
               end
         2'b10:
               begin
-                plru_tree[promote_idx][2] <= 1'b0;
-                plru_tree[promote_idx][0] <= 1'b1;
+                repl_tree[promote_idx][2] <= 1'b0;
+                repl_tree[promote_idx][0] <= 1'b1;
               end
         2'b11:
               begin
-                plru_tree[promote_idx][2] <= 1'b0;
-                plru_tree[promote_idx][0] <= 1'b0;
+                repl_tree[promote_idx][2] <= 1'b0;
+                repl_tree[promote_idx][0] <= 1'b0;
               end
       endcase
     end
   end
 
 `elsif THESIS_REPL
-  assign evict_way = 2'b00;
+  localparam REPL_CNT_WIDTH = 2;
+  localparam REPL_CNT_MAX   = (1<<REPL_CNT_WIDTH) - 1;
+  localparam REPL_THRESHOLD = (1<<(REPL_CNT_WIDTH));
+
+  logic [REPL_CNT_WIDTH-1:0] repl_tree [0:NUM_IDX-1][0:2];
+
+  assign evict_way[1] = (repl_tree[cdreq_idx][2] >= REPL_THRESHOLD);
+  assign evict_way[0] = (repl_tree[cdreq_idx][2] >= REPL_THRESHOLD) ? (repl_tree[promote_idx][1] >= REPL_THRESHOLD) : (repl_tree[promote_idx][0] >= REPL_THRESHOLD);
+
+  function automatic logic [REPL_CNT_WIDTH-1:0] incr1(input logic [REPL_CNT_WIDTH-1:0] var0);
+    return (var0 == REPL_CNT_MAX) ? var0 : var0 + 1;
+  endfunction
+
+  function automatic logic [REPL_CNT_WIDTH-1:0] decr1(input logic [REPL_CNT_WIDTH-1:0] var0);
+    return (var0 == 0) ? 0 : var0 - 1;
+  endfunction
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if(!rst_n) begin
+      for(int i=0; i < NUM_IDX; i++) begin
+        repl_tree[i][2] <= REPL_THRESHOLD;
+        repl_tree[i][1] <= REPL_THRESHOLD;
+        repl_tree[i][0] <= REPL_THRESHOLD;
+      end
+    end
+    else if(promote_ack) begin
+      unique case(promote_way)
+        2'b00:
+              begin
+                repl_tree[promote_idx][2] <= incr1(repl_tree[promote_idx][2]);
+                repl_tree[promote_idx][1] <= incr1(repl_tree[promote_idx][1]);
+              end
+        2'b01:
+              begin
+                repl_tree[promote_idx][2] <= incr1(repl_tree[promote_idx][2]);
+                repl_tree[promote_idx][1] <= decr1(repl_tree[promote_idx][1]);
+              end
+        2'b10:
+              begin
+                repl_tree[promote_idx][2] <= decr1(repl_tree[promote_idx][2]);
+                repl_tree[promote_idx][0] <= incr1(repl_tree[promote_idx][0]);
+              end
+        2'b11:
+              begin
+                repl_tree[promote_idx][2] <= decr1(repl_tree[promote_idx][2]);
+                repl_tree[promote_idx][0] <= decr1(repl_tree[promote_idx][0]);
+              end
+      endcase // promote_way
+    end
+  end
 `else
-  $fatal("can not identify replacement policy")
+  $fatal("can not identify replacement policy");
 `endif
 
   // ----------------------------------------------------------------

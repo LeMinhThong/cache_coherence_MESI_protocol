@@ -130,7 +130,7 @@ function void `THIS_CLASS::comp_model_vs_rtl(string type_req="ALL", idx_t idx=0,
       end
       // check replacement
 `ifdef PLRU_REPL
-      hdl_path = $sformatf("cache_mem_tb_top.dut.plru_tree[%0d]", i);
+      hdl_path = $sformatf("cache_mem_tb_top.dut.repl_tree[%0d]", i);
       if(!uvm_hdl_read(hdl_path, read_rtl_blk))
         `uvm_fatal(m_msg_name, $sformatf("read hdl path fail, hdl_path=%s", hdl_path))
       if((type_req == "ALL") || ((type_req inside {"CDREQ", "SUREQ"}) && (i == idx))) begin
