@@ -325,9 +325,9 @@ module cache_mem #(
   logic [2:0] tree_bit;
 
   assign tree_bit         = repl_tree[cdreq_idx];
-  // evict only occures in cdreq --> only cdreq_idx is considered to determine evict_way
-  // FIXME
-  //assign tree_bit         = repl_tree[promote_idx];
+  // promote could occurres when executes SUREQ
+  // but determines evict way is only occures when executes CDREQ
+  // --> only cdreq_idx is considered to determine evict_way
 
   assign evict_way[1]     = tree_bit[2];
   assign evict_way[0]     = tree_bit[2] ? tree_bit[0] : tree_bit[1];
@@ -367,12 +367,23 @@ module cache_mem #(
 `elsif THESIS_REPL
   localparam REPL_CNT_WIDTH = 2;
   localparam REPL_CNT_MAX   = (1<<REPL_CNT_WIDTH) - 1;
-  localparam REPL_THRESHOLD = (1<<(REPL_CNT_WIDTH));
+  localparam REPL_THRESHOLD = (1<<(REPL_CNT_WIDTH-1));
 
   logic [REPL_CNT_WIDTH-1:0] repl_tree [0:NUM_IDX-1][0:2];
+  
+  logic [REPL_CNT_WIDTH-1:0] repl_tree_n2;
+  logic [REPL_CNT_WIDTH-1:0] repl_tree_n1;
+  logic [REPL_CNT_WIDTH-1:0] repl_tree_n0;
+
+  assign repl_tree_n2 = repl_tree[cdreq_idx][2];
+  assign repl_tree_n1 = repl_tree[cdreq_idx][1];
+  assign repl_tree_n0 = repl_tree[cdreq_idx][0];
 
   assign evict_way[1] = (repl_tree[cdreq_idx][2] >= REPL_THRESHOLD);
-  assign evict_way[0] = (repl_tree[cdreq_idx][2] >= REPL_THRESHOLD) ? (repl_tree[promote_idx][1] >= REPL_THRESHOLD) : (repl_tree[promote_idx][0] >= REPL_THRESHOLD);
+  assign evict_way[0] = (repl_tree[cdreq_idx][2] >= REPL_THRESHOLD) ? (repl_tree[cdreq_idx][0] >= REPL_THRESHOLD) : (repl_tree[cdreq_idx][1] >= REPL_THRESHOLD);
+
+  //assign evict_way[1] = ((repl_tree[cdreq_idx][2] >= REPL_THRESHOLD) || (repl_tree[cdreq_idx][0] == REPL_CNT_MAX));
+  //assign evict_way[0] = (repl_tree[cdreq_idx][2] >= REPL_THRESHOLD) ? (repl_tree[cdreq_idx][0] >= REPL_THRESHOLD) : (repl_tree[cdreq_idx][1] >= REPL_THRESHOLD);
 
   function automatic logic [REPL_CNT_WIDTH-1:0] incr1(input logic [REPL_CNT_WIDTH-1:0] var0);
     return (var0 == REPL_CNT_MAX) ? var0 : var0 + 1;
@@ -708,9 +719,6 @@ module cache_mem #(
   logic asgData_in_cdreq_ack;
   logic asgData_in_sursp_ack;
   logic asgData_in_cdrsp_ack;
-
-  logic asgData_in_surspCh_idx;
-  logic asgData_in_surspCh_way;
 
   //assign asgData_in_cdreq =  (cdreq_op_bf == CDREQ_WB);
   assign asgData_in_cdreq_ack = ( (cdreq_op_bf == CDREQ_WB) &&
