@@ -17,7 +17,7 @@ class `THIS_CLASS extends uvm_component;
   extern  virtual function  void  write(cache_txn_c t);
 
   //-----------------------------------------------------------------
-  covergroup CG_CDREQ_OP_COV();
+  covergroup CG_CDREQ_MESI_COV();
     option.per_instance = 1;
 
     CP_CDREQ_OP_COV: coverpoint m_txn.cdreq_op {
@@ -26,22 +26,84 @@ class `THIS_CLASS extends uvm_component;
           bins CB_CDREQ_MD  = {CDREQ_MD };
           bins CB_CDREQ_WB  = {CDREQ_WB };
     }
-  endgroup: CG_CDREQ_OP_COV
+    CP_LOOKUP_COV: coverpoint m_txn.Lookup {
+          bins CP_HIT           = {HIT          };
+          bins CP_FILL_INV_BLK  = {FILL_INV_BLK };
+          bins CP_EVICT_BLK     = {EVICT_BLK    };
+    }
+    `CP_STATE_COV
+    CP_CUREQ_OP_COV: coverpoint m_txn.cureq_op {
+          bins CP_CUREQ_RFO = {CUREQ_RFO};
+          bins CP_CUREQ_INV = {CUREQ_INV};
+    }
+    CP_CDRSP_RSP_COV: coverpoint m_txn.cdrsp_rsp {
+          bins CP_CDRSP_OKAY  = {CDRSP_OKAY};
+    }
+    CP_SDREQ_OP_COV: coverpoint m_txn.sdreq_op {
+          bins CB_SDREQ_RD  = {SDREQ_RD };
+          bins CB_SDREQ_RFO = {SDREQ_RFO};
+          bins CB_SDREQ_INV = {SDREQ_INV};
+          bins CB_SDREQ_WB  = {SDREQ_WB };
+    }
+    CP_SURSP_RSP_COV: coverpoint m_txn.sursp_rsp {
+          bins CB_SURSP_OKAY  = {SURSP_OKAY };
+          bins CB_SURSP_FETCH = {SURSP_FETCH};
+          bins CB_SURSP_SNOOP = {SURSP_SNOOP};
+    }
+    CP_CURSP_RSP_COV: coverpoint m_txn.cursp_rsp {
+          bins CB_RSP_CURSP_OKAY = {CURSP_OKAY};
+    }
+    CROSS_CDREQ_OP_X_STATE_COV: cross CP_CDREQ_OP_COV, CP_STATE_COV {
+          illegal_bins CB_ILL_RD_X_MIGRATED   = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_RD } && binsof(CP_STATE_COV)  intersect {MIGRATED  };
+          illegal_bins CB_ILL_RFO_X_MIGRATED  = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_RFO} && binsof(CP_STATE_COV)  intersect {MIGRATED  };
+          illegal_bins CB_ILL_MD_X_INVALID    = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_MD } && binsof(CP_STATE_COV)  intersect {INVALID   };
+          illegal_bins CB_ILL_WB_X_INVALID    = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_WB } && binsof(CP_STATE_COV)  intersect {INVALID   };
+          illegal_bins CB_ILL_WB_X_SHARED     = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_WB } && binsof(CP_STATE_COV)  intersect {SHARED    };
+          illegal_bins CB_ILL_WB_X_MODIFIED   = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_WB } && binsof(CP_STATE_COV)  intersect {MODIFIED  };
+    }
+    CROSS_CDREQ_OP_X_LOOKUP_COV: cross CP_CDREQ_OP_COV, CP_LOOKUP_COV {
+          illegal_bins CP_ILL_MD_X_FILL_INV_BLK = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_MD} && binsof(CP_LOOKUP_COV) intersect {FILL_INV_BLK };
+          illegal_bins CP_ILL_MD_X_EVICT_BLK    = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_MD} && binsof(CP_LOOKUP_COV) intersect {EVICT_BLK    };
+          illegal_bins CP_ILL_WB_X_FILL_INV_BLK = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_WB} && binsof(CP_LOOKUP_COV) intersect {FILL_INV_BLK };
+          illegal_bins CP_ILL_WB_X_EVICT_BLK    = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_WB} && binsof(CP_LOOKUP_COV) intersect {EVICT_BLK    };
+    }
+    CROSS_SDREQ_OP_X_SURSP_RSP_COV: cross CP_SDREQ_OP_COV, CP_SURSP_RSP_COV {
+          illegal_bins CB_ILL_RD_X_OKAY   = binsof(CP_SDREQ_OP_COV) intersect {SDREQ_RD  } && binsof(CP_SURSP_RSP_COV) intersect {SURSP_OKAY };
+          illegal_bins CB_ILL_RFO_X_FETCH = binsof(CP_SDREQ_OP_COV) intersect {SDREQ_RFO } && binsof(CP_SURSP_RSP_COV) intersect {SURSP_FETCH};
+          illegal_bins CB_ILL_RFO_X_SNOOP = binsof(CP_SDREQ_OP_COV) intersect {SDREQ_RFO } && binsof(CP_SURSP_RSP_COV) intersect {SURSP_SNOOP};
+          illegal_bins CB_ILL_WB_X_FETCH  = binsof(CP_SDREQ_OP_COV) intersect {SDREQ_WB  } && binsof(CP_SURSP_RSP_COV) intersect {SURSP_FETCH};
+          illegal_bins CB_ILL_WB_X_SNOOP  = binsof(CP_SDREQ_OP_COV) intersect {SDREQ_WB  } && binsof(CP_SURSP_RSP_COV) intersect {SURSP_SNOOP};
+          illegal_bins CB_ILL_INV_X_FETCH = binsof(CP_SDREQ_OP_COV) intersect {SDREQ_INV } && binsof(CP_SURSP_RSP_COV) intersect {SURSP_FETCH};
+          illegal_bins CB_ILL_INV_X_SNOOP = binsof(CP_SDREQ_OP_COV) intersect {SDREQ_INV } && binsof(CP_SURSP_RSP_COV) intersect {SURSP_SNOOP};
+    }
+    CORSS_STATE_X_LOOKUP_COV: cross CP_STATE_COV, CP_LOOKUP_COV {
+          illegal_bins CB_ILL_INVALID_X_HIT             = binsof(CP_STATE_COV) intersect {INVALID   } && binsof(CP_LOOKUP_COV) intersect {HIT         };
+          illegal_bins CB_ILL_INVALID_X_EVICT_BLK       = binsof(CP_STATE_COV) intersect {INVALID   } && binsof(CP_LOOKUP_COV) intersect {EVICT_BLK   };
+          illegal_bins CB_ILL_EXCLUSIVE_X_FILL_INV_BLK  = binsof(CP_STATE_COV) intersect {EXCLUSIVE } && binsof(CP_LOOKUP_COV) intersect {FILL_INV_BLK};
+          illegal_bins CB_ILL_SHARED_X_FILL_INV_BLK     = binsof(CP_STATE_COV) intersect {SHARED    } && binsof(CP_LOOKUP_COV) intersect {FILL_INV_BLK};
+          illegal_bins CB_ILL_MODIFIED_X_FILL_INV_BLK   = binsof(CP_STATE_COV) intersect {MODIFIED  } && binsof(CP_LOOKUP_COV) intersect {FILL_INV_BLK};
+          illegal_bins CB_ILL_MIGRATED_X_FILL_INV_BLK   = binsof(CP_STATE_COV) intersect {MIGRATED  } && binsof(CP_LOOKUP_COV) intersect {FILL_INV_BLK};
+    }
+  endgroup: CG_CDREQ_MESI_COV
 
   //-----------------------------------------------------------------
-  covergroup CG_CDREQ_IDX_COV();
+  covergroup CG_CDREQ_BLK_COV();
     option.per_instance = 1;
 
-    CP_CDREQ_IDX_COV: coverpoint m_txn.cdreq_addr[`IDX] {
-          bins CB_CDREQ_IDX[] = {[0:`VIP_NUM_IDX-1]};
+    CP_IDX_COV: coverpoint m_txn.Idx {
+          bins CB_IDX[] = {[0:`VIP_NUM_IDX-1]};
     }
-  endgroup: CG_CDREQ_IDX_COV
+    CP_WAY_COV: coverpoint m_txn.Way {
+          bins CB_WAY[] = {[0:`VIP_NUM_WAY]};
+    }
+    CROSS_IDX_WAY_COV: cross CP_IDX_COV, CP_WAY_COV;
+  endgroup: CG_CDREQ_BLK_COV
 
   //-----------------------------------------------------------------
   function new(string name="`THIS_CLASS", uvm_component parent);
     super.new(name, parent);
-    CG_CDREQ_OP_COV = new();
-    CG_CDREQ_IDX_COV = new();
+    CG_CDREQ_MESI_COV = new();
+    CG_CDREQ_BLK_COV = new();
   endfunction: new
 endclass: `THIS_CLASS
 
@@ -66,8 +128,8 @@ task `THIS_CLASS::run_phase(uvm_phase phase);
     wait(m_txn_q.size() > 0);
     while(m_txn_q.size() > 0) begin
       m_txn = m_txn_q.pop_front();
-      CG_CDREQ_OP_COV.sample();
-      CG_CDREQ_IDX_COV.sample();
+      CG_CDREQ_MESI_COV.sample();
+      CG_CDREQ_BLK_COV.sample();
     end
   end
 endtask: run_phase
@@ -75,7 +137,8 @@ endtask: run_phase
 //-------------------------------------------------------------------
 function void `THIS_CLASS::report_phase(uvm_phase phase);
   super.report_phase(phase);
-  `uvm_info(m_msg_name, $sformatf("CG_CDREQ_OP_COV=%f", CG_CDREQ_OP_COV.get_coverage()), UVM_LOW)
+  `uvm_info(m_msg_name, $sformatf("CG_CDREQ_MESI_COV=%f", CG_CDREQ_MESI_COV.get_coverage()), UVM_LOW)
+  `uvm_info(m_msg_name, $sformatf("CG_CDREQ_BLK_COV=%f", CG_CDREQ_BLK_COV.get_coverage()), UVM_LOW)
 endfunction: report_phase
 
 `undef THIS_CLASS
