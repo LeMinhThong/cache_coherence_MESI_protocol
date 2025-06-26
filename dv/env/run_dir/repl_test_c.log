@@ -1,6 +1,6 @@
 QuestaSim-64 vlog 10.6c Compiler 2017.07 Jul 26 2017
-Start time: 22:15:36 on Jun 22,2025
-vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/topchip" "+incdir+../lib" "+incdir+../lib/agents" "+incdir+../lib/if" "+incdir+../lib/seqs" "+incdir+../lib/units" "+incdir+/tests" "+incdir+.//tb" ../../rtl/topchip/cache_def.sv ../../rtl/topchip/cache_pkg.sv ../../rtl/topchip/cache_mem.sv ../lib/if/cache_if.sv ../lib/cache_units_pkg.sv .//tests/cache_tests_pkg.sv .//tb/cache_mem_tb_top.sv "+define+THESIS_REPL" "+define+HAS_SB" -l run_dir/repl_test_c.log 
+Start time: 12:37:04 on Jun 26,2025
+vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/topchip" "+incdir+../lib" "+incdir+../lib/agents" "+incdir+../lib/if" "+incdir+../lib/seqs" "+incdir+../lib/units" "+incdir+/tests" "+incdir+.//tb" ../../rtl/topchip/cache_def.sv ../../rtl/topchip/cache_pkg.sv ../../rtl/topchip/cache_mem.sv ../lib/if/cache_if.sv ../lib/cache_units_pkg.sv .//tests/cache_tests_pkg.sv .//tb/cache_mem_tb_top.sv "+define+PLRU_REPL" "+define+HAS_SB" -l run_dir/repl_test_c.log 
 -- Compiling package cache_pkg
 -- Compiling package cache_mem_sv_unit
 -- Importing package cache_pkg
@@ -16,14 +16,14 @@ vlog -sv -lint "+incdir+../../rtl" "+incdir+../../rtl/topchip" "+incdir+../lib" 
 
 Top level modules:
 	cache_mem_tb_top
-End time: 22:15:37 on Jun 22,2025, Elapsed time: 0:00:01
+End time: 12:37:04 on Jun 26,2025, Elapsed time: 0:00:00
 Errors: 0, Warnings: 0
 Reading E:/questaSim/main/tcl/vsim/pref.tcl
 
  10.6c
 
- vsim work.cache_mem_tb_top "+UVM_VERBOSITY=MEDIUM" "+UVM_TESTNAME=repl_test_c" -sv_seed random -coverage -nodpiexports -novopt -wlf wave_dir/repl_test_c.wlf -do " log -r /*; coverage save -onexit cov_metrics/repl_test_c.ucdb; run -all; quit -f;" 
- Start time: 22:15:38 on Jun 22,2025
+ vsim work.cache_mem_tb_top "+UVM_VERBOSITY=MEDIUM" "+UVM_TESTNAME=repl_test_c" -sv_seed random -coverage -novopt -wlf wave_dir/repl_test_c.wlf -do " log -r /*; coverage save -onexit cov_metrics/repl_test_c.ucdb; run -all; quit -f;" 
+ Start time: 12:37:06 on Jun 26,2025
  ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
  //  Questa Sim-64
  //  Version 10.6c win64 Jul 26 2017
@@ -58,7 +58,7 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  Loading mtiUvm.questa_uvm_pkg
  Loading E:/questaSim/main/uvm-1.1d\win64\uvm_dpi.dll
  ** Warning: (vsim-8634) Code was not compiled with coverage options.
- Sv_Seed = 503574646
+ Sv_Seed = 983291050
   coverage save -onexit cov_metrics/repl_test_c.ucdb
   run -all
  ----------------------------------------------------------------
@@ -83,10 +83,6 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
  UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
-    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
-    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
@@ -99,9 +95,9 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(290): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(290): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
@@ -115,40 +111,50 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(396): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(295): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(396): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(295): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(396): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(327): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(396): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(462): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(398): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(462): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(399): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(462): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(400): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(462): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(401): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(464): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(406): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(465): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(407): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(466): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(548): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(467): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(557): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(472): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(564): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(473): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(614): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(623): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(630): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
  hello from cache_mem_tb
  UVM_INFO @ 0: reporter [RNTST] Running test repl_test_c...
- ** Warning: (vsim-8315) ../../rtl/topchip/cache_mem.sv(387): No condition is true in the unique/priority if/case statement.
+ ** Warning: (vsim-8315) ../../rtl/topchip/cache_mem.sv(453): No condition is true in the unique/priority if/case statement.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8315) ../../rtl/topchip/cache_mem.sv(377): No condition is true in the unique/priority if/case statement.
+ ** Warning: (vsim-8315) ../../rtl/topchip/cache_mem.sv(443): No condition is true in the unique/priority if/case statement.
     Time: 0 ns  Iteration: 0  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(557): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(623): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 1  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-3881) ../lib/units/cache_cov_cdreq.svh(97): Sign-and-Width conversion applied in bin 'CB_WAY' for Coverpoint 'CP_WAY_COV'. Value '4' changed to '3 (maximum)' value.
+    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+ ** Warning: (vsim-3882) ../lib/units/cache_cov_cdreq.svh(97): Out of bounds value range in bin 'CB_WAY' for Coverpoint 'CP_WAY_COV' converted to nearest valid bounded range of [0:3].
+    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
  UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
  ----------------------------------------------------------------
  Name                       Type                      Size  Value
@@ -188,31 +194,27 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
        m_xfr_a_imp          uvm_analysis_imp          -     @765 
  ----------------------------------------------------------------
  
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(396): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(462): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(396): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(462): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(396): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(462): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(396): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(462): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(398): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(464): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(399): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(465): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(400): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(466): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(401): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(467): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(406): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(472): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(407): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(473): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(557): Index xxxxxxxx into array dimension [0:255] is out of bounds.
-    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
-    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(291): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(623): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(292): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
@@ -226,9 +228,9 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(294): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(295): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
- ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(286): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(295): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(287): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
@@ -241,6 +243,10 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
  ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(289): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(290): Index xxxxxxxx into array dimension [0:255] is out of bounds.
+    Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
+ ** Warning: (vsim-8233) ../../rtl/topchip/cache_mem.sv(290): Index xxxxxxxx into array dimension [0:255] is out of bounds.
     Time: 0 ns  Iteration: 58  Instance: /cache_mem_tb_top/dut
  UVM_INFO .\\tests\cache_base_test.svh(57) @ 0: uvm_test_top [repl_test_c] Start test
  UVM_INFO ../lib/units/cache_sb.svh(61) @ 10: uvm_test_top.env.sb [SB] Reset is handling
@@ -248,186 +254,106 @@ Reading E:/questaSim/main/tcl/vsim/pref.tcl
  UVM_INFO ../lib/units/cache_sb.svh(73) @ 30: uvm_test_top.env.sb [SB] Reset has completed
  UVM_INFO ../lib/units/cache_sb.svh(116) @ 70: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
  UVM_INFO ../lib/units/cache_sb.svh(117) @ 70: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x1  DAT=0x0  Lookup=FILL_INV_BLK  Access to: IDX=0x1  WAY=0x0  ST=INVALID  TAG=0x0  DAT=0x0
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 140: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x1  sdreq_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 180: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 200: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 200: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=FILL_INV_BLK  ST=INVALID  IDX=0x1  WAY=0x0  cdreq_op=CDREQ_RD  cdreq_addr=0x1  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x1  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c  cursp_rsp=CURSP_OKAY  cursp_data=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 210: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 210: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE <-- INVALID  TAG=0x0(remain)  DATA=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c <-- 0x0  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 210: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 230: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 230: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x101  DAT=0x0  Lookup=FILL_INV_BLK  Access to: IDX=0x1  WAY=0x1  ST=INVALID  TAG=0x0  DAT=0x0
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 300: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x101  sdreq_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 350: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 390: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 390: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=FILL_INV_BLK  ST=INVALID  IDX=0x1  WAY=0x1  cdreq_op=CDREQ_RD  cdreq_addr=0x101  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x101  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b  cursp_rsp=CURSP_OKAY  cursp_data=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 400: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=1
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 400: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE <-- INVALID  TAG=0x1 <-- 0x0  DATA=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b <-- 0x0  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 400: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 420: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 420: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x201  DAT=0x0  Lookup=FILL_INV_BLK  Access to: IDX=0x1  WAY=0x2  ST=INVALID  TAG=0x0  DAT=0x0
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 490: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x201  sdreq_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 570: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 620: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 620: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=FILL_INV_BLK  ST=INVALID  IDX=0x1  WAY=0x2  cdreq_op=CDREQ_RD  cdreq_addr=0x201  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x201  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7  cursp_rsp=CURSP_OKAY  cursp_data=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 630: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=2
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 630: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE <-- INVALID  TAG=0x2 <-- 0x0  DATA=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7 <-- 0x0  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 630: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 650: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 650: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x301  DAT=0x0  Lookup=FILL_INV_BLK  Access to: IDX=0x1  WAY=0x3  ST=INVALID  TAG=0x0  DAT=0x0
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 670: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x301  sdreq_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 700: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 740: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 740: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=FILL_INV_BLK  ST=INVALID  IDX=0x1  WAY=0x3  cdreq_op=CDREQ_RD  cdreq_addr=0x301  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x301  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49  cursp_rsp=CURSP_OKAY  cursp_data=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 750: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=3
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 750: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE <-- INVALID  TAG=0x3 <-- 0x0  DATA=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49 <-- 0x0  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 750: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 90: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x1  sdreq_data=0x0  
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 130: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d  
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 160: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d  
+ UVM_INFO ../lib/units/cache_cov_cdreq.svh(120) @ 160: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=FILL_INV_BLK  ST=INVALID  IDX=0x1  WAY=0x0  cdreq_op=CDREQ_RD  cdreq_addr=0x1  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x1  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d  cursp_rsp=CURSP_OKAY  cursp_data=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d  
+ UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 170: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
+ UVM_INFO ../lib/units/cache_sb.svh(333) @ 170: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE <-- INVALID  TAG=0x0(remain)  DATA=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d <-- 0x0  EVICT_WAY=0x2 <-- 0x0  
+ UVM_INFO ../lib/units/cache_sb.svh(338) @ 170: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/units/cache_sb.svh(116) @ 190: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
+ UVM_INFO ../lib/units/cache_sb.svh(117) @ 190: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x101  DAT=0x0  Lookup=FILL_INV_BLK  Access to: IDX=0x1  WAY=0x1  ST=INVALID  TAG=0x0  DAT=0x0
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 210: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x101  sdreq_data=0x0  
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 250: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0x5fff3ef365fcd1f908cbbbf2781cc59d60c6dac9db4b73a4a9e06628eb56c7944892a02156bc4bc2e712adafe912ea111647576ad353450c87684d90d584179c  
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 270: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0x5fff3ef365fcd1f908cbbbf2781cc59d60c6dac9db4b73a4a9e06628eb56c7944892a02156bc4bc2e712adafe912ea111647576ad353450c87684d90d584179c  
+ UVM_INFO ../lib/units/cache_cov_cdreq.svh(120) @ 270: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=FILL_INV_BLK  ST=INVALID  IDX=0x1  WAY=0x1  cdreq_op=CDREQ_RD  cdreq_addr=0x101  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x101  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0x5fff3ef365fcd1f908cbbbf2781cc59d60c6dac9db4b73a4a9e06628eb56c7944892a02156bc4bc2e712adafe912ea111647576ad353450c87684d90d584179c  cursp_rsp=CURSP_OKAY  cursp_data=0x5fff3ef365fcd1f908cbbbf2781cc59d60c6dac9db4b73a4a9e06628eb56c7944892a02156bc4bc2e712adafe912ea111647576ad353450c87684d90d584179c  
+ UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 280: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=1
+ UVM_INFO ../lib/units/cache_sb.svh(333) @ 280: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE <-- INVALID  TAG=0x1 <-- 0x0  DATA=0x5fff3ef365fcd1f908cbbbf2781cc59d60c6dac9db4b73a4a9e06628eb56c7944892a02156bc4bc2e712adafe912ea111647576ad353450c87684d90d584179c <-- 0x0  EVICT_WAY=0x2(remain)  
+ UVM_INFO ../lib/units/cache_sb.svh(338) @ 280: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/units/cache_sb.svh(116) @ 300: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
+ UVM_INFO ../lib/units/cache_sb.svh(117) @ 300: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x201  DAT=0x0  Lookup=FILL_INV_BLK  Access to: IDX=0x1  WAY=0x2  ST=INVALID  TAG=0x0  DAT=0x0
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 360: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x201  sdreq_data=0x0  
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 430: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xe6927eacaf1a4ff7ff92b8978b3f08c9daea74f90b186cc4f2bf4cf540aa2d5eb07967e7bb3ebdeb1562330d6d580d200bfd4868901c147c99065b78f857dc70  
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 500: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xe6927eacaf1a4ff7ff92b8978b3f08c9daea74f90b186cc4f2bf4cf540aa2d5eb07967e7bb3ebdeb1562330d6d580d200bfd4868901c147c99065b78f857dc70  
+ UVM_INFO ../lib/units/cache_cov_cdreq.svh(120) @ 500: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=FILL_INV_BLK  ST=INVALID  IDX=0x1  WAY=0x2  cdreq_op=CDREQ_RD  cdreq_addr=0x201  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x201  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0xe6927eacaf1a4ff7ff92b8978b3f08c9daea74f90b186cc4f2bf4cf540aa2d5eb07967e7bb3ebdeb1562330d6d580d200bfd4868901c147c99065b78f857dc70  cursp_rsp=CURSP_OKAY  cursp_data=0xe6927eacaf1a4ff7ff92b8978b3f08c9daea74f90b186cc4f2bf4cf540aa2d5eb07967e7bb3ebdeb1562330d6d580d200bfd4868901c147c99065b78f857dc70  
+ UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 510: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=2
+ UVM_INFO ../lib/units/cache_sb.svh(333) @ 510: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE <-- INVALID  TAG=0x2 <-- 0x0  DATA=0xe6927eacaf1a4ff7ff92b8978b3f08c9daea74f90b186cc4f2bf4cf540aa2d5eb07967e7bb3ebdeb1562330d6d580d200bfd4868901c147c99065b78f857dc70 <-- 0x0  EVICT_WAY=0x0 <-- 0x2  
+ UVM_INFO ../lib/units/cache_sb.svh(338) @ 510: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/units/cache_sb.svh(116) @ 530: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
+ UVM_INFO ../lib/units/cache_sb.svh(117) @ 530: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x301  DAT=0x0  Lookup=FILL_INV_BLK  Access to: IDX=0x1  WAY=0x3  ST=INVALID  TAG=0x0  DAT=0x0
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 590: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x301  sdreq_data=0x0  
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 630: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0x9e23930d60f31fa8fd51d0c746ccbb55bb93533f51b1253d2eb3febe005543e3b6d09954682195e3119a07828051c9c74b3892dfeeb87b67c73b0c8036e78291  
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 660: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0x9e23930d60f31fa8fd51d0c746ccbb55bb93533f51b1253d2eb3febe005543e3b6d09954682195e3119a07828051c9c74b3892dfeeb87b67c73b0c8036e78291  
+ UVM_INFO ../lib/units/cache_cov_cdreq.svh(120) @ 660: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=FILL_INV_BLK  ST=INVALID  IDX=0x1  WAY=0x3  cdreq_op=CDREQ_RD  cdreq_addr=0x301  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x301  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0x9e23930d60f31fa8fd51d0c746ccbb55bb93533f51b1253d2eb3febe005543e3b6d09954682195e3119a07828051c9c74b3892dfeeb87b67c73b0c8036e78291  cursp_rsp=CURSP_OKAY  cursp_data=0x9e23930d60f31fa8fd51d0c746ccbb55bb93533f51b1253d2eb3febe005543e3b6d09954682195e3119a07828051c9c74b3892dfeeb87b67c73b0c8036e78291  
+ UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 670: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=3
+ UVM_INFO ../lib/units/cache_sb.svh(333) @ 670: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE <-- INVALID  TAG=0x3 <-- 0x0  DATA=0x9e23930d60f31fa8fd51d0c746ccbb55bb93533f51b1253d2eb3febe005543e3b6d09954682195e3119a07828051c9c74b3892dfeeb87b67c73b0c8036e78291 <-- 0x0  EVICT_WAY=0x0(remain)  
+ UVM_INFO ../lib/units/cache_sb.svh(338) @ 670: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/units/cache_sb.svh(116) @ 690: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
+ UVM_INFO ../lib/units/cache_sb.svh(117) @ 690: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x1  DAT=0x0  Lookup=HIT  Access to: IDX=0x1  WAY=0x0  ST=EXCLUSIVE  TAG=0x0  DAT=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 740: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d  
+ UVM_INFO ../lib/units/cache_cov_cdreq.svh(120) @ 740: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x0  cdreq_op=CDREQ_RD  cdreq_addr=0x1  cdreq_data=0x0  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  cursp_rsp=CURSP_OKAY  cursp_data=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d  
+ UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 750: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
+ UVM_INFO ../lib/units/cache_sb.svh(333) @ 750: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x0(remain)  DATA=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d(remain)  EVICT_WAY=0x2 <-- 0x0  
+ UVM_INFO ../lib/units/cache_sb.svh(338) @ 750: uvm_test_top.env.sb [SB] --------------------------------------------------
  UVM_INFO ../lib/units/cache_sb.svh(116) @ 770: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 770: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x1  DAT=0x0  Lookup=HIT  Access to: IDX=0x1  WAY=0x0  ST=EXCLUSIVE  TAG=0x0  DAT=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 820: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 820: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x0  cdreq_op=CDREQ_RD  cdreq_addr=0x1  cdreq_data=0x0  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  cursp_rsp=CURSP_OKAY  cursp_data=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 830: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 830: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x0(remain)  DATA=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c(remain)  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 830: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 850: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 850: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x101  DAT=0x0  Lookup=HIT  Access to: IDX=0x1  WAY=0x1  ST=EXCLUSIVE  TAG=0x1  DAT=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 870: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 870: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x1  cdreq_op=CDREQ_RD  cdreq_addr=0x101  cdreq_data=0x0  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  cursp_rsp=CURSP_OKAY  cursp_data=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 880: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=1
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 880: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x1(remain)  DATA=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b(remain)  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 880: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 900: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 900: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x201  DAT=0x0  Lookup=HIT  Access to: IDX=0x1  WAY=0x2  ST=EXCLUSIVE  TAG=0x2  DAT=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 970: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 970: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x2  cdreq_op=CDREQ_RD  cdreq_addr=0x201  cdreq_data=0x0  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  cursp_rsp=CURSP_OKAY  cursp_data=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 980: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=2
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 980: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x2(remain)  DATA=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7(remain)  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 980: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 1000: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 1000: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x301  DAT=0x0  Lookup=HIT  Access to: IDX=0x1  WAY=0x3  ST=EXCLUSIVE  TAG=0x3  DAT=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1050: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 1050: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x3  cdreq_op=CDREQ_RD  cdreq_addr=0x301  cdreq_data=0x0  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  cursp_rsp=CURSP_OKAY  cursp_data=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 1060: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=3
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 1060: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x3(remain)  DATA=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49(remain)  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 1060: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 1080: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 1080: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x401  DAT=0x0  Lookup=EVICT_BLK  Access to: IDX=0x1  WAY=0x0  ST=EXCLUSIVE  TAG=0x0  DAT=0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1150: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x401  sdreq_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1200: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xfc8ce0b518d29f636d71265c04efaee62e0ee7bb31933cc41ce1b9a2cf66db37e01053aac4d9cac84386d468b4c24b1429f259fb95440ac0e28358dd3de1c82d  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1250: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xfc8ce0b518d29f636d71265c04efaee62e0ee7bb31933cc41ce1b9a2cf66db37e01053aac4d9cac84386d468b4c24b1429f259fb95440ac0e28358dd3de1c82d  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 1250: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=EVICT_BLK  ST=EXCLUSIVE  IDX=0x1  WAY=0x0  EVICT_WAY=0x0  cdreq_op=CDREQ_RD  cdreq_addr=0x401  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x401  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0xfc8ce0b518d29f636d71265c04efaee62e0ee7bb31933cc41ce1b9a2cf66db37e01053aac4d9cac84386d468b4c24b1429f259fb95440ac0e28358dd3de1c82d  cursp_rsp=CURSP_OKAY  cursp_data=0xfc8ce0b518d29f636d71265c04efaee62e0ee7bb31933cc41ce1b9a2cf66db37e01053aac4d9cac84386d468b4c24b1429f259fb95440ac0e28358dd3de1c82d  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 1260: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 1260: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x4 <-- 0x0  DATA=0xfc8ce0b518d29f636d71265c04efaee62e0ee7bb31933cc41ce1b9a2cf66db37e01053aac4d9cac84386d468b4c24b1429f259fb95440ac0e28358dd3de1c82d <-- 0xa914cceceab92446da67a04ab4d09fca1547d05d914a2f01ac617e36cbc84d973a8dbe3387b80ed1691a00590403cf6ad3c28f3d2c66261d3d24ce83dc3afa7c  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 1260: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 1280: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 1280: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x501  DAT=0x0  Lookup=EVICT_BLK  Access to: IDX=0x1  WAY=0x0  ST=EXCLUSIVE  TAG=0x4  DAT=0xfc8ce0b518d29f636d71265c04efaee62e0ee7bb31933cc41ce1b9a2cf66db37e01053aac4d9cac84386d468b4c24b1429f259fb95440ac0e28358dd3de1c82d
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1350: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x501  sdreq_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1390: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xa231b8953f4c487cedc62861dc248eb3b34f566cfdd2d2a9e95cc7a6627c96ac7dec0a0c7b49d9d1949a611812c0810e6c476c5798a57445e0b9676b9db6423c  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1460: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xa231b8953f4c487cedc62861dc248eb3b34f566cfdd2d2a9e95cc7a6627c96ac7dec0a0c7b49d9d1949a611812c0810e6c476c5798a57445e0b9676b9db6423c  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 1460: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=EVICT_BLK  ST=EXCLUSIVE  IDX=0x1  WAY=0x0  EVICT_WAY=0x0  cdreq_op=CDREQ_RD  cdreq_addr=0x501  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x501  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0xa231b8953f4c487cedc62861dc248eb3b34f566cfdd2d2a9e95cc7a6627c96ac7dec0a0c7b49d9d1949a611812c0810e6c476c5798a57445e0b9676b9db6423c  cursp_rsp=CURSP_OKAY  cursp_data=0xa231b8953f4c487cedc62861dc248eb3b34f566cfdd2d2a9e95cc7a6627c96ac7dec0a0c7b49d9d1949a611812c0810e6c476c5798a57445e0b9676b9db6423c  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 1470: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 1470: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x5 <-- 0x4  DATA=0xa231b8953f4c487cedc62861dc248eb3b34f566cfdd2d2a9e95cc7a6627c96ac7dec0a0c7b49d9d1949a611812c0810e6c476c5798a57445e0b9676b9db6423c <-- 0xfc8ce0b518d29f636d71265c04efaee62e0ee7bb31933cc41ce1b9a2cf66db37e01053aac4d9cac84386d468b4c24b1429f259fb95440ac0e28358dd3de1c82d  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 1470: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 1490: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 1490: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x601  DAT=0x0  Lookup=EVICT_BLK  Access to: IDX=0x1  WAY=0x0  ST=EXCLUSIVE  TAG=0x5  DAT=0xa231b8953f4c487cedc62861dc248eb3b34f566cfdd2d2a9e95cc7a6627c96ac7dec0a0c7b49d9d1949a611812c0810e6c476c5798a57445e0b9676b9db6423c
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1530: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x601  sdreq_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1580: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0x3bfa5605bdd8bc5413758ea197bcaa296097eb046c479bd324267b23e4889f54edfd668d88bb89f4f15d229a100c52ba86f4b86f8955b06f99257e17762801a5  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1610: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0x3bfa5605bdd8bc5413758ea197bcaa296097eb046c479bd324267b23e4889f54edfd668d88bb89f4f15d229a100c52ba86f4b86f8955b06f99257e17762801a5  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 1610: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=EVICT_BLK  ST=EXCLUSIVE  IDX=0x1  WAY=0x0  EVICT_WAY=0x0  cdreq_op=CDREQ_RD  cdreq_addr=0x601  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x601  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0x3bfa5605bdd8bc5413758ea197bcaa296097eb046c479bd324267b23e4889f54edfd668d88bb89f4f15d229a100c52ba86f4b86f8955b06f99257e17762801a5  cursp_rsp=CURSP_OKAY  cursp_data=0x3bfa5605bdd8bc5413758ea197bcaa296097eb046c479bd324267b23e4889f54edfd668d88bb89f4f15d229a100c52ba86f4b86f8955b06f99257e17762801a5  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 1620: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 1620: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x6 <-- 0x5  DATA=0x3bfa5605bdd8bc5413758ea197bcaa296097eb046c479bd324267b23e4889f54edfd668d88bb89f4f15d229a100c52ba86f4b86f8955b06f99257e17762801a5 <-- 0xa231b8953f4c487cedc62861dc248eb3b34f566cfdd2d2a9e95cc7a6627c96ac7dec0a0c7b49d9d1949a611812c0810e6c476c5798a57445e0b9676b9db6423c  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 1620: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(116) @ 1640: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(117) @ 1640: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x701  DAT=0x0  Lookup=EVICT_BLK  Access to: IDX=0x1  WAY=0x0  ST=EXCLUSIVE  TAG=0x6  DAT=0x3bfa5605bdd8bc5413758ea197bcaa296097eb046c479bd324267b23e4889f54edfd668d88bb89f4f15d229a100c52ba86f4b86f8955b06f99257e17762801a5
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1660: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x701  sdreq_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1720: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xccb18fecc56c9c9826a0108fcc08a935f7239eaf450b8fd06e79e7e08046592c2dd35fbf91b7bc40e60af7fa00ef674197caac8f40e806030f96ec800254afbe  
- UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1750: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xccb18fecc56c9c9826a0108fcc08a935f7239eaf450b8fd06e79e7e08046592c2dd35fbf91b7bc40e60af7fa00ef674197caac8f40e806030f96ec800254afbe  
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(58) @ 1750: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=EVICT_BLK  ST=EXCLUSIVE  IDX=0x1  WAY=0x0  EVICT_WAY=0x0  cdreq_op=CDREQ_RD  cdreq_addr=0x701  cdreq_data=0x0  sdreq_op=SDREQ_RD  sdreq_addr=0x701  sdreq_data=0x0  sursp_rsp=SURSP_FETCH  sursp_data=0xccb18fecc56c9c9826a0108fcc08a935f7239eaf450b8fd06e79e7e08046592c2dd35fbf91b7bc40e60af7fa00ef674197caac8f40e806030f96ec800254afbe  cursp_rsp=CURSP_OKAY  cursp_data=0xccb18fecc56c9c9826a0108fcc08a935f7239eaf450b8fd06e79e7e08046592c2dd35fbf91b7bc40e60af7fa00ef674197caac8f40e806030f96ec800254afbe  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 1760: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(241) @ 1760: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x7 <-- 0x6  DATA=0xccb18fecc56c9c9826a0108fcc08a935f7239eaf450b8fd06e79e7e08046592c2dd35fbf91b7bc40e60af7fa00ef674197caac8f40e806030f96ec800254afbe <-- 0x3bfa5605bdd8bc5413758ea197bcaa296097eb046c479bd324267b23e4889f54edfd668d88bb89f4f15d229a100c52ba86f4b86f8955b06f99257e17762801a5  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(246) @ 1760: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(311) @ 1780: uvm_test_top.env.sb [SB] --------------------  SUREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(312) @ 1780: uvm_test_top.env.sb [REC_SUREQ] Request: OP=SUREQ_RD  ADDR=0x1  LOOKUP=SNP_MISS  Access to IDX=0x1  WAY=0xx  ST=  TAG=0xx  DAT=0xx
- UVM_INFO ../lib/units/cache_sb_base.svh(99) @ 1840: uvm_test_top.env.sb [SB] Type_xfr=SDRSP_XFR  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
- UVM_INFO ../lib/units/cache_cov_sureq.svh(45) @ 1840: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] sample SUREQ transaction: Type_xfr=SNP_TXN  Type=SNP_REQ  Lookup=SNP_MISS  ST=  IDX=0x1  WAY=0xx  sureq_op=SUREQ_RD  sureq_addr=0x1  cureq_op=  cureq_addr=0xx  cdrsp_rsp=  cdrsp_data=0xx  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 1850: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=x
- UVM_INFO ../lib/units/cache_sb.svh(430) @ 1850: uvm_test_top.env.sb [PASS_SUREQ] Report: memory remain, no change
- UVM_INFO ../lib/units/cache_sb.svh(435) @ 1850: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(311) @ 1870: uvm_test_top.env.sb [SB] --------------------  SUREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(312) @ 1870: uvm_test_top.env.sb [REC_SUREQ] Request: OP=SUREQ_RD  ADDR=0x101  LOOKUP=HIT  Access to IDX=0x1  WAY=0x1  ST=EXCLUSIVE  TAG=0x1  DAT=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b
- UVM_INFO ../lib/units/cache_sb_base.svh(99) @ 1930: uvm_test_top.env.sb [SB] Type_xfr=SDRSP_XFR  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b  
- UVM_INFO ../lib/units/cache_cov_sureq.svh(45) @ 1930: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] sample SUREQ transaction: Type_xfr=SNP_TXN  Type=SNP_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x1  sureq_op=SUREQ_RD  sureq_addr=0x101  cureq_op=  cureq_addr=0xx  cdrsp_rsp=  cdrsp_data=0xx  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 1940: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=1
- UVM_INFO ../lib/units/cache_sb.svh(430) @ 1940: uvm_test_top.env.sb [PASS_SUREQ] Report: ST: SHARED <-- EXCLUSIVE  TAG: 0x1(remain)  DATA: 0xb93cedf6ad41dcdd75277941e8902dd28ff36e22c3bab567cb354c86947a6e8b6314db10027febb82008970c867606a051d7ccdb001cb9bd279aebc38d2ab23b(remain)  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(435) @ 1940: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(311) @ 1960: uvm_test_top.env.sb [SB] --------------------  SUREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(312) @ 1960: uvm_test_top.env.sb [REC_SUREQ] Request: OP=SUREQ_RD  ADDR=0x201  LOOKUP=HIT  Access to IDX=0x1  WAY=0x2  ST=EXCLUSIVE  TAG=0x2  DAT=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7
- UVM_INFO ../lib/units/cache_sb_base.svh(99) @ 2010: uvm_test_top.env.sb [SB] Type_xfr=SDRSP_XFR  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7  
- UVM_INFO ../lib/units/cache_cov_sureq.svh(45) @ 2010: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] sample SUREQ transaction: Type_xfr=SNP_TXN  Type=SNP_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x2  sureq_op=SUREQ_RD  sureq_addr=0x201  cureq_op=  cureq_addr=0xx  cdrsp_rsp=  cdrsp_data=0xx  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 2020: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=2
- UVM_INFO ../lib/units/cache_sb.svh(430) @ 2020: uvm_test_top.env.sb [PASS_SUREQ] Report: ST: SHARED <-- EXCLUSIVE  TAG: 0x2(remain)  DATA: 0xef3a9506b3b23653ec59502c62683af68c6884e98244b51ed3457f7d14e1ab2dcbf648ef7d18138acb80d22d511d936d724153622168ceb2e005cc26a0fe14e7(remain)  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(435) @ 2020: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(311) @ 2040: uvm_test_top.env.sb [SB] --------------------  SUREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(312) @ 2040: uvm_test_top.env.sb [REC_SUREQ] Request: OP=SUREQ_RD  ADDR=0x301  LOOKUP=HIT  Access to IDX=0x1  WAY=0x3  ST=EXCLUSIVE  TAG=0x3  DAT=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49
- UVM_INFO ../lib/units/cache_sb_base.svh(99) @ 2100: uvm_test_top.env.sb [SB] Type_xfr=SDRSP_XFR  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49  
- UVM_INFO ../lib/units/cache_cov_sureq.svh(45) @ 2100: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] sample SUREQ transaction: Type_xfr=SNP_TXN  Type=SNP_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x3  sureq_op=SUREQ_RD  sureq_addr=0x301  cureq_op=  cureq_addr=0xx  cdrsp_rsp=  cdrsp_data=0xx  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 2110: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=3
- UVM_INFO ../lib/units/cache_sb.svh(430) @ 2110: uvm_test_top.env.sb [PASS_SUREQ] Report: ST: SHARED <-- EXCLUSIVE  TAG: 0x3(remain)  DATA: 0xf2f1405e7f6bdf61d3354d73d7077480b090a1ccf83c13add6f44dc659d80556a6314c869f6003f63f7de9b9e6c8e7ba086a1931917232b30163b235fae59c49(remain)  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(435) @ 2110: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(311) @ 2130: uvm_test_top.env.sb [SB] --------------------  SUREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(312) @ 2130: uvm_test_top.env.sb [REC_SUREQ] Request: OP=SUREQ_RD  ADDR=0x401  LOOKUP=SNP_MISS  Access to IDX=0x1  WAY=0x0  ST=INVALID  TAG=0x0  DAT=0x0
- UVM_INFO ../lib/units/cache_sb_base.svh(99) @ 2170: uvm_test_top.env.sb [SB] Type_xfr=SDRSP_XFR  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
- UVM_INFO ../lib/units/cache_cov_sureq.svh(45) @ 2170: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] sample SUREQ transaction: Type_xfr=SNP_TXN  Type=SNP_REQ  Lookup=SNP_MISS  ST=INVALID  IDX=0x1  WAY=0x0  sureq_op=SUREQ_RD  sureq_addr=0x401  cureq_op=  cureq_addr=0xx  cdrsp_rsp=  cdrsp_data=0xx  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 2180: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(430) @ 2180: uvm_test_top.env.sb [PASS_SUREQ] Report: memory remain, no change
- UVM_INFO ../lib/units/cache_sb.svh(435) @ 2180: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(311) @ 2200: uvm_test_top.env.sb [SB] --------------------  SUREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(312) @ 2200: uvm_test_top.env.sb [REC_SUREQ] Request: OP=SUREQ_RD  ADDR=0x501  LOOKUP=SNP_MISS  Access to IDX=0x1  WAY=0x0  ST=INVALID  TAG=0x0  DAT=0x0
- UVM_INFO ../lib/units/cache_sb_base.svh(99) @ 2230: uvm_test_top.env.sb [SB] Type_xfr=SDRSP_XFR  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
- UVM_INFO ../lib/units/cache_cov_sureq.svh(45) @ 2230: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] sample SUREQ transaction: Type_xfr=SNP_TXN  Type=SNP_REQ  Lookup=SNP_MISS  ST=INVALID  IDX=0x1  WAY=0x0  sureq_op=SUREQ_RD  sureq_addr=0x501  cureq_op=  cureq_addr=0xx  cdrsp_rsp=  cdrsp_data=0xx  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 2240: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(430) @ 2240: uvm_test_top.env.sb [PASS_SUREQ] Report: memory remain, no change
- UVM_INFO ../lib/units/cache_sb.svh(435) @ 2240: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(311) @ 2260: uvm_test_top.env.sb [SB] --------------------  SUREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(312) @ 2260: uvm_test_top.env.sb [REC_SUREQ] Request: OP=SUREQ_RD  ADDR=0x601  LOOKUP=SNP_MISS  Access to IDX=0x1  WAY=0x0  ST=INVALID  TAG=0x0  DAT=0x0
- UVM_INFO ../lib/units/cache_sb_base.svh(99) @ 2310: uvm_test_top.env.sb [SB] Type_xfr=SDRSP_XFR  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
- UVM_INFO ../lib/units/cache_cov_sureq.svh(45) @ 2310: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] sample SUREQ transaction: Type_xfr=SNP_TXN  Type=SNP_REQ  Lookup=SNP_MISS  ST=INVALID  IDX=0x1  WAY=0x0  sureq_op=SUREQ_RD  sureq_addr=0x601  cureq_op=  cureq_addr=0xx  cdrsp_rsp=  cdrsp_data=0xx  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  sdrsp_rsp=SDRSP_INVALID  sdrsp_data=0x0  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 2320: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(430) @ 2320: uvm_test_top.env.sb [PASS_SUREQ] Report: memory remain, no change
- UVM_INFO ../lib/units/cache_sb.svh(435) @ 2320: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO ../lib/units/cache_sb.svh(311) @ 2340: uvm_test_top.env.sb [SB] --------------------  SUREQ ----------------------
- UVM_INFO ../lib/units/cache_sb.svh(312) @ 2340: uvm_test_top.env.sb [REC_SUREQ] Request: OP=SUREQ_RD  ADDR=0x701  LOOKUP=HIT  Access to IDX=0x1  WAY=0x0  ST=EXCLUSIVE  TAG=0x7  DAT=0xccb18fecc56c9c9826a0108fcc08a935f7239eaf450b8fd06e79e7e08046592c2dd35fbf91b7bc40e60af7fa00ef674197caac8f40e806030f96ec800254afbe
- UVM_INFO ../lib/units/cache_sb_base.svh(99) @ 2380: uvm_test_top.env.sb [SB] Type_xfr=SDRSP_XFR  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xccb18fecc56c9c9826a0108fcc08a935f7239eaf450b8fd06e79e7e08046592c2dd35fbf91b7bc40e60af7fa00ef674197caac8f40e806030f96ec800254afbe  
- UVM_INFO ../lib/units/cache_cov_sureq.svh(45) @ 2380: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] sample SUREQ transaction: Type_xfr=SNP_TXN  Type=SNP_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x0  sureq_op=SUREQ_RD  sureq_addr=0x701  cureq_op=  cureq_addr=0xx  cdrsp_rsp=  cdrsp_data=0xx  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0xccb18fecc56c9c9826a0108fcc08a935f7239eaf450b8fd06e79e7e08046592c2dd35fbf91b7bc40e60af7fa00ef674197caac8f40e806030f96ec800254afbe  
- UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 2390: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=0
- UVM_INFO ../lib/units/cache_sb.svh(430) @ 2390: uvm_test_top.env.sb [PASS_SUREQ] Report: ST: SHARED <-- EXCLUSIVE  TAG: 0x7(remain)  DATA: 0xccb18fecc56c9c9826a0108fcc08a935f7239eaf450b8fd06e79e7e08046592c2dd35fbf91b7bc40e60af7fa00ef674197caac8f40e806030f96ec800254afbe(remain)  EVICT_WAY=0x0(remain)  
- UVM_INFO ../lib/units/cache_sb.svh(435) @ 2390: uvm_test_top.env.sb [SB] --------------------------------------------------
- UVM_INFO .\\tests\cache_base_test.svh(72) @ 2435: uvm_test_top [repl_test_c] Complete test
- UVM_INFO ../lib/units/cache_sb_base.svh(153) @ 2435: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at all blocks
- UVM_INFO ../lib/units/cache_cov_cdreq.svh(78) @ 2435: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] CG_CDREQ_OP_COV=25.000000
- UVM_INFO ../lib/units/cache_cov_sureq.svh(64) @ 2435: uvm_test_top.env.cov.cov_sureq [COV_CDREQ] CG_SUREQ_OP_COV=33.333333
+ UVM_INFO ../lib/units/cache_sb.svh(117) @ 770: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x101  DAT=0x0  Lookup=HIT  Access to: IDX=0x1  WAY=0x1  ST=EXCLUSIVE  TAG=0x1  DAT=0x5fff3ef365fcd1f908cbbbf2781cc59d60c6dac9db4b73a4a9e06628eb56c7944892a02156bc4bc2e712adafe912ea111647576ad353450c87684d90d584179c
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 810: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0x5fff3ef365fcd1f908cbbbf2781cc59d60c6dac9db4b73a4a9e06628eb56c7944892a02156bc4bc2e712adafe912ea111647576ad353450c87684d90d584179c  
+ UVM_INFO ../lib/units/cache_cov_cdreq.svh(120) @ 810: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x1  cdreq_op=CDREQ_RD  cdreq_addr=0x101  cdreq_data=0x0  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  cursp_rsp=CURSP_OKAY  cursp_data=0x5fff3ef365fcd1f908cbbbf2781cc59d60c6dac9db4b73a4a9e06628eb56c7944892a02156bc4bc2e712adafe912ea111647576ad353450c87684d90d584179c  
+ UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 820: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=1
+ UVM_INFO ../lib/units/cache_sb.svh(333) @ 820: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x1(remain)  DATA=0x5fff3ef365fcd1f908cbbbf2781cc59d60c6dac9db4b73a4a9e06628eb56c7944892a02156bc4bc2e712adafe912ea111647576ad353450c87684d90d584179c(remain)  EVICT_WAY=0x2(remain)  
+ UVM_INFO ../lib/units/cache_sb.svh(338) @ 820: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/units/cache_sb.svh(116) @ 840: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
+ UVM_INFO ../lib/units/cache_sb.svh(117) @ 840: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x201  DAT=0x0  Lookup=HIT  Access to: IDX=0x1  WAY=0x2  ST=EXCLUSIVE  TAG=0x2  DAT=0xe6927eacaf1a4ff7ff92b8978b3f08c9daea74f90b186cc4f2bf4cf540aa2d5eb07967e7bb3ebdeb1562330d6d580d200bfd4868901c147c99065b78f857dc70
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 910: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xe6927eacaf1a4ff7ff92b8978b3f08c9daea74f90b186cc4f2bf4cf540aa2d5eb07967e7bb3ebdeb1562330d6d580d200bfd4868901c147c99065b78f857dc70  
+ UVM_INFO ../lib/units/cache_cov_cdreq.svh(120) @ 910: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x2  cdreq_op=CDREQ_RD  cdreq_addr=0x201  cdreq_data=0x0  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  cursp_rsp=CURSP_OKAY  cursp_data=0xe6927eacaf1a4ff7ff92b8978b3f08c9daea74f90b186cc4f2bf4cf540aa2d5eb07967e7bb3ebdeb1562330d6d580d200bfd4868901c147c99065b78f857dc70  
+ UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 920: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=2
+ UVM_INFO ../lib/units/cache_sb.svh(333) @ 920: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x2(remain)  DATA=0xe6927eacaf1a4ff7ff92b8978b3f08c9daea74f90b186cc4f2bf4cf540aa2d5eb07967e7bb3ebdeb1562330d6d580d200bfd4868901c147c99065b78f857dc70(remain)  EVICT_WAY=0x0 <-- 0x2  
+ UVM_INFO ../lib/units/cache_sb.svh(338) @ 920: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/units/cache_sb.svh(116) @ 940: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
+ UVM_INFO ../lib/units/cache_sb.svh(117) @ 940: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x301  DAT=0x0  Lookup=HIT  Access to: IDX=0x1  WAY=0x3  ST=EXCLUSIVE  TAG=0x3  DAT=0x9e23930d60f31fa8fd51d0c746ccbb55bb93533f51b1253d2eb3febe005543e3b6d09954682195e3119a07828051c9c74b3892dfeeb87b67c73b0c8036e78291
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 960: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0x9e23930d60f31fa8fd51d0c746ccbb55bb93533f51b1253d2eb3febe005543e3b6d09954682195e3119a07828051c9c74b3892dfeeb87b67c73b0c8036e78291  
+ UVM_INFO ../lib/units/cache_cov_cdreq.svh(120) @ 960: uvm_test_top.env.cov.cov_cdreq [COV_CDREQ] sample CDREQ transaction: Type_xfr=L1_TXN  Type=L1_REQ  Lookup=HIT  ST=EXCLUSIVE  IDX=0x1  WAY=0x3  cdreq_op=CDREQ_RD  cdreq_addr=0x301  cdreq_data=0x0  sdreq_op=  sdreq_addr=0xx  sdreq_data=0xx  sursp_rsp=  sursp_data=0xx  cursp_rsp=CURSP_OKAY  cursp_data=0x9e23930d60f31fa8fd51d0c746ccbb55bb93533f51b1253d2eb3febe005543e3b6d09954682195e3119a07828051c9c74b3892dfeeb87b67c73b0c8036e78291  
+ UVM_INFO ../lib/units/cache_sb_base.svh(151) @ 970: uvm_test_top.env.sb [SB] no mismatch between RTL and MODEL at: IDX=1  WAY=3
+ UVM_INFO ../lib/units/cache_sb.svh(333) @ 970: uvm_test_top.env.sb [PASS_CDREQ] Report: ST=EXCLUSIVE(remain)  TAG=0x3(remain)  DATA=0x9e23930d60f31fa8fd51d0c746ccbb55bb93533f51b1253d2eb3febe005543e3b6d09954682195e3119a07828051c9c74b3892dfeeb87b67c73b0c8036e78291(remain)  EVICT_WAY=0x0(remain)  
+ UVM_INFO ../lib/units/cache_sb.svh(338) @ 970: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/units/cache_sb.svh(116) @ 990: uvm_test_top.env.sb [SB] --------------------  CDREQ ----------------------
+ UVM_INFO ../lib/units/cache_sb.svh(117) @ 990: uvm_test_top.env.sb [REC_CDREQ] Request: OP=CDREQ_RD  ADDR=0x401  DAT=0x0  Lookup=EVICT_BLK  Access to: IDX=0x1  WAY=0x0  ST=EXCLUSIVE  TAG=0x0  DAT=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1010: uvm_test_top.env.sb [SB] Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x401  sdreq_data=0x0  
+ UVM_ERROR ../lib/units/cache_sb.svh(196) @ 1010: uvm_test_top.env.sb [SUREQ_ERROR] expect:[CUREQ_XFR]  cureq_op=CUREQ_INV  cureq_addr=0x1 --- actually:Type_xfr=SDREQ_XFR  sdreq_op=SDREQ_RD  sdreq_addr=0x401  sdreq_data=0x0  
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1050: uvm_test_top.env.sb [SB] Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xf4e1f40907bd01fa645f637c6e46ed45de5513135fa9f727a880bbf364cc51918dfad21f4cb6dfbe468b19f9fb023b01b575b77beb0ed5e3a0aaf6b2ee557a84  
+ UVM_ERROR ../lib/units/cache_sb.svh(230) @ 1050: uvm_test_top.env.sb [CDREQ_ERROR] expect:[SDREQ_XFR]  sdreq_op=SDREQ_RD  sdreq_addr=0x401  sdreq_data=0x0--- actually:Type_xfr=SURSP_XFR  sursp_rsp=SURSP_FETCH  sursp_data=0xf4e1f40907bd01fa645f637c6e46ed45de5513135fa9f727a880bbf364cc51918dfad21f4cb6dfbe468b19f9fb023b01b575b77beb0ed5e3a0aaf6b2ee557a84  
+ UVM_ERROR ../lib/units/cache_sb_base.svh(122) @ 1060: uvm_test_top.env.sb [CDREQ_ERROR] tag mismatch: IDX=1  WAY=0  RTL=0x4  MODEL=0x0
+ UVM_ERROR ../lib/units/cache_sb_base.svh(126) @ 1060: uvm_test_top.env.sb [CDREQ_ERROR] data mismatch: IDX=1  WAY=0  RTL=0xf4e1f40907bd01fa645f637c6e46ed45de5513135fa9f727a880bbf364cc51918dfad21f4cb6dfbe468b19f9fb023b01b575b77beb0ed5e3a0aaf6b2ee557a84  MODEL=0x42da70f4805346af2ab15c8d3c0b712f0c61760c78fba13804bf69629120b956190f3904243098f5581bf85f89609692fa155d9a1923bbf40793434d0318094d
+ UVM_ERROR ../lib/units/cache_sb_base.svh(139) @ 1060: uvm_test_top.env.sb [CDREQ_ERROR] replacement bit mismatch: IDX=1  RTL=0x0  MODEL=0x6
+ UVM_ERROR ../lib/units/cache_sb_base.svh(156) @ 1060: uvm_test_top.env.sb [SB] there are 3 mismatch between RTL and MODEL
+ UVM_INFO ../lib/units/cache_sb.svh(336) @ 1060: uvm_test_top.env.sb [FAIL_CDREQ] # request from CDREQ failed
+ UVM_INFO ../lib/units/cache_sb.svh(338) @ 1060: uvm_test_top.env.sb [SB] --------------------------------------------------
+ UVM_INFO ../lib/units/cache_sb_base.svh(88) @ 1120: uvm_test_top.env.sb [SB] Type_xfr=CURSP_XFR  cursp_rsp=CURSP_OKAY  cursp_data=0xf4e1f40907bd01fa645f637c6e46ed45de5513135fa9f727a880bbf364cc51918dfad21f4cb6dfbe468b19f9fb023b01b575b77beb0ed5e3a0aaf6b2ee557a84  
+ UVM_FATAL ../lib/units/cache_sb.svh(355) @ 1120: uvm_test_top.env.sb [SB_FAIL] receives other sub-transfers before request transfer is opened
  
  --- UVM Report Summary ---
  
  ** Report counts by severity
- UVM_INFO :  168
+ UVM_INFO :   79
  UVM_WARNING :    0
- UVM_ERROR :    0
- UVM_FATAL :    0
+ UVM_ERROR :    6
+ UVM_FATAL :    1
  ** Report counts by id
  [CACHE]     1
- [COV_CDREQ]    22
- [PASS_CDREQ]    12
- [PASS_SUREQ]     8
+ [CDREQ_ERROR]     4
+ [COV_CDREQ]     8
+ [FAIL_CDREQ]     1
+ [PASS_CDREQ]     8
  [Questa UVM]     2
- [REC_CDREQ]    12
- [REC_SUREQ]     8
+ [REC_CDREQ]     9
  [RNTST]     1
- [SB]    99
+ [SB]    48
+ [SB_FAIL]     1
+ [SUREQ_ERROR]     1
  [UVMTOP]     1
- [repl_test_c]     2
- ** Note: $finish    : E:/questaSim/main/win64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
-    Time: 2435 ns  Iteration: 97  Instance: /cache_mem_tb_top
+ [repl_test_c]     1
+ ** Note: $finish    : E:/questaSim/main/win64/../verilog_src/uvm-1.1d/src/base/uvm_report_object.svh(292)
+    Time: 1120 ns  Iteration: 2  Region: /cache_units_pkg::cache_sb_c::run_phase
  Saving coverage database on exit...
- End time: 22:15:44 on Jun 22,2025, Elapsed time: 0:00:06
- Errors: 0, Warnings: 61
+ End time: 12:37:11 on Jun 26,2025, Elapsed time: 0:00:05
+ Errors: 0, Warnings: 64

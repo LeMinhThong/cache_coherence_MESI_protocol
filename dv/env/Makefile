@@ -85,7 +85,6 @@ vsim:
 				+UVM_TESTNAME=$(TEST_NAME) \
 				-sv_seed $(SEED) \
 				-coverage \
-				-nodpiexports \
 				-novopt \
 				$(USER_CMD) \
 				-wlf wave_dir/$(TEST_NAME).wlf \
@@ -94,8 +93,8 @@ vsim:
 	sed 's/^#//' run_dir/$(TEST_NAME).log > tmp.log && mv tmp.log run_dir/$(TEST_NAME).log
 	sed -i '/  log -r \/\\*/d' run_dir/$(TEST_NAME).log
 
-#-nodpiexports \
 #-novopt \
+#-nodpiexports \
 #--------------------------------------------------------------------
 vlog_rtl:
-	vlog -sv -lint $(RTL_INCDIR) $(RTL_SRC)
+	vlog -sv -lint $(RTL_INCDIR) $(RTL_SRC) $(VLOG_DEF) $(USER_DEF)
