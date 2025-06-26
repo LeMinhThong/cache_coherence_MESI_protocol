@@ -19,6 +19,7 @@ package cache_units_pkg;
   `include "cache_model.svh"
   `include "cache_sb_base.svh"
   `include "cache_sb.svh"
+  `include "cache_cov_def.svh"
   `include "cache_cov_cdreq.svh"
   `include "cache_cov_sureq.svh"
   `include "cache_cov.svh"
