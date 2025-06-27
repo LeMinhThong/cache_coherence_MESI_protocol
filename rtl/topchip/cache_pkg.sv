@@ -30,12 +30,15 @@ package cache_pkg;
   // ----------------------------------------------------------------
   // downstream L1 request states
   // ----------------------------------------------------------------
-  parameter CDREQ_IDLE        = 3'b000;
-  parameter CDREQ_ALLOCATE    = 3'b001;
-  parameter CDREQ_INIT_SDREQ  = 3'b010;
-  parameter CDREQ_WAIT_SURSP  = 3'b011;
-  parameter CDREQ_UPDATE      = 3'b100;
-  parameter CDREQ_SEND_RSP    = 3'b101;
+  parameter CDREQ_IDLE            = 4'b0000;
+  parameter CDREQ_ALLOCATE        = 4'b0001;
+  parameter CDREQ_INIT_CUREQ      = 4'b0010;
+  parameter CDREQ_WAIT_CDRSP      = 4'b0011;
+  parameter CDREQ_EVICT_ACK       = 4'b0100;
+  parameter CDREQ_WAIT_EVICT_COMP = 4'b0101;
+  parameter CDREQ_INIT_SDREQ      = 4'b0110;
+  parameter CDREQ_WAIT_SURSP      = 4'b0111;
+  parameter CDREQ_SEND_RSP        = 4'b1000;
 
   // ----------------------------------------------------------------
   // upstream snoop request states

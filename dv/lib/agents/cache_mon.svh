@@ -16,6 +16,7 @@ class `THIS_CLASS extends uvm_monitor;
 
   bit         cdreq_ot;
   address_t   cdreq_addr_bf;
+  lookup_e    cdreq_lookup;
   cache_txn_c l1_xfr_q[$];
   cache_txn_c l1_lookup_q[$];
 
@@ -24,6 +25,7 @@ class `THIS_CLASS extends uvm_monitor;
   cache_txn_c snp_xfr_q[$];
   cache_txn_c snp_lookup_q[$];
 
+  string      cureq_owner;
   string      sdreq_owner;
 
   extern  virtual function  void  build_phase(uvm_phase phase);
@@ -76,9 +78,16 @@ endtask: run_phase
 //-------------------------------------------------------------------
 function void `THIS_CLASS::write(cache_txn_c t);
   cache_txn_c lookup = new t;
-  if      ((lookup.Type == L1_REQ)   && (t.Type_xfr == LOOKUP_XFR))  l1_lookup_q.push_back(lookup);
-  else if ((lookup.Type == SNP_REQ)  && (t.Type_xfr == LOOKUP_XFR))  snp_lookup_q.push_back(lookup);
-  else                                                          `uvm_fatal(m_msg_name, $sformatf("can not identify source of lookup package: %s", lookup.convert2string()))
+  if ((lookup.Type == L1_REQ)   && (t.Type_xfr == LOOKUP_XFR)) begin
+    cdreq_lookup = lookup.Lookup;
+    l1_lookup_q.push_back(lookup);
+  end
+  else if ((lookup.Type == SNP_REQ)  && (t.Type_xfr == LOOKUP_XFR)) begin
+    snp_lookup_q.push_back(lookup);
+  end
+  else begin
+    `uvm_fatal(m_msg_name, $sformatf("can not identify source of lookup package: %s", lookup.convert2string()))
+  end
 endfunction: write
 
 //-------------------------------------------------------------------
@@ -104,6 +113,14 @@ task `THIS_CLASS::coll_l1_txn();
       txn.Idx         = lookup.Idx;
       txn.Way         = lookup.Way;
       txn.Evict_way   = lookup.Evict_way;
+    end
+    else if(xfr.Type_xfr == CUREQ_XFR) begin
+      txn.cureq_op    = xfr.cureq_op;
+      txn.cureq_addr  = xfr.cureq_addr;
+    end
+    else if(xfr.Type_xfr == CDRSP_XFR) begin
+      txn.cdrsp_rsp   = xfr.cdrsp_rsp;
+      txn.cdrsp_data  = xfr.cdrsp_data;
     end
     else if(xfr.Type_xfr == SDREQ_XFR) begin
       txn.sdreq_op    = xfr.sdreq_op;
@@ -233,7 +250,18 @@ task `THIS_CLASS::coll_cureq_xfr();
 
     `uvm_info(m_msg_name, $sformatf("%s", t.convert2string()), UVM_DEBUG);
     m_xfr_ap.write(t);
-    snp_xfr_q.push_back(t);
+
+    if(sureq_ot && (`M_VIF.cureq_addr == sureq_addr_bf)) begin
+      cureq_owner = "SUREQ";
+      snp_xfr_q.push_back(t);
+    end
+    else if(cdreq_ot && (cdreq_lookup == EVICT_BLK)) begin
+      cureq_owner = "CDREQ";
+      l1_xfr_q.push_back(t);
+    end
+    else begin
+      `uvm_fatal(m_msg_name, $sformatf("cureq_addr=0x%0h is not coresponding to any access, SUREQ=0x%0h", `M_VIF.sdreq_addr, sureq_addr_bf))
+    end
     @`M_VIF;
   end
 endtask: coll_cureq_xfr
@@ -250,7 +278,11 @@ task `THIS_CLASS::coll_cdrsp_xfr();
 
     `uvm_info(m_msg_name, $sformatf("%s", t.convert2string()), UVM_DEBUG);
     m_xfr_ap.write(t);
-    snp_xfr_q.push_back(t);
+
+    if(cureq_owner == "CDREQ")        l1_xfr_q.push_back(t);
+    else if(cureq_owner == "SUREQ")   snp_xfr_q.push_back(t);
+    else                              `uvm_fatal("SB_FAIL", "receives SURSP although SDREQ has not sent yet")
+    cureq_owner = "NONE";
     @`M_VIF;
   end
 endtask: coll_cdrsp_xfr
@@ -269,13 +301,13 @@ task `THIS_CLASS::coll_sdreq_xfr();
     `uvm_info(m_msg_name, $sformatf("%s", t.convert2string()), UVM_DEBUG);
     m_xfr_ap.write(t);
 
-    if(cdreq_ot && (`M_VIF.sdreq_addr == cdreq_addr_bf)) begin
-      sdreq_owner = "CDREQ";
-      l1_xfr_q.push_back(t);
-    end
-    else if(sureq_ot && (`M_VIF.sdreq_addr == sureq_addr_bf)) begin
+    if(sureq_ot && (`M_VIF.sdreq_addr == sureq_addr_bf)) begin
       sdreq_owner = "SUREQ";
       snp_xfr_q.push_back(t);
+    end
+    else if(cdreq_ot) begin
+      sdreq_owner = "CDREQ";
+      l1_xfr_q.push_back(t);
     end
     else begin
       `uvm_fatal(m_msg_name, $sformatf("sdreq_addr=0x%0h is not coresponding to any access, CDREQ=0x%0h or SUREQ=0x%0h", `M_VIF.sdreq_addr, cdreq_addr_bf, sureq_addr_bf))

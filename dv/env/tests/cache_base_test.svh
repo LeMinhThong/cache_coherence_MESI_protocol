@@ -12,7 +12,7 @@ class `THIS_CLASS extends uvm_test;
 
   cache_env_c m_env;
 
-  time m_timeout = 100us;
+  time m_timeout = 20us;
 
   extern  virtual task            send_l1_rd  (address_t addr, sursp_e sursp_rsp=SURSP_OKAY);
   extern  virtual task            send_l1_rfo (address_t addr);

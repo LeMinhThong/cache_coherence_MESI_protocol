@@ -14,6 +14,7 @@ class `THIS_CLASS extends uvm_scoreboard;
 
   string    m_msg_name  = "SB";
   string    sdreq_owner = "NONE";
+  string    cureq_owner = "NONE";
   string    hdl_path;
 
   bit       cdreq_ot;
@@ -164,11 +165,36 @@ function void `THIS_CLASS::write(cache_txn_c t);
   if(t_loc.Type_xfr inside {CDREQ_XFR, CURSP_XFR}) begin
     l1_xfr_q.push_back(t_loc);
   end
-  else if(t_loc.Type_xfr inside {SUREQ_XFR, SDRSP_XFR, CUREQ_XFR, CDRSP_XFR}) begin
+
+  else if(t_loc.Type_xfr inside {SUREQ_XFR, SDRSP_XFR}) begin
     snp_xfr_q.push_back(t_loc);
   end
+
+  else if(t_loc.Type_xfr == CUREQ_XFR) begin
+    if(cdreq_ot && (t_loc.cureq_addr == {cdreq_tag_prev, cdreq_idx_bf})) begin
+      cureq_owner = "CDREQ";
+      l1_xfr_q.push_back(t_loc);
+    end
+    else if(sureq_ot && (t_loc.cureq_addr == sureq_addr_req_bf)) begin
+      cureq_owner = "SUREQ";
+      snp_xfr_q.push_back(t_loc);
+    end
+    else
+      `uvm_fatal("SB_FAIL", $sformatf("cureq_addr=0x%0h is not coresponding to any access, CDREQ=0x%0h or SUREQ=0x%0h", t_loc.cureq_addr, {cdreq_tag_prev, cdreq_idx_bf}, sureq_addr_req_bf))
+  end
+  else if(t_loc.Type_xfr == CDRSP_XFR) begin
+    if(cureq_owner == "CDREQ")      l1_xfr_q.push_back(t_loc);
+    else if(cureq_owner == "SUREQ") snp_xfr_q.push_back(t_loc);
+    else                            `uvm_fatal("SB_FAIL", "receives SURSP although SDREQ has not sent yet")
+    cureq_owner = "NONE";
+  end
+
   else if(t_loc.Type_xfr == SDREQ_XFR) begin
-    if(cdreq_ot && (t_loc.sdreq_addr == cdreq_addr_req_bf)) begin
+    if(cdreq_ot && (cdreq_lookup != EVICT_BLK) && (t_loc.sdreq_addr == cdreq_addr_req_bf)) begin
+      sdreq_owner = "CDREQ";
+      l1_xfr_q.push_back(t_loc);
+    end
+    else if(cdreq_ot && (cdreq_lookup == EVICT_BLK) && (t_loc.sdreq_addr inside {{cdreq_tag_prev, cdreq_idx_bf}, cdreq_addr_req_bf})) begin
       sdreq_owner = "CDREQ";
       l1_xfr_q.push_back(t_loc);
     end
@@ -177,7 +203,7 @@ function void `THIS_CLASS::write(cache_txn_c t);
       snp_xfr_q.push_back(t_loc);
     end
     else
-      `uvm_fatal("SB_FAIL", $sformatf("sdreq_addr=0x%0h is not coresponding to any access, CDREQ=0x%0h or SUREQ=0x%0h", t_loc.sdreq_addr, cdreq_addr_req_bf, sureq_addr_req_bf))
+      `uvm_fatal("SB_FAIL", $sformatf("sdreq_addr=0x%0h is not coresponding to any access, CDREQ=0x%0h or EVICT_BLK=0x%0h or SUREQ=0x%0h", t_loc.sdreq_addr, cdreq_addr_req_bf, {cdreq_tag_prev, cdreq_idx_bf}, sureq_addr_req_bf))
   end
   else if(t_loc.Type_xfr == SURSP_XFR) begin
     if(sdreq_owner == "CDREQ")      l1_xfr_q.push_back(t_loc);

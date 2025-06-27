@@ -43,7 +43,7 @@ class `THIS_CLASS extends uvm_component;
           bins CB_SDREQ_RD  = {SDREQ_RD };
           bins CB_SDREQ_RFO = {SDREQ_RFO};
           bins CB_SDREQ_INV = {SDREQ_INV};
-          bins CB_SDREQ_WB  = {SDREQ_WB };
+          //bins CB_SDREQ_WB  = {SDREQ_WB };
     }
     CP_SURSP_RSP_COV: coverpoint m_txn.sursp_rsp {
           bins CB_SURSP_OKAY  = {SURSP_OKAY };
@@ -53,9 +53,11 @@ class `THIS_CLASS extends uvm_component;
     CP_CURSP_RSP_COV: coverpoint m_txn.cursp_rsp {
           bins CB_RSP_CURSP_OKAY = {CURSP_OKAY};
     }
+    // FIXME cross CP_CDREQ_OP_COV, CP_STATE_COV, CP_LOOKUP_COV
     CROSS_CDREQ_OP_X_STATE_COV: cross CP_CDREQ_OP_COV, CP_STATE_COV {
-          illegal_bins CB_ILL_RD_X_MIGRATED   = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_RD } && binsof(CP_STATE_COV)  intersect {MIGRATED  };
-          illegal_bins CB_ILL_RFO_X_MIGRATED  = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_RFO} && binsof(CP_STATE_COV)  intersect {MIGRATED  };
+          // occurred when EVICT WAY
+          //illegal_bins CB_ILL_RD_X_MIGRATED   = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_RD } && binsof(CP_STATE_COV)  intersect {MIGRATED  };
+          //illegal_bins CB_ILL_RFO_X_MIGRATED  = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_RFO} && binsof(CP_STATE_COV)  intersect {MIGRATED  };
           illegal_bins CB_ILL_MD_X_INVALID    = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_MD } && binsof(CP_STATE_COV)  intersect {INVALID   };
           illegal_bins CB_ILL_WB_X_INVALID    = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_WB } && binsof(CP_STATE_COV)  intersect {INVALID   };
           illegal_bins CB_ILL_WB_X_SHARED     = binsof(CP_CDREQ_OP_COV) intersect {CDREQ_WB } && binsof(CP_STATE_COV)  intersect {SHARED    };

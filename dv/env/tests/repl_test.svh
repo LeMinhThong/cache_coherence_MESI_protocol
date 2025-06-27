@@ -14,20 +14,20 @@ endclass: `THIS_CLASS
 
 //-------------------------------------------------------------------
 task `THIS_CLASS::run_seq();
-  send_l1_rd('h001, SURSP_FETCH);
-  send_l1_rd('h101, SURSP_FETCH);
-  send_l1_rd('h201, SURSP_FETCH);
-  send_l1_rd('h301, SURSP_FETCH);
-
-  send_l1_rd('h001);
-  send_l1_rd('h101);
-  send_l1_rd('h201);
-  send_l1_rd('h301);
-
   send_l1_rd('h401, SURSP_FETCH);
   send_l1_rd('h501, SURSP_FETCH);
   send_l1_rd('h601, SURSP_FETCH);
   send_l1_rd('h701, SURSP_FETCH);
+
+  send_l1_rd('h401);
+  send_l1_rd('h501);
+  send_l1_rd('h601);
+  send_l1_rd('h701);
+
+  send_l1_rd('hc01, SURSP_FETCH);
+  send_l1_rd('hd01, SURSP_FETCH);
+  send_l1_rd('he01, SURSP_FETCH);
+  send_l1_rd('hf01, SURSP_FETCH);
 
   send_snp_rd('h001);
   send_snp_rd('h101);

@@ -14,9 +14,6 @@ class `THIS_CLASS extends uvm_component;
   cache_txn_c l1_req_q[$];
   cache_txn_c snp_req_q[$];
 
-  cureq_e     cureq_op_loc;
-  sdreq_e     sdreq_op_loc;
-
   string  m_msg_name            = "DRV_BFM";
   int     wt_ready_en_rand_max  = 5;
   int     wt_send_rsp_rand_max  = 5;
@@ -110,6 +107,8 @@ endtask: get_and_drive
 task `THIS_CLASS::drive_l1_transfer();
   cache_txn_c t_req;
   cache_txn_c t_rsp;
+  cureq_e     cureq_op_loc;
+  sdreq_e     sdreq_op_loc;
 
   init_l1_transfer = 1'b1;
   while(l1_req_q.size() > 0) begin
@@ -138,16 +137,16 @@ task `THIS_CLASS::drive_l1_transfer();
         `M_VIF.cdreq_data   <= '0;
       end
 
-      begin: CAC_SDREQ_HANDLER_BLK
-        // accept request from SDREQ
-        @(posedge `M_VIF.sdreq_valid);
+      begin: CAC_CUREQ_HANDLER_BLK
+        // accept request from CUREQ
+        @(posedge `M_VIF.cureq_valid);
         repeat($urandom_range(0, wt_ready_en_rand_max)) begin
           @`M_VIF;
         end
-        sdreq_op_loc = sdreq_e'(`M_VIF.sdreq_op);
-        `M_VIF.sdreq_ready  <= 1'b1;
+        cureq_op_loc = cureq_e'(`M_VIF.cureq_op);
+        `M_VIF.cureq_ready  <= 1'b1;
         @`M_VIF;
-        `M_VIF.sdreq_ready  <= 1'b0;
+        `M_VIF.cureq_ready  <= 1'b0;
         @`M_VIF;
 
         // wait before send response
@@ -155,22 +154,59 @@ task `THIS_CLASS::drive_l1_transfer();
           @`M_VIF;
         end
 
-        // send response on SURSP
-        `M_VIF.sursp_valid  <= 1'b1;
-        if(sdreq_op_loc == SDREQ_RD)
-          `M_VIF.sursp_rsp <= t_req.sursp_rsp;
-        else
-          `M_VIF.sursp_rsp <= SURSP_OKAY;
+        // send response on CDRSP
+        `M_VIF.cdrsp_valid  <= 1'b1;
+        `M_VIF.cdrsp_rsp    <= CDRSP_OKAY;
+        if(cureq_op_loc == CUREQ_RFO)
+          `M_VIF.cdrsp_data <= t_req.cdrsp_data;
+        else // CURSP_INV
+          `M_VIF.cdrsp_data <= '0;
 
-        if(sdreq_op_loc inside {SDREQ_RD, SDREQ_RFO})
-          `M_VIF.sursp_data <= t_req.sursp_data;
-        else
-          `M_VIF.sursp_data <= '0;
+        @(posedge `M_VIF.cdrsp_ready);
+        `M_VIF.cdrsp_valid  <= 1'b0;
+        `M_VIF.cdrsp_rsp    <= '0;
+        `M_VIF.cdrsp_data   <= '0;
+      end: CAC_CUREQ_HANDLER_BLK
 
-        @(posedge `M_VIF.sursp_ready);
-        `M_VIF.sursp_valid  <= 1'b0;
-        `M_VIF.sursp_rsp    <= '0;
-        `M_VIF.sursp_data   <= '0;
+      begin: CAC_SDREQ_HANDLER_BLK
+        forever begin
+          // accept request from SDREQ
+          @(posedge `M_VIF.sdreq_valid);
+          repeat($urandom_range(0, wt_ready_en_rand_max)) begin
+            @`M_VIF;
+          end
+          sdreq_op_loc = sdreq_e'(`M_VIF.sdreq_op);
+          `M_VIF.sdreq_ready  <= 1'b1;
+          @`M_VIF;
+          `M_VIF.sdreq_ready  <= 1'b0;
+          @`M_VIF;
+
+          // wait before send response
+          repeat($urandom_range(0, wt_send_rsp_rand_max)) begin
+            @`M_VIF;
+          end
+
+          // send response on SURSP
+          `M_VIF.sursp_valid  <= 1'b1;
+          if(sdreq_op_loc == SDREQ_RD)
+            `M_VIF.sursp_rsp <= t_req.sursp_rsp;
+          else
+            `M_VIF.sursp_rsp <= SURSP_OKAY;
+
+          if(sdreq_op_loc inside {SDREQ_RD, SDREQ_RFO})
+            `M_VIF.sursp_data <= t_req.sursp_data;
+          else
+            `M_VIF.sursp_data <= '0;
+
+          fork
+            begin
+              @(posedge `M_VIF.sursp_ready);
+              `M_VIF.sursp_valid  <= 1'b0;
+              `M_VIF.sursp_rsp    <= '0;
+              `M_VIF.sursp_data   <= '0;
+            end
+          join_none
+        end
       end: CAC_SDREQ_HANDLER_BLK
 
       begin // CURSP
@@ -187,6 +223,7 @@ task `THIS_CLASS::drive_l1_transfer();
         `M_VIF.cursp_ready <= 1'b0;
         // disable SURSP channel controller in cases no SDREQ request is initiated
         disable CAC_SDREQ_HANDLER_BLK;
+        disable CAC_CUREQ_HANDLER_BLK;
       end
     join
 
@@ -200,6 +237,8 @@ endtask: drive_l1_transfer
 task `THIS_CLASS::drive_snp_transfer();
   cache_txn_c t_req;
   cache_txn_c t_rsp;
+  cureq_e     cureq_op_loc;
+  sdreq_e     sdreq_op_loc;
 
   init_snp_transfer = 1'b1;
   while(snp_req_q.size() > 0) begin

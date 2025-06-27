@@ -186,7 +186,7 @@ task `THIS_CLASS::check_cdreq();
                 if(!((t.Type_xfr == CDRSP_XFR) && (t.cdrsp_rsp == CDRSP_OKAY)))
                   `SB_ERROR("SUREQ", $sformatf("expect:[CDRSP_XFR]  cdrsp_rsp=CDRSP_OKAY --- actually:%s", t.convert2string()))
                 else
-                  m_cache.set_data(sureq_idx_bf, sureq_way_bf, t.cdrsp_data);
+                  m_cache.set_data(cdreq_idx_bf, cdreq_way_bf, t.cdrsp_data);
               end
             end
             else begin // ST != MIGRATED
@@ -204,8 +204,8 @@ task `THIS_CLASS::check_cdreq();
             // init SDREQ_INV || SDREQ_WB
             if(cdreq_st_prev inside {MODIFIED, MIGRATED}) begin
               wait_nxt_l1_xfr(t);
-              if (!((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_WB) && (t.sdreq_addr == {cdreq_tag_prev, cdreq_idx_bf}) && (t.sdreq_data == cdreq_data_prev)))
-                `SB_ERROR("CDREQ", $sformatf("expect:[SDREQ_XFR]  sdreq_op=SDREQ_WB  sdreq_addr=0x%0h  sdreq_data=0x%0h --- actually:%s", {cdreq_tag_prev, cdreq_idx_bf}, cdreq_data_prev, t.convert2string()))
+              if (!((t.Type_xfr == SDREQ_XFR) && (t.sdreq_op == SDREQ_WB) && (t.sdreq_addr == {cdreq_tag_prev, cdreq_idx_bf}) && (t.sdreq_data == m_cache.get_data(cdreq_idx_bf, cdreq_way_bf))))
+                `SB_ERROR("CDREQ", $sformatf("expect:[SDREQ_XFR]  sdreq_op=SDREQ_WB  sdreq_addr=0x%0h  sdreq_data=0x%0h --- actually:%s", {cdreq_tag_prev, cdreq_idx_bf}, m_cache.get_data(cdreq_idx_bf, cdreq_way_bf), t.convert2string()))
               else begin
                 wait_nxt_l1_xfr(t);
                 if (!((t.Type_xfr == SURSP_XFR) && (t.sursp_rsp == SURSP_OKAY) && (t.sursp_data == '0)))
