@@ -143,7 +143,18 @@ module cache_mem #(
   logic                   snp_hit;
 
   // ----------------------------------------------------------------
-  // def_blk: state controller
+  // def_blk: corner_case detector
+  // ----------------------------------------------------------------
+  logic cdreq_corner_rd_rfo_hit_migrated;
+  logic cdreq_corner_md_miss;
+  logic cdreq_corner_wb_not_hit_migrated;
+  logic cdreq_corner_triger;
+  logic cdreq_corner_ack;
+
+  logic sureq_corner_triger;
+  logic sureq_corner_ack;
+  // ----------------------------------------------------------------
+  // def_blk: phase controller
   // ----------------------------------------------------------------
   logic [3:0]             cdreq_req_curSt, cdreq_req_nxtSt;
   logic [2:0]             sureq_req_curSt, sureq_req_nxtSt;
@@ -239,7 +250,7 @@ module cache_mem #(
                         );
 
   assign cursp_valid =  ( (cdreq_req_curSt == CDREQ_SEND_RSP) &&
-                          cac_hit
+                          (cac_hit || cdreq_corner_ack)
                         );
 
   assign cureq_valid =  ( (sureq_req_curSt == SUREQ_INIT_CUREQ) ||
@@ -247,6 +258,53 @@ module cache_mem #(
                         );
 
   assign sdrsp_valid =  (sureq_req_curSt == SUREQ_SEND_RSP);
+
+  // ----------------------------------------------------------------
+  // imp_blk: corner_case detector
+  // ----------------------------------------------------------------
+  assign cdreq_corner_rd_rfo_hit_migrated = (cdreq_req_curSt == CDREQ_ALLOCATE) &&
+                                            ((cdreq_op_bf == CDREQ_RD) || (cdreq_op_bf == CDREQ_RFO)) &&
+                                            cac_hit &&
+                                            (cdreq_blk_curSt == MIGRATED);
+
+  assign cdreq_corner_md_miss             = (cdreq_req_curSt == CDREQ_ALLOCATE) &&
+                                            (cdreq_op_bf == CDREQ_MD) &&
+                                            !cac_hit;
+
+  assign cdreq_corner_wb_not_hit_migrated = (cdreq_req_curSt == CDREQ_ALLOCATE) &&
+                                            (cdreq_op_bf == CDREQ_WB) &&
+                                            (!cac_hit || (cdreq_blk_curSt != MIGRATED));
+
+  assign cdreq_corner_triger              = cdreq_corner_rd_rfo_hit_migrated ||
+                                            cdreq_corner_md_miss ||
+                                            cdreq_corner_wb_not_hit_migrated;
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if(!rst_n)
+      cdreq_corner_ack <= 1'b0;
+    else begin
+      if(cdreq_corner_triger)
+        cdreq_corner_ack <= 1'b1;
+      else if(cursp_hs_compack)
+        cdreq_corner_ack <= 1'b0;
+    end
+  end
+
+  assign sureq_corner_triger  = (sureq_req_curSt == SUREQ_ALLOCATE) &&
+                                (sureq_op_bf == SUREQ_INV) &&
+                                snp_hit &&
+                                ((sureq_blk_curSt == EXCLUSIVE) || (sureq_blk_curSt == MIGRATED) || (sureq_blk_curSt == MODIFIED));
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if(!rst_n)
+      sureq_corner_ack <= 1'b0;
+    else begin
+      if(sureq_corner_triger)
+        sureq_corner_ack <= 1'b1;
+      else if(sdrsp_hs_compack)
+        sureq_corner_ack <= 1'b0;
+    end
+  end
 
   // ----------------------------------------------------------------
   // imp_blk: allocate CDREQ
@@ -310,12 +368,14 @@ module cache_mem #(
   logic [1:0]           evict_way;
 
   always_comb begin
-    if(cac_hit && cursp_hs_compack) begin
+    //if(cac_hit && cursp_hs_compack) begin
+    if(!cdreq_corner_ack && cac_hit && cursp_hs_compack) begin
       promote_ack = 1'b1;
       promote_idx = cdreq_idx;
       promote_way = cdreq_way;
     end
-    else if(snp_hit && sdrsp_hs_compack && (sureq_op_bf == SUREQ_RD)) begin
+    //else if(snp_hit && sdrsp_hs_compack && (sureq_op_bf == SUREQ_RD)) begin
+    else if(!sureq_corner_ack && snp_hit && sdrsp_hs_compack && (sureq_op_bf == SUREQ_RD)) begin
       promote_ack = 1'b1;
       promote_idx = sureq_idx;
       promote_way = sureq_way;
@@ -499,14 +559,11 @@ module cache_mem #(
   assign cache_lookup     = {wr_miss, rd_miss, wr_hit, rd_hit};
 
   // ----------------------------------------------------------------
-  // imp_blk: common CDERQ SUREQ state controller
+  // imp_blk: common CDERQ SUREQ controller
   // ----------------------------------------------------------------
   // FIXME: assume that SUREQ accessed block is always present in L1
   assign blk_valid_in_l1      = 1'b1;
 
-  //assign cdreq_init_sdreq_inv = ( ((cdreq_op_bf == CDREQ_RFO) || (cdreq_op_bf == CDREQ_MD)) &&
-  //                                (cdreq_blk_curSt == SHARED)
-  //                              );
   assign cdreq_init_sdreq_inv = ( ((cdreq_op_bf == CDREQ_RFO) || (cdreq_op_bf == CDREQ_MD)) &&
                                   (cdreq_blk_curSt == SHARED) &&
                                   !evict_ack
@@ -524,7 +581,7 @@ module cache_mem #(
                                   blk_valid_in_l1
                                 );
   // ----------------------------------------------------------------
-  // imp_blk: CDERQ state controller
+  // imp_blk: CDERQ phase controller
   // ----------------------------------------------------------------
   logic cdreq_init_sdreq;
   logic evict_init_wb_inv;
@@ -547,15 +604,17 @@ module cache_mem #(
       cdreq_req_nxtSt = CDREQ_IDLE;
     else begin
       case(cdreq_req_curSt)
-        CDREQ_IDLE:             cdreq_req_nxtSt = (cdreq_hs_en      ) ? CDREQ_ALLOCATE        : CDREQ_IDLE; 
-        CDREQ_ALLOCATE:         cdreq_req_nxtSt = (evict_ack        ) ? CDREQ_INIT_CUREQ      : (cdreq_init_sdreq ) ? CDREQ_INIT_SDREQ : CDREQ_SEND_RSP;
-        CDREQ_INIT_CUREQ:       cdreq_req_nxtSt = (cureq_hs_compack ) ? CDREQ_WAIT_CDRSP      : CDREQ_INIT_CUREQ; 
-        CDREQ_WAIT_CDRSP:       cdreq_req_nxtSt = (cdrsp_hs_en      ) ? ((evict_init_wb_inv ) ? CDREQ_EVICT_ACK : CDREQ_INIT_SDREQ) : CDREQ_WAIT_CDRSP; 
-        CDREQ_EVICT_ACK:        cdreq_req_nxtSt = (sdreq_hs_compack ) ? CDREQ_WAIT_EVICT_COMP : CDREQ_EVICT_ACK;
-        CDREQ_WAIT_EVICT_COMP:  cdreq_req_nxtSt = (sursp_hs_en      ) ? CDREQ_INIT_SDREQ      : CDREQ_WAIT_EVICT_COMP;
-        CDREQ_INIT_SDREQ:       cdreq_req_nxtSt = (sdreq_hs_compack ) ? CDREQ_WAIT_SURSP      : CDREQ_INIT_SDREQ;
-        CDREQ_WAIT_SURSP:       cdreq_req_nxtSt = (sursp_hs_en      ) ? CDREQ_SEND_RSP        : CDREQ_WAIT_SURSP;
-        CDREQ_SEND_RSP:         cdreq_req_nxtSt = (cursp_hs_compack ) ? CDREQ_IDLE            : CDREQ_SEND_RSP;
+        CDREQ_IDLE:             cdreq_req_nxtSt = (cdreq_hs_en          ) ? CDREQ_ALLOCATE        : CDREQ_IDLE; 
+        CDREQ_ALLOCATE:         cdreq_req_nxtSt = (cdreq_corner_triger  ) ? CDREQ_SEND_RSP        :
+                                                  (evict_ack            ) ? CDREQ_INIT_CUREQ      :
+                                                  (cdreq_init_sdreq     ) ? CDREQ_INIT_SDREQ      : CDREQ_SEND_RSP;
+        CDREQ_INIT_CUREQ:       cdreq_req_nxtSt = (cureq_hs_compack     ) ? CDREQ_WAIT_CDRSP      : CDREQ_INIT_CUREQ; 
+        CDREQ_WAIT_CDRSP:       cdreq_req_nxtSt = (cdrsp_hs_en          ) ? ((evict_init_wb_inv ) ? CDREQ_EVICT_ACK : CDREQ_INIT_SDREQ) : CDREQ_WAIT_CDRSP; 
+        CDREQ_EVICT_ACK:        cdreq_req_nxtSt = (sdreq_hs_compack     ) ? CDREQ_WAIT_EVICT_COMP : CDREQ_EVICT_ACK;
+        CDREQ_WAIT_EVICT_COMP:  cdreq_req_nxtSt = (sursp_hs_en          ) ? CDREQ_INIT_SDREQ      : CDREQ_WAIT_EVICT_COMP;
+        CDREQ_INIT_SDREQ:       cdreq_req_nxtSt = (sdreq_hs_compack     ) ? CDREQ_WAIT_SURSP      : CDREQ_INIT_SDREQ;
+        CDREQ_WAIT_SURSP:       cdreq_req_nxtSt = (sursp_hs_en          ) ? CDREQ_SEND_RSP        : CDREQ_WAIT_SURSP;
+        CDREQ_SEND_RSP:         cdreq_req_nxtSt = (cursp_hs_compack     ) ? CDREQ_IDLE            : CDREQ_SEND_RSP;
         default:                cdreq_req_nxtSt = CDREQ_IDLE;
       endcase // cdreq_req_curSt
     end
@@ -569,7 +628,7 @@ module cache_mem #(
   end
 
   // ----------------------------------------------------------------
-  // imp_blk: SUREQ state controller
+  // imp_blk: SUREQ phase controller
   // ----------------------------------------------------------------
   logic sureq_init_cureq;
   logic sureq_init_wb;
@@ -592,13 +651,15 @@ module cache_mem #(
       sureq_req_nxtSt = SUREQ_IDLE;
     else begin
       case(sureq_req_curSt)
-        SUREQ_IDLE:       sureq_req_nxtSt = (sureq_hs_en      ) ? SUREQ_ALLOCATE    : SUREQ_IDLE;
-        SUREQ_ALLOCATE:   sureq_req_nxtSt = (sureq_init_cureq ) ? SUREQ_INIT_CUREQ  : (sureq_init_wb) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP;
-        SUREQ_INIT_CUREQ: sureq_req_nxtSt = (cureq_hs_compack ) ? SUREQ_WAIT_CDRSP  : SUREQ_INIT_CUREQ;
-        SUREQ_WAIT_CDRSP: sureq_req_nxtSt = (cdrsp_hs_en      ) ? ((sureq_init_wb_after_cureq) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP) : SUREQ_WAIT_CDRSP;
-        SUREQ_INIT_SDREQ: sureq_req_nxtSt = (sdreq_hs_compack ) ? SUREQ_WAIT_SURSP  : SUREQ_INIT_SDREQ;
-        SUREQ_WAIT_SURSP: sureq_req_nxtSt = (sursp_hs_en      ) ? SUREQ_SEND_RSP    : SUREQ_WAIT_SURSP;
-        SUREQ_SEND_RSP:   sureq_req_nxtSt = (sdrsp_hs_compack ) ? SUREQ_IDLE        : SUREQ_SEND_RSP;
+        SUREQ_IDLE:       sureq_req_nxtSt = (sureq_hs_en          ) ? SUREQ_ALLOCATE    : SUREQ_IDLE;
+        SUREQ_ALLOCATE:   sureq_req_nxtSt = (sureq_corner_triger  ) ? SUREQ_SEND_RSP    :
+                                            (sureq_init_cureq     ) ? SUREQ_INIT_CUREQ  :
+                                            (sureq_init_wb        ) ? SUREQ_INIT_SDREQ  : SUREQ_SEND_RSP;
+        SUREQ_INIT_CUREQ: sureq_req_nxtSt = (cureq_hs_compack     ) ? SUREQ_WAIT_CDRSP  : SUREQ_INIT_CUREQ;
+        SUREQ_WAIT_CDRSP: sureq_req_nxtSt = (cdrsp_hs_en          ) ? ((sureq_init_wb_after_cureq) ? SUREQ_INIT_SDREQ : SUREQ_SEND_RSP) : SUREQ_WAIT_CDRSP;
+        SUREQ_INIT_SDREQ: sureq_req_nxtSt = (sdreq_hs_compack     ) ? SUREQ_WAIT_SURSP  : SUREQ_INIT_SDREQ;
+        SUREQ_WAIT_SURSP: sureq_req_nxtSt = (sursp_hs_en          ) ? SUREQ_SEND_RSP    : SUREQ_WAIT_SURSP;
+        SUREQ_SEND_RSP:   sureq_req_nxtSt = (sdrsp_hs_compack     ) ? SUREQ_IDLE        : SUREQ_SEND_RSP;
         default:          sureq_req_nxtSt = SUREQ_IDLE;
       endcase // sureq_req_curSt
     end
@@ -646,9 +707,10 @@ module cache_mem #(
 
   // CURSP channel control
   // FIXME: cursp_rsp is fixed at OKAY
-  assign cursp_rsp  = CURSP_OKAY;
+  assign cursp_rsp  = cdreq_corner_ack ? CURSP_ERROR : CURSP_OKAY;
 
   assign cursp_data = ( cdreq_ot &&
+                        !cdreq_corner_ack &&
                         ((cdreq_op_bf == CDREQ_RD) || (cdreq_op_bf == CDREQ_RFO))
                       ) ? mem[cdreq_idx][cdreq_way][`DAT] : {BLK_WIDTH{1'b0}};
 
@@ -666,7 +728,7 @@ module cache_mem #(
   assign sdreq_data = (sdreq_op == SDREQ_WB) ? ((evict_ack) ? mem[cdreq_idx][cdreq_way][`DAT] : mem[sureq_idx][sureq_way][`DAT]) : {BLK_WIDTH{1'b0}};
 
   // SDRSP channel control
-  assign sdrsp_rsp  = (snp_hit) ? SDRSP_OKAY : SDRSP_INV;
+  assign sdrsp_rsp  = (sureq_corner_ack) ? SDRSP_ERROR : (snp_hit) ? SDRSP_OKAY : SDRSP_INV;
 
   assign sdrsp_data = ( snp_hit &&
                         ((sureq_op_bf == SUREQ_RD) || (sureq_op_bf == SUREQ_RFO))
@@ -725,13 +787,21 @@ module cache_mem #(
       end
     end
     else begin
-      if(cdreq_req_curSt == CDREQ_SEND_RSP)
+      if((cdreq_req_curSt == CDREQ_SEND_RSP) && !cdreq_corner_ack)
         mem[cdreq_idx][cdreq_way][`ST] <= cdreq_blk_nxtSt;
-      else if(sdrsp_hs_compack)
+      if(sdrsp_hs_compack && !sureq_corner_ack)
         // avoid assign state <-- INVALID while wait sursp_ready asserted (in SUREQ_RFO)
         // if state <-- INVALID then sdrsp_data <-- 0x0)
         mem[sureq_idx][sureq_way][`ST] <= sureq_blk_nxtSt;
     end
+    //else if(!cdreq_corner_ack) begin
+    //  if(cdreq_req_curSt == CDREQ_SEND_RSP)
+    //    mem[cdreq_idx][cdreq_way][`ST] <= cdreq_blk_nxtSt;
+    //  else if(sdrsp_hs_compack)
+    //    // avoid assign state <-- INVALID while wait sursp_ready asserted (in SUREQ_RFO)
+    //    // if state <-- INVALID then sdrsp_data <-- 0x0)
+    //    mem[sureq_idx][sureq_way][`ST] <= sureq_blk_nxtSt;
+    //end
   end
 
   // ----------------------------------------------------------------
@@ -749,7 +819,8 @@ module cache_mem #(
           mem[i][ii][`RAM_TAG] <= {TAG_WIDTH{1'b0}};
         end
       end
-    end else begin
+    end
+    else if(!cdreq_corner_ack) begin
       if(asg_tag_trigger) begin
         mem[cdreq_idx][cdreq_way][`RAM_TAG] <= cdreq_addr_bf[`ADDR_TAG];
       end
@@ -765,7 +836,8 @@ module cache_mem #(
 
   //assign asgData_in_cdreq =  (cdreq_op_bf == CDREQ_WB);
   assign asgData_in_cdreq_ack = ( (cdreq_op_bf == CDREQ_WB) &&
-                                  cdreq_hs_en
+                                  (cdreq_req_curSt == CDREQ_ALLOCATE) &&
+                                  !cdreq_corner_triger
                                 );
 
   assign asgData_in_sursp_ack = ( ((cdreq_op_bf == CDREQ_RFO) || (cdreq_op_bf == CDREQ_RD)) &&
@@ -786,7 +858,8 @@ module cache_mem #(
           mem[i][ii][`DAT] <= {BLK_WIDTH{1'b0}};
         end
       end
-    end else begin
+    end
+    else if(!cdreq_corner_ack) begin
       if      (asgData_in_cdreq_ack)   mem[cdreq_idx][cdreq_way][`DAT] <= cdreq_data_bf;
       else if (asgData_in_sursp_ack)   mem[cdreq_idx][cdreq_way][`DAT] <= sursp_data;
       else if (asgData_in_cdrsp_ack) begin

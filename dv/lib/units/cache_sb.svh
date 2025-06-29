@@ -91,6 +91,7 @@ task `THIS_CLASS::check_cdreq();
     else if((t.Type_xfr == CDREQ_XFR) && (cdreq_ot == 0)) begin
       // allocate scenario
       cdreq_ot              = 1;
+      cdreq_corner          = 0;
       cdreq_error_count     = 0;
       cdreq_op_req_bf       = t.cdreq_op;
       cdreq_addr_req_bf     = t.cdreq_addr;
@@ -137,8 +138,9 @@ task `THIS_CLASS::check_cdreq();
             if(!((t.Type_xfr == CURSP_XFR) && (t.cursp_rsp == CURSP_OKAY) && (t.cursp_data == m_cache.get_data(cdreq_idx_bf, cdreq_way_bf))))
               `SB_ERROR("CDREQ", $sformatf("expect:[CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x%0h --- actually:%s", m_cache.get_data(cdreq_idx_bf, cdreq_way_bf), t.convert2string()))
           end
-          else if(cdreq_st_prev == MIGRATED)
-            `SB_ERROR("CDREQ", $sformatf("[CORNER_CASE] OP=%s  ADDR=0x%0h  ST=%s", cdreq_op_req_bf.name(), cdreq_addr_req_bf, cdreq_st_prev))
+          else if(cdreq_st_prev == MIGRATED) begin
+            l1_corner_case_handler(t);
+          end
           else begin
             `uvm_fatal(m_msg_name, $sformatf("Invalid ST=%s", cdreq_st_prev.name()))
           end
@@ -284,29 +286,32 @@ task `THIS_CLASS::check_cdreq();
             `uvm_fatal(m_msg_name, $sformatf("can not identify current state of accessed block ST=%s", cdreq_st_prev.name()))
           end
         end
-        else if(cdreq_lookup inside {FILL_INV_BLK, EVICT_BLK})
-          `SB_ERROR("CDREQ", $sformatf("[CORNER_CASE] violated inclusivity property: ST=%s  LOOKUP=%s", cdreq_st_prev.name(), cdreq_lookup.name()))
+        else if(cdreq_lookup inside {FILL_INV_BLK, EVICT_BLK}) begin
+          l1_corner_case_handler(t);
+        end
         else begin
           `uvm_fatal(m_msg_name, $sformatf("invalid LOOKUP=%s", cdreq_lookup.name()))
         end
       end
       else if(cdreq_op_req_bf == CDREQ_WB) begin
         if(cdreq_lookup == HIT) begin
-          if(cdreq_st_prev inside {EXCLUSIVE, MIGRATED}) begin
+          if(cdreq_st_prev inside {MIGRATED}) begin
             m_cache.set_state(cdreq_idx_bf, cdreq_way_bf, MODIFIED);
             m_cache.set_data(cdreq_idx_bf, cdreq_way_bf, t.cdreq_data);
             wait_nxt_l1_xfr(t);
             if(!((t.Type_xfr == CURSP_XFR) && (t.cursp_rsp == CURSP_OKAY) && (t.cursp_data == '0)))
               `SB_ERROR("CDREQ", $sformatf("expect:[CURSP_XFR]  cursp_rsp=CURSP_OKAY  cursp_data=0x0 --- actually:%s", t.convert2string()))
           end
-          else if(cdreq_st_prev inside {INVALID, SHARED, MODIFIED})
-            `SB_ERROR("CDREQ", $sformatf("[CORNER_CASE] OP=%s  ADDR=0x%0h  ST=%s", cdreq_op_req_bf.name(), cdreq_addr_req_bf, cdreq_st_prev))
+          else if(cdreq_st_prev inside {INVALID, EXCLUSIVE, SHARED, MODIFIED}) begin
+            l1_corner_case_handler(t);
+          end
           else begin
             `uvm_fatal(m_msg_name, $sformatf("invalid ST=%s", cdreq_st_prev.name()))
           end
         end
-        else if(cdreq_lookup inside {FILL_INV_BLK, EVICT_BLK})
-          `SB_ERROR("CDREQ", $sformatf("[CORNER_CASE] violated inclusivity property: ST=%s  LOOKUP=%s", cdreq_st_prev.name(), cdreq_lookup.name()))
+        else if(cdreq_lookup inside {FILL_INV_BLK, EVICT_BLK}) begin
+          l1_corner_case_handler(t);
+        end
         else begin
           `uvm_fatal(m_msg_name, $sformatf("invalid LOOKUP=%s", cdreq_lookup.name()))
         end
@@ -316,7 +321,9 @@ task `THIS_CLASS::check_cdreq();
       end
 
       // promote replacement
-      m_cache.update_repl_age(cdreq_idx_bf, cdreq_way_bf);
+      if(!cdreq_corner) begin
+        m_cache.update_repl_age(cdreq_idx_bf, cdreq_way_bf);
+      end
       // print report
       @`M_VIF;
       comp_model_vs_rtl("CDREQ", cdreq_idx_bf, cdreq_way_bf);
@@ -339,6 +346,7 @@ task `THIS_CLASS::check_cdreq();
 
       // clean scenario
       cdreq_ot              = 0;
+      cdreq_corner          = 0;
       cdreq_error_count     = 0;
       cdreq_op_req_bf       = CDREQ_RD;
       cdreq_addr_req_bf     = 0;
@@ -492,8 +500,9 @@ task `THIS_CLASS::check_sureq();
             if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_OKAY) && (t.sdrsp_data == '0)))
               `SB_ERROR("SUREQ", $sformatf("expect:[SDRSP_XFR]  sdrsp_rsp=SDRSP_OKAY  sdrsp_data=0x0 --- actually:%s", t.convert2string()))
           end
-          else if(sureq_st_prev inside {EXCLUSIVE, MODIFIED, MIGRATED})
-            `SB_ERROR("SUREQ", $sformatf("[CORNER_CASE] OP=%s  ADDR=0x%0h  ST=%s", sureq_op_req_bf.name(), sureq_addr_req_bf, sureq_st_prev))
+          else if(sureq_st_prev inside {EXCLUSIVE, MODIFIED, MIGRATED}) begin
+            snp_corner_case_handler(t);
+          end
           else begin
             `uvm_fatal(m_msg_name, $sformatf("invalid ST=%s", sureq_st_prev.name()))
           end

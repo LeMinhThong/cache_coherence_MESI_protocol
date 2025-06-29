@@ -19,36 +19,45 @@ class `THIS_CLASS extends uvm_component;
   covergroup CG_SUREQ_MESI_COV();
     option.per_instance = 1;
 
+    `CP_STATE_COV
+
     CP_SUREQ_OP_COV: coverpoint m_txn.sureq_op {
           bins CB_SUREQ_RD  = {SUREQ_RD };
           bins CB_SUREQ_RFO = {SUREQ_RFO};
           bins CB_SUREQ_INV = {SUREQ_INV};
     }
     CP_LOOKUP_COV: coverpoint m_txn.Lookup {
-          bins CP_HIT       = {HIT      };
-          bins CP_SNP_MISS  = {SNP_MISS };
+          bins CB_HIT       = {HIT      };
+          bins CB_SNP_MISS  = {SNP_MISS };
     }
-    `CP_STATE_COV
     CP_CUREQ_OP_COV: coverpoint m_txn.cureq_op {
-          bins CP_CUREQ_RD  = {CUREQ_RD };
-          bins CP_CUREQ_RFO = {CUREQ_RFO};
-          bins CP_CUREQ_INV = {CUREQ_INV};
+          bins CB_CUREQ_RD  = {CUREQ_RD };
+          bins CB_CUREQ_RFO = {CUREQ_RFO};
+          bins CB_CUREQ_INV = {CUREQ_INV};
     }
     CP_CDRSP_RSP_COV: coverpoint m_txn.cdrsp_rsp {
-          bins CP_CDRSP_OKAY  = {CDRSP_OKAY};
+          bins CB_CDRSP_OKAY  = {CDRSP_OKAY};
     }
     CP_SDREQ_OP_COV: coverpoint m_txn.sdreq_op {
-          bins CP_SDREQ_WB = {SDREQ_WB};
+          bins CB_SDREQ_WB = {SDREQ_WB};
     }
     CP_SURSP_RSP_COV: coverpoint m_txn.sursp_rsp {
-          bins CP_SURSP_OKAY = {SURSP_OKAY};
+          bins CB_SURSP_OKAY = {SURSP_OKAY};
     }
-    CROSS_SUREQ_OP_X_STATE_COV: cross CP_SUREQ_OP_COV, CP_STATE_COV {
-          illegal_bins CP_ILL_INV_X_EXCLUSIVE = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_INV} && binsof(CP_STATE_COV) intersect {EXCLUSIVE};
-          illegal_bins CP_ILL_INV_X_MIGRATED  = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_INV} && binsof(CP_STATE_COV) intersect {MIGRATED };
-          illegal_bins CP_ILL_INV_X_MODIFIED  = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_INV} && binsof(CP_STATE_COV) intersect {MODIFIED };
+    CROSS_SUREQ_OP_X_LOOKUP_X_STATE_COV: cross CP_SUREQ_OP_COV, CP_LOOKUP_COV, CP_STATE_COV {
+          //bins          CB_RD_X_MISS          = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_RD } && binsof(CP_LOOKUP_COV) intersect {SNP_MISS};
+          //bins          CB_RFO_X_MISS         = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_RFO} && binsof(CP_LOOKUP_COV) intersect {SNP_MISS};
+          //bins          CB_INV_X_MISS         = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_INV} && binsof(CP_LOOKUP_COV) intersect {SNP_MISS};
+          `CROSS_CB_2(CB_RD_X_MISS,   CP_SUREQ_OP_COV, SUREQ_RD,  CP_LOOKUP_COV, SNP_MISS)
+          `CROSS_CB_2(CB_RFO_X_MISS,  CP_SUREQ_OP_COV, SUREQ_RFO, CP_LOOKUP_COV, SNP_MISS)
+          `CROSS_CB_2(CB_INV_X_MISS,  CP_SUREQ_OP_COV, SUREQ_INV, CP_LOOKUP_COV, SNP_MISS)
+
+          //illegal_bins  CB_ILL_HIT_X_I        = binsof(CP_LOOKUP_COV) intersect {HIT} && binsof(CP_STATE_COV) intersect {INVALID};
+          `CROSS_ILL_CB_2(CB_ILL_HIT_X_INVALID, CP_LOOKUP_COV, HIT, CP_STATE_COV, INVALID)
+          `CROSS_ILL_CB_3(CB_ILL_INV_X_HIT_EXCLUSIVE, CP_SUREQ_OP_COV, SDREQ_INV, CP_LOOKUP_COV, HIT, CP_STATE_COV, EXCLUSIVE )
+          `CROSS_ILL_CB_3(CB_ILL_INV_X_HIT_MIGRATED,  CP_SUREQ_OP_COV, SDREQ_INV, CP_LOOKUP_COV, HIT, CP_STATE_COV, MIGRATED  )
+          `CROSS_ILL_CB_3(CB_ILL_INV_X_HIT_MODIFIED,  CP_SUREQ_OP_COV, SDREQ_INV, CP_LOOKUP_COV, HIT, CP_STATE_COV, MODIFIED  )
     }
-    CROSS_SUREQ_OP_X_LOOKUP_COV: cross CP_SUREQ_OP_COV, CP_LOOKUP_COV, CP_STATE_COV;
   endgroup: CG_SUREQ_MESI_COV
 
   function new(string name="`THIS_CLASS", uvm_component parent);

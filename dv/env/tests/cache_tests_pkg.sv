@@ -12,6 +12,7 @@ package cache_tests_pkg;
   `include "rd_wr_test.svh"
   `include "mesi_test.svh"
   `include "repl_test.svh"
+  `include "corner_test.svh"
 endpackage
 
 `endif

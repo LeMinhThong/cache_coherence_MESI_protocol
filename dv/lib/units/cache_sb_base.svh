@@ -18,6 +18,7 @@ class `THIS_CLASS extends uvm_scoreboard;
   string    hdl_path;
 
   bit       cdreq_ot;
+  bit       cdreq_corner;
   int       cdreq_error_count;
   cdreq_e   cdreq_op_req_bf;
   address_t cdreq_addr_req_bf;
@@ -31,6 +32,7 @@ class `THIS_CLASS extends uvm_scoreboard;
   way_t     cdreq_evict_way_prev;
 
   bit       sureq_ot;
+  bit       sureq_corner;
   int       sureq_error_count;
   bit       sureq_hit;
   sureq_e   sureq_op_req_bf;
@@ -52,6 +54,8 @@ class `THIS_CLASS extends uvm_scoreboard;
 
   extern  virtual task            wait_nxt_l1_xfr(ref cache_txn_c t);
   extern  virtual task            wait_nxt_snp_xfr(ref cache_txn_c t);
+  extern  virtual task            l1_corner_case_handler(ref cache_txn_c t);
+  extern  virtual task            snp_corner_case_handler(ref cache_txn_c t);
   extern  virtual function  void  comp_model_vs_rtl(string type_req="ALL", idx_t idx=0, way_t way=0);
   extern  virtual function  void  write(cache_txn_c t);
 
@@ -101,6 +105,26 @@ task `THIS_CLASS::wait_nxt_snp_xfr(ref cache_txn_c t);
 endtask: wait_nxt_snp_xfr
 
 // ------------------------------------------------------------------
+task `THIS_CLASS::l1_corner_case_handler(ref cache_txn_c t);
+  `uvm_warning("CDREQ_CORNER", $sformatf("OP=%s  LOOKUP=%s  ST=%s", cdreq_op_req_bf.name(), cdreq_lookup.name(), cdreq_st_prev.name()))
+  cdreq_corner = 1;
+  wait_nxt_l1_xfr(t);
+  if(!((t.Type_xfr == CURSP_XFR) && (t.cursp_rsp == CURSP_ERROR) && (t.cursp_data == 0))) begin
+    `SB_ERROR("CDREQ", $sformatf("expect:[CURSP_XFR]  RSP=CURSP_ERROR  DATA=0 --- actually:%s", t.convert2string()))
+  end
+endtask: l1_corner_case_handler
+
+// ------------------------------------------------------------------
+task `THIS_CLASS::snp_corner_case_handler(ref cache_txn_c t);
+  `uvm_warning("SUREQ_CORNER", $sformatf("OP=%s  LOOKUP=%s  ST=%s", sureq_op_req_bf.name(), sureq_lookup.name(), sureq_st_prev.name()))
+  sureq_corner = 1;
+  wait_nxt_snp_xfr(t);
+  if(!((t.Type_xfr == SDRSP_XFR) && (t.sdrsp_rsp == SDRSP_ERROR) && (t.sdrsp_data == 0))) begin
+    `SB_ERROR("SUREQ", $sformatf("expect:[SDRSP_XFR]  RSP=SDRSP_ERROR  DATA=0 --- actually:%s", t.convert2string()))
+  end
+endtask: snp_corner_case_handler
+
+// ------------------------------------------------------------------
 function void `THIS_CLASS::comp_model_vs_rtl(string type_req="ALL", idx_t idx=0, way_t way=0);
   int                       error_count;
   bit [`VIP_RAM_WIDTH-1:0]  read_rtl_blk;
@@ -116,7 +140,7 @@ function void `THIS_CLASS::comp_model_vs_rtl(string type_req="ALL", idx_t idx=0,
           `uvm_fatal(m_msg_name, $sformatf("read hdl path fail, hdl_path=%s", hdl_path))
         if((type_req == "ALL") || ((type_req inside {"CDREQ", "SUREQ"}) && (i == idx) && (ii == way))) begin
           if(st_e'(read_rtl_blk[`ST]) != m_cache.mem[i][ii].state) begin
-            `SB_ERROR(type_req, $sformatf("state mismatch: IDX=%0d  WAY=%0d  RTL=0x%0s  MODEL=0x%s", i, ii, st_e'(read_rtl_blk[`ST]), m_cache.mem[i][ii].state))
+            `SB_ERROR(type_req, $sformatf("state mismatch: IDX=%0d  WAY=%0d  RTL=%0s  MODEL=%s", i, ii, st_e'(read_rtl_blk[`ST]), m_cache.mem[i][ii].state))
             error_count++;
           end
           if(read_rtl_blk[`RAM_TAG] != m_cache.mem[i][ii].tag) begin

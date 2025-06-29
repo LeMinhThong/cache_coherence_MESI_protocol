@@ -54,8 +54,6 @@ task `THIS_CLASS::run_seq();
       send_snp_inv({tag, idx});
       send_l1_rd  ({tag, idx}, SURSP_FETCH);
       send_l1_md  ({tag, idx});
-      send_snp_rfo({tag, idx});
-      send_l1_rd  ({tag, idx}, SURSP_FETCH);
       send_l1_wb  ({tag, idx});
       send_snp_rd ({tag, idx});
 
@@ -95,9 +93,10 @@ task `THIS_CLASS::run_seq();
       send_l1_rd  (((32'h4 << 8) | 8'h4), SURSP_FETCH);
       send_l1_rd  (((32'h5 << 8) | 8'h4), SURSP_SNOOP);
       send_l1_rfo (((32'h6 << 8) | 8'h4));
+
+      `uvm_info(get_type_name(), "run_seq complete", UVM_DEBUG)
     end
   join_any
-  `uvm_info(get_type_name(), "run_seq complete", UVM_DEBUG)
 endtask: run_seq
 
 `undef THIS_CLASS
