@@ -642,8 +642,11 @@ module cache_mem #(
                                           (sureq_blk_curSt == MODIFIED)
                                         );
 
-  assign sureq_init_wb_after_cureq  =   ( (sureq_blk_curSt == MODIFIED) ||
-                                          (sureq_blk_curSt == MIGRATED)
+  //assign sureq_init_wb_after_cureq  =   ( (sureq_blk_curSt == MODIFIED) ||
+  //                                        (sureq_blk_curSt == MIGRATED)
+  //                                      );
+  assign sureq_init_wb_after_cureq  =   ( sureq_ot &&
+                                          ((sureq_blk_curSt == MODIFIED) || (sureq_blk_curSt == MIGRATED))
                                         );
 
   always_comb begin
