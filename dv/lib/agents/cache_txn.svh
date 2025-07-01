@@ -64,6 +64,17 @@ class `THIS_CLASS extends uvm_sequence_item;
     `uvm_field_int  (           sdrsp_data  ,UVM_DEFAULT)
   `uvm_object_utils_end
 
+  constraint cdreq_addr_c { cdreq_addr inside {[0:8'hff]}; }
+  constraint sureq_addr_c { sureq_addr inside {[0:8'hff]}; }
+  constraint cdrsp_rsp_c { cdrsp_rsp == CDRSP_OKAY; }
+  constraint sursp_rsp_c {
+    solve cdreq_op before sursp_rsp;
+    if(cdreq_op == CDREQ_RD)
+      sursp_rsp inside {SURSP_FETCH, SURSP_SNOOP};
+    else
+      sursp_rsp == SURSP_OKAY;
+  }
+
   // ----------------------------------------------------------------
   extern  virtual function  string  convert2string();
   extern  virtual function  bit     comp(input cache_txn_c item);
@@ -83,9 +94,7 @@ endclass: `THIS_CLASS
 function string `THIS_CLASS::convert2string();
   string str;
 
-  //str = {str, $sformatf("TxnId=%0d  ",        TxnId             )};
   str = {str, $sformatf("Type_xfr=%s  ",        Type_xfr.name()   )};
-  //if((Type_xfr == LOOKUP_XFR) || (Type_xfr == ALL_CH)) begin
   if(Type_xfr inside {LOOKUP_XFR, L1_TXN, SNP_TXN, ALL_CH}) begin
     str = {str, $sformatf("Type=%s  ",          Type.name()       )};
     str = {str, $sformatf("Lookup=%s  ",        Lookup.name()     )};
@@ -96,44 +105,36 @@ function string `THIS_CLASS::convert2string();
       str = {str, $sformatf("EVICT_WAY=0x%0h  ", Evict_way)};
     end
   end
-  //if((Type_xfr == CDREQ_XFR) || (Type_xfr == ALL_CH)) begin
   if(Type_xfr inside {CDREQ_XFR, L1_TXN, ALL_CH}) begin
     str = {str, $sformatf("cdreq_op=%s  ",      cdreq_op.name()   )};
     str = {str, $sformatf("cdreq_addr=0x%0h  ", cdreq_addr        )};
     str = {str, $sformatf("cdreq_data=0x%0h  ", cdreq_data        )};
   end
-  //if((Type_xfr == SUREQ_XFR) || (Type_xfr == ALL_CH)) begin
   if(Type_xfr inside {SUREQ_XFR, SNP_TXN, ALL_CH}) begin
     str = {str, $sformatf("sureq_op=%s  ",      sureq_op.name()   )};
     str = {str, $sformatf("sureq_addr=0x%0h  ", sureq_addr        )};
   end
-  //if((Type_xfr == CUREQ_XFR) || (Type_xfr == ALL_CH)) begin
   if(Type_xfr inside {CUREQ_XFR, SNP_TXN, ALL_CH}) begin
     str = {str, $sformatf("cureq_op=%s  ",      cureq_op.name()   )};
     str = {str, $sformatf("cureq_addr=0x%0h  ", cureq_addr        )};
   end
-  //if((Type_xfr == CDRSP_XFR) || (Type_xfr == ALL_CH)) begin
   if(Type_xfr inside {CDRSP_XFR, SNP_TXN, ALL_CH}) begin
     str = {str, $sformatf("cdrsp_rsp=%s  ",     cdrsp_rsp.name()  )};
     str = {str, $sformatf("cdrsp_data=0x%0h  ", cdrsp_data        )};
   end
-  //if((Type_xfr == SDREQ_XFR) || (Type_xfr == ALL_CH)) begin
   if(Type_xfr inside {SDREQ_XFR, L1_TXN, SNP_TXN, ALL_CH}) begin
     str = {str, $sformatf("sdreq_op=%s  ",      sdreq_op.name()   )};
     str = {str, $sformatf("sdreq_addr=0x%0h  ", sdreq_addr        )};
     str = {str, $sformatf("sdreq_data=0x%0h  ", sdreq_data        )};
   end
-  //if((Type_xfr == SURSP_XFR) || (Type_xfr == ALL_CH)) begin
   if(Type_xfr inside {SURSP_XFR, L1_TXN, SNP_TXN, ALL_CH}) begin
     str = {str, $sformatf("sursp_rsp=%s  ",     sursp_rsp.name()  )};
     str = {str, $sformatf("sursp_data=0x%0h  ", sursp_data        )};
   end
-  //if((Type_xfr == CURSP_XFR) || (Type_xfr == ALL_CH)) begin
   if(Type_xfr inside {CURSP_XFR, L1_TXN, ALL_CH}) begin
     str = {str, $sformatf("cursp_rsp=%s  ",     cursp_rsp.name()  )};
     str = {str, $sformatf("cursp_data=0x%0h  ", cursp_data        )};
   end
-  //if((Type_xfr == SDRSP_XFR) || (Type_xfr == ALL_CH)) begin
   if(Type_xfr inside {SDRSP_XFR, SNP_TXN, ALL_CH}) begin
     str = {str, $sformatf("sdrsp_rsp=%s  ",     sdrsp_rsp.name()  )};
     str = {str, $sformatf("sdrsp_data=0x%0h  ", sdrsp_data        )};

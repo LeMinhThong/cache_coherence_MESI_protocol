@@ -24,7 +24,7 @@ task `THIS_CLASS::body();
   cache_txn_c t_req = new();
   cache_txn_c t_rsp = new();
 
-  `uvm_info(get_type_name(), "start body", UVM_DEBUG);
+  `uvm_info(get_type_name(), "start body", UVM_DEBUG)
   assert(randomize(t_req) with {
     t_req.Type        == L1_REQ;
     t_req.cdreq_op    == m_op;

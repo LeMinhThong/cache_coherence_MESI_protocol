@@ -29,6 +29,7 @@ package cache_units_pkg;
   `include "cache_base_seq.svh"
   `include "l1_req_seq.svh"
   `include "snp_req_seq.svh"
+  `include "rand_seq.svh"
 
 endpackage: cache_units_pkg
 

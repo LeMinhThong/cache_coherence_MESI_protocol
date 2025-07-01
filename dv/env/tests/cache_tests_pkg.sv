@@ -13,6 +13,7 @@ package cache_tests_pkg;
   `include "mesi_test.svh"
   `include "repl_test.svh"
   `include "corner_test.svh"
+  `include "rand_test.svh"
 endpackage
 
 `endif

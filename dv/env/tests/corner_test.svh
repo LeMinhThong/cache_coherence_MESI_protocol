@@ -38,41 +38,13 @@ task `THIS_CLASS::run_seq();
       send_l1_wb  (addr);
       send_l1_wb  (addr);
       send_snp_inv(addr);
-      // EVICT EXCLUSIVE
+      // EVICT
       send_l1_rd  (32'h002, SURSP_FETCH);
       send_l1_rd  (32'h102, SURSP_FETCH);
       send_l1_rd  (32'h202, SURSP_FETCH);
       send_l1_rd  (32'h302, SURSP_FETCH);
       send_l1_md  (32'h402);
       send_l1_wb  (32'h502);
-
-      // EVICT SHARED
-      send_l1_rd  (32'h003, SURSP_SNOOP);
-      send_l1_rd  (32'h103, SURSP_SNOOP);
-      send_l1_rd  (32'h203, SURSP_SNOOP);
-      send_l1_rd  (32'h303, SURSP_SNOOP);
-      send_l1_md  (32'h403);
-      send_l1_wb  (32'h503);
-
-      // EVICT MIGRATED
-      send_l1_rfo (32'h004);
-      send_l1_rfo (32'h104);
-      send_l1_rfo (32'h204);
-      send_l1_rfo (32'h304);
-      send_l1_md  (32'h404);
-      send_l1_wb  (32'h504);
-
-      // EVICT MIGRATED
-      send_l1_rfo (32'h005);
-      send_l1_rfo (32'h105);
-      send_l1_rfo (32'h205);
-      send_l1_rfo (32'h305);
-      send_l1_wb  (32'h005);
-      send_l1_wb  (32'h105);
-      send_l1_wb  (32'h205);
-      send_l1_wb  (32'h305);
-      send_l1_md  (32'h405);
-      send_l1_wb  (32'h505);
 
       `uvm_info(get_type_name(), "run_seq complete", UVM_DEBUG)
     end

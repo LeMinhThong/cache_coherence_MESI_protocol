@@ -22,16 +22,16 @@ class `THIS_CLASS extends uvm_component;
     `CP_STATE_COV
 
     CP_SUREQ_OP_COV: coverpoint m_txn.sureq_op {
-          bins CB_SUREQ_RD  = {SUREQ_RD };
+          bins CB_SUREQ_RD  = {SUREQ_RD};
           bins CB_SUREQ_RFO = {SUREQ_RFO};
           bins CB_SUREQ_INV = {SUREQ_INV};
     }
     CP_LOOKUP_COV: coverpoint m_txn.Lookup {
-          bins CB_HIT       = {HIT      };
-          bins CB_SNP_MISS  = {SNP_MISS };
+          bins CB_HIT       = {HIT};
+          bins CB_SNP_MISS  = {SNP_MISS};
     }
     CP_CUREQ_OP_COV: coverpoint m_txn.cureq_op {
-          bins CB_CUREQ_RD  = {CUREQ_RD };
+          bins CB_CUREQ_RD  = {CUREQ_RD};
           bins CB_CUREQ_RFO = {CUREQ_RFO};
           bins CB_CUREQ_INV = {CUREQ_INV};
     }
@@ -45,24 +45,34 @@ class `THIS_CLASS extends uvm_component;
           bins CB_SURSP_OKAY = {SURSP_OKAY};
     }
     CROSS_SUREQ_OP_X_LOOKUP_X_STATE_COV: cross CP_SUREQ_OP_COV, CP_LOOKUP_COV, CP_STATE_COV {
-          //bins          CB_RD_X_MISS          = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_RD } && binsof(CP_LOOKUP_COV) intersect {SNP_MISS};
-          //bins          CB_RFO_X_MISS         = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_RFO} && binsof(CP_LOOKUP_COV) intersect {SNP_MISS};
-          //bins          CB_INV_X_MISS         = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_INV} && binsof(CP_LOOKUP_COV) intersect {SNP_MISS};
-          `CROSS_CB_2(CB_RD_X_MISS,   CP_SUREQ_OP_COV, SUREQ_RD,  CP_LOOKUP_COV, SNP_MISS)
-          `CROSS_CB_2(CB_RFO_X_MISS,  CP_SUREQ_OP_COV, SUREQ_RFO, CP_LOOKUP_COV, SNP_MISS)
-          `CROSS_CB_2(CB_INV_X_MISS,  CP_SUREQ_OP_COV, SUREQ_INV, CP_LOOKUP_COV, SNP_MISS)
+          bins          CB_RD_X_MISS                = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_RD}  && binsof(CP_LOOKUP_COV) intersect {SNP_MISS};
+          bins          CB_RFO_X_MISS               = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_RFO} && binsof(CP_LOOKUP_COV) intersect {SNP_MISS};
+          bins          CB_INV_X_MISS               = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_INV} && binsof(CP_LOOKUP_COV) intersect {SNP_MISS};
 
-          //illegal_bins  CB_ILL_HIT_X_I        = binsof(CP_LOOKUP_COV) intersect {HIT} && binsof(CP_STATE_COV) intersect {INVALID};
-          `CROSS_ILL_CB_2(CB_ILL_HIT_X_INVALID, CP_LOOKUP_COV, HIT, CP_STATE_COV, INVALID)
-          `CROSS_ILL_CB_3(CB_ILL_INV_X_HIT_EXCLUSIVE, CP_SUREQ_OP_COV, SDREQ_INV, CP_LOOKUP_COV, HIT, CP_STATE_COV, EXCLUSIVE )
-          `CROSS_ILL_CB_3(CB_ILL_INV_X_HIT_MIGRATED,  CP_SUREQ_OP_COV, SDREQ_INV, CP_LOOKUP_COV, HIT, CP_STATE_COV, MIGRATED  )
-          `CROSS_ILL_CB_3(CB_ILL_INV_X_HIT_MODIFIED,  CP_SUREQ_OP_COV, SDREQ_INV, CP_LOOKUP_COV, HIT, CP_STATE_COV, MODIFIED  )
+          illegal_bins  CB_ILL_HIT_X_INVALID        = binsof(CP_LOOKUP_COV)   intersect {HIT} &&
+                                                      binsof(CP_STATE_COV)    intersect {INVALID};
+
+          ignore_bins   CB_IGN_INV_X_NOT_HIT_SHARED = binsof(CP_SUREQ_OP_COV) intersect {SUREQ_INV} &&
+                                                      binsof(CP_LOOKUP_COV)   intersect {HIT} &&
+                                                      binsof(CP_STATE_COV)    intersect {EXCLUSIVE, MIGRATED, MODIFIED};
     }
   endgroup: CG_SUREQ_MESI_COV
+
+  //-----------------------------------------------------------------
+  covergroup CG_SUREQ_CONER_CASE_COV();
+    option.per_instance = 1;
+
+    CP_INV_NOT_HIT_SHARED_COV: coverpoint m_txn.State iff(m_txn.sureq_op == SUREQ_INV && m_txn.Lookup == HIT) {
+          bins CB_INV_HIT_EXCLUSIVE = {EXCLUSIVE};
+          bins CB_INV_HIT_MIGRATED  = {MIGRATED};
+          bins CB_INV_HIT_MODIFIED  = {MODIFIED};
+    }
+  endgroup: CG_SUREQ_CONER_CASE_COV
 
   function new(string name="`THIS_CLASS", uvm_component parent);
     super.new(name, parent);
     CG_SUREQ_MESI_COV = new();
+    CG_SUREQ_CONER_CASE_COV = new();
   endfunction: new
 endclass: `THIS_CLASS
 
@@ -88,6 +98,7 @@ task `THIS_CLASS::run_phase(uvm_phase phase);
     while(m_txn_q.size() > 0) begin
       m_txn = m_txn_q.pop_front();
       CG_SUREQ_MESI_COV.sample();
+      CG_SUREQ_CONER_CASE_COV.sample();
     end
   end
 endtask: run_phase
@@ -96,6 +107,7 @@ endtask: run_phase
 function void `THIS_CLASS::report_phase(uvm_phase phase);
   super.report_phase(phase);
   `uvm_info(m_msg_name, $sformatf("CG_SUREQ_MESI_COV=%f", CG_SUREQ_MESI_COV.get_coverage()), UVM_LOW)
+  `uvm_info(m_msg_name, $sformatf("CG_SUREQ_CONER_CASE_COV=%f", CG_SUREQ_CONER_CASE_COV.get_coverage()), UVM_LOW)
 endfunction: report_phase
 
 `undef THIS_CLASS
